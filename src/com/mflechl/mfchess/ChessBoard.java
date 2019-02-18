@@ -168,8 +168,12 @@ public class ChessBoard implements ActionListener {
 
                 Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check);
 
-                ArrayList<IBoard> moveList= Move.allLegalMoves(iBoard);
-                System.out.println("move list 0 item  "+moveList.get(0).setup[0][0]);
+                //if this list is empty: check mate or remis
+                ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, state.turnOf * -1, true);
+                if (moveList.size() > 0) {
+//                    System.out.println("move list 0 item  "+moveList.get(0).setup[0][0]);
+                    System.out.println(moveList.get(0));
+                }
 
                 //update state
                 state.turnOf *= -1;
