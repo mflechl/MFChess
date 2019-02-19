@@ -155,6 +155,10 @@ public class ChessBoard implements ActionListener {
 
                 state.check = Move.isChecked(iBoard, state.turnOf * -1); //check of opponent result of the move?
 
+                State _state = new State(state);
+                _state.update(movingPiece, aLine, _l, aRow);
+                System.out.println(state.enPassantPossible + " " + _state.enPassantPossible);
+
                 //if this list is empty: check mate or remis
                 ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, state.turnOf * -1, true);
                 if (moveList.size() > 0) {
@@ -170,10 +174,7 @@ public class ChessBoard implements ActionListener {
                 Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
 
                 //update state
-                state.turnOf *= -1;
-                if (state.turnOf == WHITE) state.moveNumber++;
-                if (Math.abs(movingPiece) == PAWN && Math.abs(aLine - _l) == 2) state.enPassantPossible = aRow;
-                else state.enPassantPossible = -1;
+                state = _state;
 
                 tiles[aLine][aRow].inactive();
                 aLine = -1;
