@@ -220,4 +220,18 @@ public final class Move {
         return list;
     }
 
+    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int toLine = 0; toLine < 8; toLine++) {
+            for (int toRow = 0; toRow < 8; toRow++) {
+                if (isLegal(_iBoard, sDummy, fromLine, fromRow, toLine, toRow, _state)) {
+                    int[] dest = {toLine, toRow};
+                    list.add(dest);
+                    if (stopAfterFirst) return list;
+                }
+            }
+        }
+        return list;
+    }
+
 }
