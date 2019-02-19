@@ -119,7 +119,7 @@ public class ChessBoard implements ActionListener {
     private int aRow = -1;
 
     private void changeBoardState(int _l, int _r) {
-        //TODO: Special cases - check mate, promotion: ask for piece; notation: origin field if ambiguous
+        //TODO: Special cases - promotion: ask for piece; notation: origin field if ambiguous
 
         //piece of right color?; change active field if needed
         if (tiles[_l][_r].getPiece() * state.turnOf > 0) {
@@ -160,7 +160,7 @@ public class ChessBoard implements ActionListener {
                 System.out.println(state.enPassantPossible + " " + _state.enPassantPossible);
 
                 //if this list is empty: check mate or remis
-                ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, state.turnOf * -1, true);
+                ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, _state, true);
                 if (moveList.size() > 0) {
 //                    System.out.println("move list 0 item  "+moveList.get(0).setup[0][0]);
                     System.out.println(moveList.get(0));
@@ -170,6 +170,9 @@ public class ChessBoard implements ActionListener {
                     if (state.check) mate = true;
                     else remis = true;
                 }
+
+                //fastest remis:
+                //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6Stalemate! All black's
 
                 Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
 

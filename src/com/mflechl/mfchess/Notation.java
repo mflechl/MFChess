@@ -51,12 +51,17 @@ class Notation extends JLabel {
             lbl += CoordBoard.alpha[toRow + 1];
             lbl += Integer.toString(toLine + 1);
         }
-        if (mate) {
-            lbl += "# ";
-            if (piece > 0) lbl += "1-0";
-            else lbl += "0-1";
-        } else if (remis) lbl += " &#189; - &#189;";
-        else if (check) lbl += "+";
+        if (mate || remis || check) {
+            lbl += "<font color='red'>";
+            if (mate) {
+                lbl += "# ";
+                if (piece > 0) lbl += "1-0";
+                else lbl += "0-1";
+            } else if (remis) lbl += " &#189; - &#189;";
+            else lbl += "+";   //must be check
+            lbl += "</font>";
+        }
+
 
         lbl += " ";
         updateText(lbl);
