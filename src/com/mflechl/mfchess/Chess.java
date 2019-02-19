@@ -69,7 +69,7 @@ public class Chess extends JFrame {
                 if (i == 0 || j == 0 || i == 9 || j == 9) {
                     canvas.add(coordBoard.coordTiles[i][j]);
                 } else {
-                    canvas.add(chessBoard.tiles[i - 1][j - 1]);
+                    canvas.add(ChessBoard.tiles[i - 1][j - 1]);
                 }
             }
         }

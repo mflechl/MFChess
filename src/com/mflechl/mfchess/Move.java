@@ -65,12 +65,13 @@ public final class Move {
             if (((col == 1 && fromLine == 1) || (col == -1 && fromLine == 6)) &&   //in starting line for white or black
                     (toLine - fromLine == 2 * col)) {                                      //move two steps in the right direction
                 //no piece in between
-                return _iBoard.setup[fromLine + col][fromRow] == 0;
+                return _iBoard.setup[toLine][fromRow] == 0;                        //needs to be empty
             }
         }
         //capture piece
         else if (Math.abs(fromRow - toRow) == 1 && (toLine - fromLine) == col) {    //eliminate other piece?
             if (_iBoard.setup[toLine][toRow] * col < 0) return true; //to-field is not empty and has opposite sign
+            System.out.println("EP " + ChessBoard.state.enPassantPossible);
             if (ChessBoard.state.enPassantPossible == toRow) { //en passant? //TODO: give state as argument
                 sMove.enPassant = true;
                 return true;

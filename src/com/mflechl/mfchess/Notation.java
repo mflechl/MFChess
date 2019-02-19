@@ -23,7 +23,7 @@ class Notation extends JLabel {
     }
 
     //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
-    void addMove(int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, boolean check) {
+    void addMove(int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, boolean check, boolean mate, boolean remis) {
         //	int eliminatedPiece=com.mflechl.mfchess.ChessBoard.board_content[toLine][toRow];
         //for display
         String lbl = "";
@@ -51,7 +51,12 @@ class Notation extends JLabel {
             lbl += CoordBoard.alpha[toRow + 1];
             lbl += Integer.toString(toLine + 1);
         }
-        if (check) lbl += "+";
+        if (mate) {
+            lbl += "# ";
+            if (piece > 0) lbl += "1-0";
+            else lbl += "0-1";
+        } else if (remis) lbl += " &#189; - &#189;";
+        else if (check) lbl += "+";
 
         lbl += " ";
         updateText(lbl);
