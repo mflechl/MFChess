@@ -18,7 +18,8 @@ public class Tile extends JLabel {
     //  static Font font = new Font("Arial Unicode MS", Font.BOLD, 50);
     static Font font = new Font("Sans-Serif", Font.PLAIN, 50);
 
-    static Border border = BorderFactory.createLineBorder(Color.BLUE, 5);
+    static Border activeBorder = BorderFactory.createLineBorder(Color.BLUE, 5);
+    static Border destinationBorder = BorderFactory.createLineBorder(Color.RED, 3);
 
     public int piece = 0;
     public int line, row;
@@ -53,11 +54,15 @@ public class Tile extends JLabel {
         });
     }
 
-    public void active() {
-        setBorder(border);
+    public void setActiveBorder() {
+        setBorder(activeBorder);
     }
 
-    public void inactive() {
+    public void setDestinationBorder() {
+        setBorder(destinationBorder);
+    }
+
+    public void setBorderInactive() {
         setBorder(null);
     }
 

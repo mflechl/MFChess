@@ -114,6 +114,14 @@ public class ChessBoard implements ActionListener {
 
     }
 
+    private void setAllBordersInactive() {
+        for (Tile[] tiles : tiles) {
+            for (Tile tile : tiles) {
+                tile.setBorderInactive();
+            }
+        }
+    }
+
     private boolean tileActive = false;
     private int aLine = -1;
     private int aRow = -1;
@@ -121,22 +129,29 @@ public class ChessBoard implements ActionListener {
     private void changeBoardState(int _l, int _r) {
         //TODO: Special cases - promotion: ask for piece; notation: origin field if ambiguous
 
-        //piece of right color?; change active field if needed
+        //piece of right color?; change setActiveBorder field if needed
         if (tiles[_l][_r].getPiece() * state.turnOf > 0) {
-            if (aLine >= 0 && aRow >= 0) tiles[aLine][aRow].inactive();
-            tiles[_l][_r].active();
+//            if (aLine >= 0 && aRow >= 0) tiles[aLine][aRow].setBorderInactive();
+            if (aLine >= 0 && aRow >= 0) setAllBordersInactive();
+            tiles[_l][_r].setActiveBorder();
             aLine = _l;
             aRow = _r;
             tileActive = true;
+            ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, state, false);
+            for (int[] pos : list) {
+                tiles[pos[0]][pos[1]].setDestinationBorder();
+            }
         }
-        //there is an active tile
+
+        //there is an setActiveBorder tile
         else if (tileActive) {
-            if (_l == aLine && _r == aRow) {  //clicking on active tile: make it inactive
-                tiles[aLine][aRow].inactive();
+            if (_l == aLine && _r == aRow) {  //clicking on setActiveBorder tile: make it setBorderInactive
+                //tiles[aLine][aRow].setBorderInactive();
+                setAllBordersInactive();
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
-            } else { //not clicking on active tile: move?
+            } else { //not clicking on setActiveBorder tile: move?
 
                 SpecialMove sMove = new SpecialMove(); //save state: castling, en passant, ...
                 if (!Move.isLegal(iBoard, sMove, aLine, aRow, _l, _r)) return;
@@ -179,7 +194,8 @@ public class ChessBoard implements ActionListener {
                 //update state
                 state = _state;
 
-                tiles[aLine][aRow].inactive();
+                //tiles[aLine][aRow].setBorderInactive();
+                setAllBordersInactive();
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
