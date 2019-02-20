@@ -44,13 +44,16 @@ public class ChessBoard implements ActionListener {
     void setMaxFontSize() {
         float mindim = Math.min(tiles[0][0].getSize().height, tiles[0][0].getSize().width);
         setFontSize(mindim * (float) 0.9);
-        this.initPieces();
+        initPieces();
+        fillTilesFromBoard();
+    }
+
+    void fillTilesFromBoard() {
         for (int i = 0; i < iBoard.setup.length; i++) {
             for (int j = 0; j < iBoard.setup[i].length; j++) {
                 tiles[i][j].setPiece(iBoard.setup[i][j]);
             }
         }
-
     }
 
     private void setFontSize(float fs) {
@@ -199,9 +202,10 @@ public class ChessBoard implements ActionListener {
                 //save to history
                 IBoardState currentMove = new IBoardState(iBoard, state);
                 pastMoves.add(currentMove);
-                System.out.println("S " + pastMoves.size());
+                System.out.println("S " + pastMoves.size() + " " + state.moveNumber);
 
-                if (pastMoves.size() > 5) restoreState(pastMoves.get(2));
+                if (state.moveNumber > 4) restoreState(pastMoves.get(1));
+                //TODO: once a new move is done => delete history, including notation on the bottom
 
 
                 //tiles[aLine][aRow].setBorderInactive();
@@ -218,6 +222,7 @@ public class ChessBoard implements ActionListener {
     private void restoreState(IBoardState boardstate) {
         iBoard = new IBoard(boardstate);
         state = new State(boardstate.state);
+        fillTilesFromBoard();
     }
 
     //moving piece
