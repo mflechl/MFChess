@@ -7,6 +7,7 @@ public class IBoard {
     IBoard( IBoard in ){
         setup = Copy.deepCopyInt(in.setup);
     }
+
     int[][] setup=new int[8][8];
 
     public String toString() {
@@ -23,3 +24,14 @@ public class IBoard {
     }
 
 }
+
+/*
+//poor man's profiling
+        long startTime = System.currentTimeMillis();
+        for (int i=0; i<1000000; i++) {
+        setup = Copy.deepCopyInt(in.setup);
+//            setup = Copy.deepArrayCopy(in.setup);
+        }
+        long finishTime = System.currentTimeMillis();
+        System.out.println("That took: " + (finishTime - startTime) + " ms");
+*/
