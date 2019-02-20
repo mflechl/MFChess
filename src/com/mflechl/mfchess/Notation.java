@@ -10,7 +10,7 @@ class Notation extends JLabel {
     //    static Border activeBorder = BorderFactory.createLineBorder(Color.BLUE, 5);
     private String notationString = "";
     private String notationHistory = "";
-    //static final String[] letter={
+
     private static int w = 100;
     private static Font font = new Font("Sans-Serif", Font.PLAIN, 20);
 

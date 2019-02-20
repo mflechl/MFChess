@@ -21,13 +21,15 @@ public class ChessBoard implements ActionListener {
     static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
 
-    static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //TODO: enum
+    static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
     static final String[] lpieces = {"", "K", "Q", "R", "B", "N", "P"};
     static final int WHITE = +1, BLACK = -1;
     static ImageIcon[] wpieces = new ImageIcon[7];
     static ImageIcon[] bpieces = new ImageIcon[7];
 
     static State state = new State();
+
+    private ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
     private boolean mate = false;
     private boolean remis = false;
@@ -194,6 +196,14 @@ public class ChessBoard implements ActionListener {
                 //update state
                 state = _state;
 
+                //save to history
+                IBoardState currentMove = new IBoardState(iBoard, state);
+                pastMoves.add(currentMove);
+                System.out.println("S " + pastMoves.size());
+
+                if (pastMoves.size() > 5) restoreState(pastMoves.get(2));
+
+
                 //tiles[aLine][aRow].setBorderInactive();
                 setAllBordersInactive();
                 aLine = -1;
@@ -203,6 +213,11 @@ public class ChessBoard implements ActionListener {
             }
         }
 
+    }
+
+    private void restoreState(IBoardState boardstate) {
+        iBoard = new IBoard(boardstate);
+        state = new State(boardstate.state);
     }
 
     //moving piece
