@@ -1,12 +1,12 @@
 package com.mflechl.mfchess;
 
-import java.awt.*;   // Using AWT's Graphics and Color
-import java.awt.event.ActionListener;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 //import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.util.*;
 
 
 /**
@@ -29,7 +29,7 @@ public class ChessBoard implements ActionListener {
 
     static State state = new State();
 
-    private ArrayList<IBoardState> pastMoves = new ArrayList<>();
+    private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
     private boolean mate = false;
     private boolean remis = false;
@@ -39,6 +39,7 @@ public class ChessBoard implements ActionListener {
         this.color1 = color1;
         this.color2 = color2;
         initBoard();
+        pastMoves.add(new IBoardState(iBoard, state));
     }
 
     void setMaxFontSize() {
@@ -48,7 +49,7 @@ public class ChessBoard implements ActionListener {
         fillTilesFromBoard();
     }
 
-    void fillTilesFromBoard() {
+    static void fillTilesFromBoard() {
         for (int i = 0; i < iBoard.setup.length; i++) {
             for (int j = 0; j < iBoard.setup[i].length; j++) {
                 tiles[i][j].setPiece(iBoard.setup[i][j]);
@@ -201,8 +202,18 @@ public class ChessBoard implements ActionListener {
 
                 //save to history
                 IBoardState currentMove = new IBoardState(iBoard, state);
-                pastMoves.add(currentMove);
-                System.out.println("S " + pastMoves.size() + " " + state.moveNumber);
+
+                int nmoves = (state.moveNumber - 1) * 2 + 1;
+                if (state.turnOf == BLACK) nmoves++;
+                //pastMoves.ensureCapacity(nmoves);
+                pastMoves.add(nmoves - 1, currentMove);
+
+                if (pastMoves.size() != nmoves) {     //have moved back in history and adding moves...
+                    pastMoves.subList(nmoves, pastMoves.size()).clear();
+                }
+
+                System.out.println("S " + pastMoves.size() + " " + state.moveNumber + " " + nmoves);
+
 
                 if (state.moveNumber > 4) restoreState(pastMoves.get(1));
                 //TODO: once a new move is done => delete history, including notation on the bottom
@@ -219,7 +230,23 @@ public class ChessBoard implements ActionListener {
 
     }
 
-    private void restoreState(IBoardState boardstate) {
+    static void getPreviousState() {
+        int toMove = ((state.moveNumber - 1) * 2) - 1;
+        if (state.turnOf == BLACK) toMove++;
+
+        System.out.println("M: " + toMove + " " + pastMoves.size());
+        if (toMove >= 0) restoreState(pastMoves.get(toMove));
+    }
+
+    static void getNextState() {
+        int toMove = ((state.moveNumber - 1) * 2) + 1;
+        if (state.turnOf == BLACK) toMove++;
+
+        System.out.println("M: " + toMove + " " + pastMoves.size());
+        if (toMove < pastMoves.size()) restoreState(pastMoves.get(toMove));
+    }
+
+    static void restoreState(IBoardState boardstate) {
         iBoard = new IBoard(boardstate);
         state = new State(boardstate.state);
         fillTilesFromBoard();

@@ -1,15 +1,13 @@
 package com.mflechl.mfchess;
 
-import java.awt.Color;
-import javax.swing.JLabel;
-import javax.swing.BorderFactory;
-import java.awt.Font;
+import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
 
 class Notation extends JLabel {
 
     //    static Border activeBorder = BorderFactory.createLineBorder(Color.BLUE, 5);
-    private String notationString = "";
-    private String notationHistory = "";
+    private ArrayList<String> notationString = new ArrayList<>();
 
     private static int w = 100;
     private static Font font = new Font("Sans-Serif", Font.PLAIN, 20);
@@ -66,17 +64,10 @@ class Notation extends JLabel {
         lbl += " ";
         updateText(lbl);
 
-        //internally, to go backward/forward
-        if (piece > 0) lbl = "+";
-        else lbl = "-";
-        lbl += apiece + Integer.toString(aLine) + aRow + toLine + toRow;
-        lbl += Math.abs(eliminatedPiece) + " ";
-        notationHistory += lbl;
-        //	System.out.println(notationHistory);
     }
 
     private void updateText(String newText) {
-        notationString += newText;
+        notationString.add(newText);
         setWidth(w);
         //	this.setText("<html><body style='width: 100%'>"+notationString+"</html>");
     }
@@ -84,6 +75,9 @@ class Notation extends JLabel {
     void setWidth(int width) {
         w = width;
         //	System.out.println("XX "+width);
-        setText("<html><body style='width: " + width + "px'>" + notationString + "</html>");
+//        setText("<html><body style='width: " + width + "px'>" + notationString + "</html>");
+        String str = String.valueOf(notationString);
+        str = str.replaceAll("[\\[\\]\\,]", "");
+        setText("<html><body style='width: " + width + "px'>" + str + "</html>");
     }
 }

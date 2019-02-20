@@ -76,7 +76,6 @@ public final class Move {
         //capture piece
         else if (Math.abs(fromRow - toRow) == 1 && (toLine - fromLine) == col) {    //eliminate other piece?
             if (_iBoard.setup[toLine][toRow] * col < 0) return true; //to-field is not empty and has opposite sign
-            System.out.println("EP " + _state.enPassantPossible);
             if (_state.enPassantPossible == toRow) { //en passant?
                 sMove.enPassant = true;
                 return true;

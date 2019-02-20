@@ -1,9 +1,11 @@
 package com.mflechl.mfchess;
 
-import java.awt.*;       // Using AWT's Graphics and Color
-import java.awt.event.*; // Using AWT's event classes and listener interface
-import javax.swing.*;    // Using Swing's components and containers
-import javax.swing.BorderFactory;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 //import javax.swing.JTextField;
 //import javax.swing.JScrollBar;
 
@@ -46,6 +48,7 @@ public class Chess extends JFrame {
         btnPanel.add(btnLeft);
         btnLeft.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                ChessBoard.getPreviousState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
@@ -54,6 +57,7 @@ public class Chess extends JFrame {
         btnPanel.add(btnRight);
         btnRight.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                ChessBoard.getNextState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
@@ -109,9 +113,11 @@ public class Chess extends JFrame {
             public void keyPressed(KeyEvent evt) {
                 switch (evt.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
+                        ChessBoard.getPreviousState();
                         repaint();
                         break;
                     case KeyEvent.VK_RIGHT:
+                        ChessBoard.getNextState();
                         repaint();
                         break;
                 }
