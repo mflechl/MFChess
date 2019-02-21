@@ -190,24 +190,22 @@ public class ChessBoard implements ActionListener {
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6Stalemate! All black's
 
+                System.out.println(Notation.notationStrings.size() + " X " + pastMoves.size() + " Y " + _state.nMoves);
+
+                if (pastMoves.size() != _state.nMoves) {     //have moved back in history and adding moves...
+                    pastMoves.subList(_state.nMoves, pastMoves.size()).clear();
+                    Notation.notationStrings.subList(_state.nMoves, Notation.notationStrings.size()).clear();
+                }
+
                 //Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
-                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), state.moveNumber, aLine, aRow, _l, _r,
+                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), _state.nMoves, state.moveNumber, aLine, aRow, _l, _r,
                         movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state, mate, remis);
 
                 //update state
                 state = _state;
-
                 //save to history
                 IBoardState currentMove = new IBoardState(iBoard, state);
-
-                int nmoves = (state.moveNumber - 1) * 2 + 1;
-                if (state.turnOf == BLACK) nmoves++;
-                //pastMoves.ensureCapacity(nmoves);
-                pastMoves.add(nmoves - 1, currentMove);
-
-                if (pastMoves.size() != nmoves) {     //have moved back in history and adding moves...
-                    pastMoves.subList(nmoves, pastMoves.size()).clear();
-                }
+                pastMoves.add(_state.nMoves, currentMove);
 
                 //tiles[aLine][aRow].setBorderInactive();
                 setAllBordersInactive();
@@ -222,19 +220,21 @@ public class ChessBoard implements ActionListener {
     }
 
     static String getLastMoveString() {
-        return getMoveString(Notation.notationString.size() - 1);
+        return getMoveString(Notation.notationStrings.size() - 1);
     }
 
     static String getMoveString(int iMove) {
-        String str = Notation.notationString.get(iMove);
+        String str = Notation.notationStrings.get(iMove);
         str = str.replaceAll("\\.", ". ");
 
-        String substr = str.substring(0, 1);
-        if (!substr.equals("<")) {
-            if (Notation.notationString.size() > 1) {
-                String prev = Notation.notationString.get(iMove - 1);
-                prev = prev.replaceAll("</font>.*", "</font> ... ");
-                str = prev + str;
+        if (str.length() > 0) {
+            String substr = str.substring(0, 1);
+            if (!substr.equals("<")) {
+                if (Notation.notationStrings.size() > 1) {
+                    String prev = Notation.notationStrings.get(iMove - 1);
+                    prev = prev.replaceAll("</font>.*", "</font> ... ");
+                    str = prev + str;
+                }
             }
         }
         str = "<html>" + str + "</html>";
@@ -242,14 +242,12 @@ public class ChessBoard implements ActionListener {
     }
 
     static void getPreviousState() {
-        int gotoState = ((state.moveNumber - 1) * 2) - 1;
-        if (state.turnOf == BLACK) gotoState++;
+        int gotoState = state.nMoves - 1;
         if (gotoState >= 0) restoreState(pastMoves.get(gotoState), gotoState);
     }
 
     static void getNextState() {
-        int gotoState = ((state.moveNumber - 1) * 2) + 1;
-        if (state.turnOf == BLACK) gotoState++;
+        int gotoState = state.nMoves + 1;
         if (gotoState < pastMoves.size()) restoreState(pastMoves.get(gotoState), gotoState);
     }
 
@@ -269,7 +267,7 @@ public class ChessBoard implements ActionListener {
         fillTilesFromBoard();
         if (gotoState < 0) Chess.btnThis.setText(getLastMoveString());
         else if (gotoState == 0) Chess.btnThis.setText("");
-        else Chess.btnThis.setText(getMoveString(gotoState - 1));
+        else Chess.btnThis.setText(getMoveString(gotoState));
     }
 
     //moving piece
