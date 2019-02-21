@@ -178,14 +178,9 @@ public class ChessBoard implements ActionListener {
 
                 State _state = new State(state);
                 _state.update(movingPiece, aLine, _l, aRow);
-                System.out.println(state.enPassantPossible + " " + _state.enPassantPossible);
 
                 //if this list is empty: check mate or remis
                 ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, _state, true);
-                if (moveList.size() > 0) {
-//                    System.out.println("move list 0 item  "+moveList.get(0).setup[0][0]);
-                    System.out.println(moveList.get(0));
-                }
 
                 if (moveList.size() == 0) {
                     if (state.check) mate = true;
@@ -195,7 +190,9 @@ public class ChessBoard implements ActionListener {
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6Stalemate! All black's
 
-                Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
+                //Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
+                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), state.moveNumber, aLine, aRow, _l, _r,
+                        movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state, mate, remis);
 
                 //update state
                 state = _state;
@@ -212,44 +209,67 @@ public class ChessBoard implements ActionListener {
                     pastMoves.subList(nmoves, pastMoves.size()).clear();
                 }
 
-                System.out.println("S " + pastMoves.size() + " " + state.moveNumber + " " + nmoves);
-
-
-                if (state.moveNumber > 4) restoreState(pastMoves.get(1));
-                //TODO: once a new move is done => delete history, including notation on the bottom
-
-
                 //tiles[aLine][aRow].setBorderInactive();
                 setAllBordersInactive();
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
+                Chess.btnThis.setText(getLastMoveString());
 
             }
         }
 
     }
 
-    static void getPreviousState() {
-        int toMove = ((state.moveNumber - 1) * 2) - 1;
-        if (state.turnOf == BLACK) toMove++;
+    static String getLastMoveString() {
+        return getMoveString(Notation.notationString.size() - 1);
+    }
 
-        System.out.println("M: " + toMove + " " + pastMoves.size());
-        if (toMove >= 0) restoreState(pastMoves.get(toMove));
+    static String getMoveString(int iMove) {
+        String str = Notation.notationString.get(iMove);
+        str = str.replaceAll("\\.", ". ");
+
+        String substr = str.substring(0, 1);
+        if (!substr.equals("<")) {
+            if (Notation.notationString.size() > 1) {
+                String prev = Notation.notationString.get(iMove - 1);
+                prev = prev.replaceAll("</font>.*", "</font> ... ");
+                str = prev + str;
+            }
+        }
+        str = "<html>" + str + "</html>";
+        return str;
+    }
+
+    static void getPreviousState() {
+        int gotoState = ((state.moveNumber - 1) * 2) - 1;
+        if (state.turnOf == BLACK) gotoState++;
+        if (gotoState >= 0) restoreState(pastMoves.get(gotoState), gotoState);
     }
 
     static void getNextState() {
-        int toMove = ((state.moveNumber - 1) * 2) + 1;
-        if (state.turnOf == BLACK) toMove++;
-
-        System.out.println("M: " + toMove + " " + pastMoves.size());
-        if (toMove < pastMoves.size()) restoreState(pastMoves.get(toMove));
+        int gotoState = ((state.moveNumber - 1) * 2) + 1;
+        if (state.turnOf == BLACK) gotoState++;
+        if (gotoState < pastMoves.size()) restoreState(pastMoves.get(gotoState), gotoState);
     }
 
-    static void restoreState(IBoardState boardstate) {
-        iBoard = new IBoard(boardstate);
-        state = new State(boardstate.state);
+    static void getBeginState() {
+        int gotoState = 0;
+        restoreState(pastMoves.get(gotoState), gotoState);
+    }
+
+    static void getLastState() {
+        int gotoState = pastMoves.size() - 1;
+        restoreState(pastMoves.get(gotoState), gotoState);
+    }
+
+    static void restoreState(IBoardState boardState, int gotoState) {
+        iBoard = new IBoard(boardState);
+        state = new State(boardState.state);
         fillTilesFromBoard();
+        if (gotoState < 0) Chess.btnThis.setText(getLastMoveString());
+        else if (gotoState == 0) Chess.btnThis.setText("");
+        else Chess.btnThis.setText(getMoveString(gotoState - 1));
     }
 
     //moving piece

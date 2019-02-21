@@ -6,8 +6,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-//import javax.swing.JTextField;
-//import javax.swing.JScrollBar;
 
 /**
  * MFChess: A ...
@@ -17,7 +15,7 @@ public class Chess extends JFrame {
     // Define constants for the various dimensions
     private static final int CANVAS_WIDTH = 640;
     private static final int CANVAS_HEIGHT = 640;
-    private static final int BUTTON_WIDTH = 160;
+    private static final int BUTTON_HEIGHT = 40;
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
@@ -27,6 +25,7 @@ public class Chess extends JFrame {
 
     static Notation notation;
     private static JScrollPane scrollPane;
+    static JLabel btnThis;
 
     // Constructor to set up the GUI components and event handlers
     private Chess() {
@@ -39,29 +38,51 @@ public class Chess extends JFrame {
 
         // Set up a panel for the buttons
         //	JPanel btnPanel = new JPanel(new FlowLayout());
-        //	JPanel btnPanel = new JPanel(new GridLayout(0,1,20,20));
-        JPanel btnPanel = new JPanel();
-        btnPanel.setPreferredSize(new Dimension(BUTTON_WIDTH, CANVAS_HEIGHT));
+        JPanel btnPanel = new JPanel(new GridLayout(1, 0, 0, 0));
+        //JPanel btnPanel = new JPanel();
+        btnPanel.setPreferredSize(new Dimension(CANVAS_WIDTH / 2, BUTTON_HEIGHT));
 
-        btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.PAGE_AXIS));
-        JButton btnLeft = new JButton("Move Left");
-        btnPanel.add(btnLeft);
-        btnLeft.addActionListener(new ActionListener() {
+        //btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.PAGE_AXIS));
+        btnPanel.add(new JLabel()); //empty cell
+        JButton btnBegin = new JButton("<<");
+        btnPanel.add(btnBegin);
+        btnBegin.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ChessBoard.getBeginState();
+                canvas.repaint();
+                requestFocus(); // change the focus to JFrame to receive KeyEvent
+            }
+        });
+        JButton btnPrev = new JButton("<");
+        btnPanel.add(btnPrev);
+        btnPrev.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ChessBoard.getPreviousState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
-        JButton btnRight = new JButton("Move Right");
-        btnPanel.add(btnRight);
-        btnRight.addActionListener(new ActionListener() {
+        btnThis = new JLabel("", SwingConstants.CENTER);
+        btnPanel.add(btnThis);
+        JButton btnNext = new JButton(">");
+        btnPanel.add(btnNext);
+        btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ChessBoard.getNextState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
+        JButton btnLast = new JButton(">>");
+        btnPanel.add(btnLast);
+        btnLast.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ChessBoard.getLastState();
+                canvas.repaint();
+                requestFocus(); // change the focus to JFrame to receive KeyEvent
+            }
+        });
+        btnPanel.add(new JLabel()); //empty cell
 
         // Set up the tiles plus coordinates at the edges
         canvas = new DrawCanvas();
@@ -102,8 +123,8 @@ public class Chess extends JFrame {
         // Add panels to the JFrame's content-pane
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
+        cp.add(btnPanel, BorderLayout.NORTH);
         cp.add(canvas, BorderLayout.CENTER);
-        cp.add(btnPanel, BorderLayout.EAST);
         //	cp.add(notationPanel, BorderLayout.SOUTH);
         cp.add(scrollPane, BorderLayout.SOUTH);
 
@@ -137,6 +158,7 @@ public class Chess extends JFrame {
     class DrawCanvas extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
+            //btnThis.setText(String.valueOf(ChessBoard.state.moveNumber));
             super.paintComponent(g);
             setBackground(CANVAS_BACKGROUND);
             //	  System.out.println("YY "+scrollPane.getSize().width);
