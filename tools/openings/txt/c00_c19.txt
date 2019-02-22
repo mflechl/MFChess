@@ -1,0 +1,238 @@
+C 1.e4 e6
+E French:
+2.e5
+E French: Steinitz
+2.f4
+E French: Labourdonnais
+2.b3
+E French: Spielmann
+2.g3
+E French: R&eacute;ti
+2.c4
+E French: Steiner
+2.c4 d5 3.cxd5 exd5 4.Qb3
+E French: Steiner (Orthoschnapp)
+2.Nc3
+E French: Queen's Knight
+2.Nc3 d5 3.f4
+E French: Queen's Knight(Pelik&aacute;n)
+2.Nf3
+E French: King's Knight
+2.Nf3 d5 3.e5 c5 4.b4
+E French: King's Knight(Wing Gambit)
+2.Nf3 d5 3.Nc3
+E French: Two Knights
+2.Bb5
+E French: Bird
+2.Qe2
+E French: Chigorin
+2.d3
+E French: Hanham
+2.d3 d5 3.Nd2 Nf6 4.Ngf3 Nc6 5.Be2
+E French: Hanham (Reversed Philidor)
+C 1.e4 e6 2.d4
+E French:
+2. ... c5
+E French: Franco-Benoni
+2. ... d6
+E French: Lengfellner
+2. ... a6
+E French: St. George
+2. ... a6 3.c4 b5 4.cxb5 axb5 5.Bxb5
+E French: St. George(St. George Gambit)
+2. ... d5 3.Be3
+E French: Alapin
+2. ... d5 3.Bd3
+E French: Schlechter
+2. ... d5 3.exd5
+E French: Exchange
+2. ... d5 3.exd5 exd5 4.Nc3 Bb4 5.Bd3 Ne7
+E French: Exchange(Canal)
+2. ... d5 3.exd5 exd5 4.Nc3 Nf6
+E French: Exchange(Svenonius)
+2. ... d5 3.exd5 exd5 4.Nc3 Nf6 5.Bg5 Nc6
+E French: Exchange(Bogolubov)
+C 1.e4 e6 2.d4 d5 3.e5
+E French: Advance
+3. ... Bd7
+E French: Advance (Bishop Swap)
+3. ... c5 4.dxc5
+E French: Advance (Steinitz)
+3. ... c5 4.Qg4
+E French: Advance (Nimzovich Attack)
+3. ... c5 4.Qg4 cxd4 5.Nf3
+E French: Advance (Nimzovich Gambit)
+3. ... c5 4.Nf3
+E French: Advance (Nimzovich)
+3. ... c5 4.c3 Qb6 5.Nf3 Bd7
+E French: Advance (Wade)
+3. ... c5 4.c3 Nc6 5.Nf3
+E French: Advance (Paulsen)
+3. ... c5 4.c3 Nc6 5.Nf3 Bd7
+E French: Advance (Euwe)
+3. ... c5 4.c3 Nc6 5.Nf3 Qb6 6.Bd3
+E French: Advance (Milner-Barry)
+C 1.e4 e6 2.d4 d5 3.Nd2
+E French: Tarrasch
+3. ... f5
+E French: Tarrasch(Haberditz)
+C 1.e4 e6 2.d4 d5 3.Nd2 Nc6
+E French: Tarrasch (Guimard)
+4.Ngf3 Nf6
+E French: Tarrasch(Byrne)
+C 1.e4 e6 2.d4 d5 3.Nd2 Nf6
+E French: Closed Tarrasch
+4.e5 Nfd7 5.f4
+E French: Closed Tarrasch(Pawn Center)
+4.e5 Nfd7 5.f4 c5 6.c3 Nc6 7.Ndf3 cxd4 8.cxd4 Nb6
+E French: Closed Tarrasch(Leningrad)
+4.e5 Nfd7 5.Bd3 c5 6.c3 b6
+E French: Closed Tarrasch(Botvinnik)
+C 1.e4 e6 2.d4 d5 3.Nd2 Nf6 4.e5 Nfd7 5.Bd3 c5 6.c3 Nc6 7.Ne2 cxd4
+E French: Closed Tarrasch
+8.cxd4 Nb6
+E French: Closed Tarrasch(Russian)
+C 1.e4 e6 2.d4 d5 3.Nd2 c5
+E French: Open Tarrasch
+4.exd5 Nf6
+E French: Open Tarrasch(Shaposhnikov)
+4.exd5 Qxd5 5.Ngf3 cxd4 6.Bc4 Qd8
+E French: Open Tarrasch(Eliskases)
+C 1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5
+E French: Open Tarrasch (Exchange)
+C 1.e4 e6 2.d4 d5 3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nc6
+E French: Open Tarrasch (Exchange)
+C 1.e4 e6 2.d4 d5 3.Nc3
+E French: Paulsen
+3. ... c5
+E French: Paulsen (Marshall)
+3. ... dxe4
+E French: Rubinstein
+3. ... dxe4 4.Nxe4 Qd5
+E French: Rubinstein(Becker)
+3. ... dxe4 4.Nxe4 Bd7 5.Nf3 Bc6
+E French: Rubinstein(Fort Knox)
+3. ... dxe4 4.Nxe4 Bd7 5.Nf3 Ngf6
+E French: Rubinstein(Capablanca)
+C 1.e4 e6 2.d4 d5 3.Nc3 Nf6
+E French: Paulsen
+4.Be3
+E French: Paulsen (Henneberger)
+4.exd5
+E French: Paulsen (Svenonius)
+4.Bd3
+E French: Paulsen (Swiss)
+4.Bg5 dxe4
+E French: Paulsen (Burn)
+4.e5
+E French: Steinitz
+4.e5 Nfd7 5.Qg4
+E French: Steinitz(Gledhill)
+4.e5 Nfd7 5.f4 c5 6.dxc5 Bxc5 7.Qg4
+E French: Steinitz(Bradford)
+4.e5 Nfd7 5.f4 c5 6.dxc5 Nc6 7.a3 Bxc5 8.Qg4 0-0 9.Nf3 f6
+E French: Steinitz(Brodsky-Jones)
+4.e5 Nfd7 5.f4 c5 6.Nf3 Nc6 7.Be3
+E French: Steinitz(Boleslavsky)
+C 1.e4 e6 2.d4 d5 3.Nc3 Nf6 4.Bg5 Bb4
+E French: MacCutcheon
+5.exd5 Qxd5 6.Bxf6 gxf6 7.Qd2 Qa5
+E French: MacCutcheon(Bogolubov)
+5.e5
+E French: MacCutcheon(Advance)
+5.e5 h6 6.exf6
+E French: MacCutcheon(Chigorin)
+5.e5 h6 6.exf6 hxg5 7.fxg7 Rg8 8.h4 gxh4 9.Qg4
+E French: MacCutcheon(Grigoriev)
+5.e5 h6 6.Bc1
+E French: MacCutcheon(Olland)
+5.e5 h6 6.Bh4
+E French: MacCutcheon(Bernstein)
+5.e5 h6 6.Be3
+E French: MacCutcheon(Janowski)
+5.e5 h6 6.Bd2
+E French: MacCutcheon(Lasker)
+5.e5 h6 6.Bd2 Nfd7
+E French: MacCutcheon(Tartakower)
+5.e5 h6 6.Bd2 Bxc3 7.bxc3 Ne4 8.Qg4 Kf8 9.Bc1
+E French: MacCutcheon(Duras)
+C 1.e4 e6 2.d4 d5 3.Nc3 Nf6 4.Bg5 Be7
+E French: Classical
+5.Bxf6
+E French: Classical(Anderssen)
+5.Bxf6 Bxf6 6.e5 Be7 7.Qg4
+E French: Classical(Richter)
+5.e5 Ng8
+E French: Classical(Vistaneskis)
+5.e5 Ng8 6.Be3 b6
+E French: Classical(Frankfurt)
+5.e5 Ne4
+E French: Classical(Tartakower)
+5.e5 Nfd7 6.h4
+E French: Albin
+5.e5 Nfd7 6.h4 f6
+E French: Albin (Teichmann)
+5.e5 Nfd7 6.h4 c5
+E French: Albin (Breyer)
+5.e5 Nfd7 6.h4 0-0
+E French: Albin (Spielmann)
+5.e5 Nfd7 6.h4 a6
+E French: Albin (Mar&oacute;czy)
+C 1.e4 e6 2.d4 d5 3.Nc3 Nf6 4.Bg5 Be7 5.e5 Nfd7 6.Bxe7
+E French: Classical
+6. ... Qxe7 7.Qd2
+E French: Classical(Rubinstein)
+6. ... Qxe7 7.Qd2 0-0 8.f4 c5 9.Nf3 10.0-0-0 c4
+E French: Classical(St&aring;hlberg)
+6. ... Qxe7 7.Qg4
+E French: Classical(Pollock)
+6. ... Qxe7 7.Bd3
+E French: Classical(Tarrasch)
+6. ... Qxe7 7.Nb5
+E French: Classical(Alapin)
+6. ... Qxe7 7.f4
+E French: Classical(Steinitz)
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4
+E French: Winawer
+4.Bd2
+E French: Winawer (Fingerslip)
+4.Bd3 c5 5.exd5 Qxd5 6.Bd2
+E French: Winawer (Kondratiev)
+4.Nge2
+E French: Winawer (Mar&oacute;czy)
+4.Nge2 dxe4 5.a3 Be7 6.Nxe4 Nf6 7.N2g3 0-0 8.Be2 Nc6
+E French: Winawer (Alatortsev)
+4.Nge2 dxe4 5.a3 Be7 6.Nxe4 Nc6 7.g4
+E French: Winawer (Alekhine)
+4.Nge2 dxe4 5.a3 Bxc3+
+E French: Winawer (Alekhine Gambit)
+4.Nge2 dxe4 5.a3 Bxc3+ 6.Nxc3 Nc6
+E French: Winawer (Kan)
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5
+E French: Advance Winawer
+4. ... Qd7
+E French: Advance Winawer(Petrosian)
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5 c5
+E French: Advance Winawer
+5.Qg4
+E French: Advance Winawer(Russian)
+5.Bd2
+E French: Advance Winawer(Bogolubov)
+5.a3 Ba5 6.b4 cxd4
+E French: Advance Winawer(Armenian)
+5.a3 cxd4 6.axb4 dxc3 7.Nf3
+E French: Advance Winawer(Rauzer)
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5 c5 5.a3 Bxc3+ 6.bxc3
+E French: Advance Winawer
+6. ... Qc7
+E French: Advance Winawer(Classical)
+6. ... Ne7 7.Qg4
+E French: Advance Winawer(Poisoned Pawn)
+6. ... Ne7 7.Qg4 Qc7 8.Qxg7 Rg8 9.Qxh7 cxd4 10.Kd1
+E French: Advance Winawer(Euwe)
+6. ... Ne7 7.Qg4 Qc7 8.Qxg7 Rg8 9.Qxh7 cxd4 10.Ne2
+E French: Advance Winawer(Konstantinopolsky)
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5 c5 5.a3 Bxc3+ 6.bxc3 Ne7 7.Nf3
+E French: Advance Winawer
+C 1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5
+E French: Advance Winawer(Smyslov)

@@ -1,0 +1,23 @@
+
+C 1.d4 Nf6 2.c4 e6 3.Nf3
+E Irregular Indian:
+3. ... a6
+E Irregular Indian: Dzindzikhashvili
+3. ... c5
+E Irregular Indian: Blumenfeld
+3. ... c5 4.d4 b5
+E Irregular Indian: Blumenfeld Gambit
+3. ... c5 4.d4 b5 5.e4
+E Irregular Indian: Blumenfeld Gambit (Rubinstein)
+3. ... c5 4.d4 b5 5.Bg5
+E Irregular Indian: Blumenfeld Gambit (Dus Chotmirsky)
+3. ... c5 4.d4 b5 5.Bg5 exd5 6.cxd5 h6
+E Irregular Indian: Blumenfeld Gambit (Spielmann)
+3. ... c5 4.d4 b5 5.dxe6 fxe6 6.cxb5 d5
+E Irregular Indian: Blumenfeld Gambit (Accepted)
+3. ... Ne4
+E Irregular Indian: D&ouml;ry
+3. ... d6
+E Irregular Indian: Small Center
+
+&nbsp;

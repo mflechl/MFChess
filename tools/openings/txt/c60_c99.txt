@@ -1,0 +1,410 @@
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5
+E Spanish:
+3. ... Bb4
+E Spanish: Alapin
+3. ... Qf6
+E Spanish: Frankfurt
+3. ... Nge7
+E Spanish: Cozio
+3. ... Nge7 4.Nc3 g6
+E Spanish: Cozio (Paulsen)
+3. ... g5
+E Spanish: Brentano
+3. ... f6
+E Spanish: N&uuml;rnberg
+3. ... Be7
+E Spanish: Lucena
+3. ... Na5
+E Spanish: Pollock
+3. ... Qe7
+E Spanish: Vinogradov
+3. ... g6
+E Spanish: Barnes
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nd4
+E Spanish: Bird
+4.Nxd4 exd4 5.d3 c6 6.Bc4 Nf6 7.Bg5
+E Spanish: Bird (Berger)
+4.Nxd4 exd4 5.0-0 Ne7
+E Spanish: Bird (Paulsen)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 d6
+E Spanish: Steinitz
+4.d4 Bd7 5.c4
+E Spanish: Steinitz(Semi-Duras)
+4.d4 Bd7 5.Nc3 Nf6 6.Bxc6
+E Spanish: Steinitz(Nimzovich)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 f5
+E Spanish: Schliemann
+4.d4
+E Spanish: Schliemann(Sch&ouml;nemann)
+4.Nc3
+E Spanish: Schliemann(Berger)
+4.Nc3 fxe4 5.Nxe4 Nf6
+E Spanish: Schliemann(Tartakower)
+4.Nc3 fxe4 5.Nxe4 d5 6.Nxe5 dxe5 7.Nxc6 Qg5
+E Spanish: Schliemann(Classical)
+4.Nc3 fxe4 5.Nxe4 d5 6.Nxe5 dxe5 7.Nxc6 Qd5
+E Spanish: Schliemann(M&ouml;hring)
+4.Nc3 Nf6 5.exf5 e4 6.Nh4
+E Spanish: Schliemann(Lasker)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 Bc5
+E Spanish: Classical
+4.0-0 Nd4 5.b4
+E Spanish: Classical(Zaitsev)
+4.c3 f5
+E Spanish: Classical(Cordel)
+4.c3 d5
+E Spanish: Classical(Konikowsky-Hardy)
+4.c3 Bb6
+E Spanish: Classical(Charousek)
+4.c3 Qe7
+E Spanish: Classical(Boden)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6
+E Spanish: Berlin
+4.d4 exd4 5.0-0
+E Spanish: Berlin (Nyholm)
+4.d3 Ne7
+E Spanish: Berlin (Mortimer)
+4.d3 Ne7 5.Nxe5 c6
+E Spanish: Berlin (Mortimer Trap)
+4.d3 Bc5 5.Be3
+E Spanish: Berlin (Kaufmann)
+4.d3 d6 5.Bxc6+
+E Spanish: Berlin (Anderssen)
+4.d3 d6 5.c4
+E Spanish: Berlin (Duras)
+4.0-0 Bc5
+E Spanish: Berlin (Beverwijk)
+4.0-0 Bc5 5.c3 0-0 6.d4 Bb6
+E Spanish: Berlin (Benelux)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.0-0 d6
+E Spanish: Closed Berlin
+5.d4 Nd7
+E Spanish: Closed Berlin(Chigorin)
+5.d4 Bd7 6.Nc3 exd4
+E Spanish: Closed Berlin(Wolf)
+5.d4 Bd7 6.Nc3 Be7
+E Spanish: Closed Berlin(Hedgehog)
+5.d4 Bd7 6.Nc3 Be7 7.Bg5
+E Spanish: Closed Berlin(Bernstein)
+5.d4 Bd7 6.Nc3 Be7 7.Re1 0-0
+E Spanish: Closed Berlin(Tarrasch Trap)
+5.d4 Bd7 6.Nc3 Be7 7.Bxc6
+E Spanish: Closed Berlin(Showalter)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.0-0 Nxe4
+E Spanish: Open Berlin
+5.d4 a6
+E Spanish: Open Berlin(Rosenthal)
+5.d4 Be7 6.dxe5
+E Spanish: Open Berlin(Minckwitz)
+5.d4 Be7 6.Qe2 d5
+E Spanish: Open Berlin(Trifunovic)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nf5
+E Spanish: Open Berlin(Cordel)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.b3
+E Spanish: Open Berlin(Fianchetto)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.Nd4
+E Spanish: Open Berlin(Winawer)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.c4
+E Spanish: Open Berlin(Zukertort)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.Nc3 0-0 10.Re1
+E Spanish: Open Berlin(Pillsbury)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.Nc3 0-0 10.Re1 Re8 11.Qc4
+E Spanish: Open Berlin(Alapin)
+5.d4 Be7 6.Qe2 Nd6 7.Bxc6 bxc6 8.dxe5 Nb7 9.Nc3 0-0 10.Re1 Nc5 11.Nd4 Ne6 12.Be3 Nxd4 13.Bxd4 c5
+E Spanish: Open Berlin(Rio de Janeiro)
+5.d4 Nd6 6.dxe5
+E Spanish: Open Berlin(l'Hermet)
+5.d4 Nd6 6.Ba4
+E Spanish: Open Berlin(Showalter)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6
+E Spanish: Morphy
+4.Bxc6
+E Spanish: Exchange
+4.Bxc6 bxc6 5.Nc3
+E Spanish: Exchange(Keres)
+4.Bxc6 dxc6 5.Nc3
+E Spanish: Exchange(Keres)
+4.Bxc6 dxc6 5.Nc3 f6 6.d3
+E Spanish: Exchange(Romanovsky)
+4.Bxc6 dxc6 5.d4 exd4 6.Qxd4 Qxd4
+E Spanish: Exchange(Alekhine)
+4.Bxc6 dxc6 5.d4 Bg4
+E Spanish: Exchange(Alapin)
+4.Bxc6 dxc6 5.0-0 Bg4 6.h3 h5
+E Spanish: Exchange(Alapin Gambit)
+4.Bxc6 dxc6 5.0-0 Qd6
+E Spanish: Exchange(Bronstein)
+4.Bxc6 dxc6 5.0-0 Bd6
+E Spanish: Exchange(Classical)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.0-0 f6
+E Spanish: Exchange (Gligoric)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6
+E Spanish: Morphy
+4.Ba4 Nge7
+E Spanish: Morphy (Cozio)
+4.Ba4 Bc5
+E Spanish: Morphy (Classical)
+4.Ba4 f5
+E Spanish: Morphy (Schliemann)
+4.Ba4 b5
+E Spanish: Morphy (Caro)
+4.Ba4 b5 5.Bb3 Na5
+E Spanish: Morphy (Norwegian)
+4.Ba4 b5 5.Bb3 Bc5
+E Spanish: Morphy (Graz)
+4.Ba4 g6
+E Spanish: Morphy (Barnes)
+4.Ba4 Bb4
+E Spanish: Morphy (Alapin)
+4.Ba4 Nd4
+E Spanish: Morphy (Bird)
+4.Ba4 g5
+E Spanish: Morphy (Brentano)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6
+E Spanish: Modern Steinitz
+5.Nc3
+E Spanish: Modern Steinitz(Three Knights)
+5.d4 b5 6.Bb3 exd4 7.Nxd4 Nxd4 8.Qxd4
+E Spanish: Modern Steinitz(Noah's Ark Trap)
+5.c4
+E Spanish: Modern Steinitz(Keres)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.0-0
+E Spanish: Modern Steinitz
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.Bxc6+
+E Spanish: Modern Steinitz
+5. ... bxc6 6.d4
+E Spanish: Modern Steinitz(Richter)
+5. ... bxc6 6.d4 f6
+E Spanish: Modern Steinitz(Alapin)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.c3
+E Spanish: Modern Steinitz
+5. ... f5
+E Spanish: Modern Steinitz(Siesta)
+5. ... f5 6.exf5 Bxf5 7.0-0
+E Spanish: Modern Steinitz(Kopayev)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.c3 Bd7
+E Spanish: Modern Steinitz
+6.d4 Nge7
+E Spanish: Modern Steinitz(Rubinstein)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.c3 Bd7 6.d4 g6
+E Spanish: Modern Steinitz (Bronstein)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6
+E Spanish: Morphy
+5.Bxc6
+E Spanish: Morphy (Treybal)
+5.Nc3
+E Spanish: Morphy (Tarrasch)
+5.Nc3 Bc5 6.Nxe5 Nxe5 7.d4 Bd6 8.0-0
+E Spanish: Morphy (Berger)
+5.d3
+E Spanish: Morphy (Anderssen)
+5.d3 d6 6.c4
+E Spanish: Morphy (Duras)
+5.d4
+E Spanish: Morphy (Mackenzie)
+5.Qe2
+E Spanish: Morphy (Wormald)
+5.Qe2 b5 6.Bb3 Be7 7.c3 d6 8.d4 Bg4
+E Spanish: Morphy (Gr&uuml;nfeld)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0
+E Spanish: Morphy
+5. ... Bc5
+E Spanish: Morphy (M&ouml;ller)
+5. ... b5
+E Spanish: Archangelsk
+5. ... b5 6.Bb3 Bb7
+E Spanish: Archangelsk(Planinc)
+5. ... b5 6.Bb3 Be7 7.a4
+E Spanish: Archangelsk(Wing Attack)
+5. ... b5 6.Bb3 d6 7.Ng5 d5 8.exd5 Nd4 9.Re1 Bc5 10.Rxe5+ Kf8
+E Spanish: Archangelsk(Rabinovich)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 d6
+E Spanish: Russian
+6.Bxc6+ bxc6 7.d4 Bg4
+E Spanish: Russian(Lipnitsky)
+6.Bxc6+ bxc6 7.d4 Nxe4
+E Spanish: Russian(Rubinstein)
+6.Bxc6+ bxc6 7.d4 Nxe4 8.Re1 f5 9.dxe5 d5 10.Nc3
+E Spanish: Russian(Boleslavsky)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Nxe4
+E Spanish: Open
+6.Qe2
+E Spanish: Open (Tartakower)
+6.Nc3
+E Spanish: Open (Knorre)
+6.d4 exd4
+E Spanish: Open (Riga)
+6.d4 exd4 7.Re1 d5 8.Bg5
+E Spanish: Open (Riga-Berger)
+6.d4 b5 7.d5
+E Spanish: Open (Richter)
+6.d4 b5 7.Nxe5
+E Spanish: Open (Friess)
+6.d4 b5 7.Bb3 d5 8.a4 Nxd4
+E Spanish: Open (Schlechter)
+6.d4 b5 7.Bb3 d5 8.a4 Nxd4 9.Nxd4 exd4 10.Nc3
+E Spanish: Open (Schlechter-Berger)
+6.d4 b5 7.Bb3 d5 8.c4
+E Spanish: Open (Harksen)
+6.d4 b5 7.Bb3 d5 8.dxe5 Ne7
+E Spanish: Open (Zukertort)
+6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.Nbd2
+E Spanish: Open (Bernstein)
+6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.Nbd2 Nc5 10.c3
+E Spanish: Open (Karpov)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.Qe2
+E Spanish: Open (Howell)
+9. ... Be7 10.c4
+E Spanish: Open (Adam)
+9. ... Be7 10.Rd1 0-0 11.c4 bxc4 12.Bxc4 Qd7
+E Spanish: Open (Ekstr&ouml;m)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3
+E Spanish: Open
+9. ... Nc5
+E Spanish: Open (Berlin)
+9. ... Bc5
+E Spanish: Open (Italian)
+9. ... Bc5 10.Qd3
+E Spanish: Open (Motzko)
+9. ... Bc5 10.Qd3 Ne7
+E Spanish: Open (Nenarokov)
+9. ... Bc5 10.Nbd2
+E Spanish: Open (St. Petersburg)
+9. ... Bc5 10.Nbd2 0-0 11.Bc2 Nxf2
+E Spanish: Open (Dilworth)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7
+E Spanish: Open (Classical)
+10.a4 b4 11.Nd4
+E Spanish: Open (Alekhine)
+10.a4 b4 11.Nd4 Qd7 12.Nxe6 fxe6 13.Rxe4
+E Spanish: Open (Tarrasch Trap)
+10.Re1 0-0 11.Nd4 Nxe5
+E Spanish: Open (Breslau)
+10.Nbd2
+E Spanish: Open (St. Petersburg)
+10.Nbd2 0-0 11.Qe2
+E Spanish: Open (Malkin)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7
+E Spanish: Closed
+6.Nc3
+E Spanish: Closed (Knight Attack)
+6.d4
+E Spanish: Closed (Center Attack)
+6.d4 exd4 7.e5 Ne4 8.c3
+E Spanish: Closed (Basque)
+6.d4 b5 7.Bb3 d6 8.c3 Bg4 9.h3 Bxf3 10.Qxf3 exd4
+E Spanish: Closed (Bronstein-Nezmetdinov)
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Bxc6
+E Spanish: Closed (Steenwijker)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Qe2
+E Spanish: Closed (Worrall)
+6. ... b5 7.Bb3 0-0
+E Spanish: Closed (Sharp Worrall)
+6. ... b5 7.Bb3 d6
+E Spanish: Closed (Solid Worrall)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1
+E Spanish: Closed
+6. ... d6
+E Spanish: Closed (Averbakh)
+6. ... d6 7.c3 Bd7 8.d4 0-0 9.Nbd2 Be8
+E Spanish: Closed (Kecskem&eacute;t)
+E &nbsp;
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3
+E Spanish: Closed
+7. ... Bb7
+E Spanish: Closed (Trajkovic)
+7. ... 0-0 8.a4
+E Spanish: Closed (Anti-Marshall)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 0-0 8.c3
+E Spanish: Closed
+8. ... d5
+E Spanish: Closed (Marshall)
+8. ... d5 9.exd5 e4
+E Spanish: Closed (Steiner)
+8. ... d5 9.exd5 Nxd5 10.Nxe5 Nxe5 11.Rxe5 c6 12.Bxd5
+E Spanish: Closed (Kevitz)
+8. ... d5 9.exd5 Nxd5 10.Nxe5 Nxe5 11.Rxe5 c6 12.d4 Bd6 13.Re1 Qh4 14.g3 Qh3 15.Be3 Bg4 16.Qd3 Rae8 17.Nd2 Re6 18.a4 Qh5
+E Spanish: Closed (Spassky)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6
+E Spanish: Closed
+8.d4 Nxd4 9.Nxd4 exd4 10.Qxd4 c5
+E Spanish: Closed (Noah's Ark Trap)
+8.c3 Na5 9.Bc2 c5
+E Spanish: Closed (Chigorin)
+8.c3 Na5 9.Bc2 c5 10.d4 Qc7 11.a4
+E Spanish: Closed (Balla)
+8.c3 Na5 9.Bc2 c5 10.d4 Qc7 11.h3 Nc6 12.d5 Nb8 13.Nbd2 g5
+E Spanish: Closed (Leonhardt)
+8.c3 Na5 9.Bc2 c5 10.d4 Qc7 11.h3 Nc6 12.d5 Nd8 13.Nbd2 g5
+E Spanish: Closed (Leonhardt)
+8.c3 0-0 9.a3
+E Spanish: Closed (Suetin)
+8.c3 0-0 9.d3
+E Spanish: Closed (Pilnik)
+8.c3 0-0 9.Bc2
+E Spanish: Closed (Lutikov)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.d4
+E Spanish: Closed (Yates)
+9. ... Bg4
+E Spanish: Closed (Bogolubov)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3
+E Spanish: Closed
+9. ... Qd7
+E Spanish: Closed (Zaitsev)
+9. ... a5
+E Spanish: Closed (Keres)
+9. ... Be6
+E Spanish: Closed (Kholmov)
+9. ... Nd7
+E Spanish: Closed (Ragozin)
+9. ... Bb7
+E Spanish: Closed (Lenzerheide)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 h6
+E Spanish: Closed (Smyslov)
+10.d4 Re8 11.Nbd2 Bf8 12.a3 h6
+E Spanish: Closed (Smyslov-Breyer)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Nb8
+E Spanish: Breyer
+10.d3
+E Spanish: Breyer (Quiet)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Nb8 10.d4
+E Spanish: Breyer
+10. ... Nbd7
+E Spanish: Breyer (Borisenko)
+10. ... Nbd7 11.Nh4
+E Spanish: Breyer (Simagin)
+10. ... Nbd7 11.Nbd2 Bb7 12.Bc2 c5
+E Spanish: Breyer (Gligoric)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Na5
+E Spanish: Berger
+10.Bc2 c6 11.d4 Qc7
+E Spanish: Berger (Rossolimo)
+10.Bc2 c5 11.d4 Nd7
+E Spanish: Berger (Keres)
+10.Bc2 c5 11.d4 Bb7 12.Nbd2 cxd4 13.cxd4 Nc6
+E Spanish: Berger (Russian)
+10.Bc2 c5 11.d4 Nc6
+E Spanish: Berger (Borisenko)
+E &nbsp;
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Na5 10.Bc2
+E Spanish: Chigorin
+12.Nbd2 Bd7 13.Nf1 Rfe8 14.Ne3 g6
+E Spanish: Chigorin(Yugoslav)
+E &nbsp;
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Na5 10.Bc2
+E Spanish: Chigorin (Rauzer)
+E 
+C 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.0-0 Be7 6.Re1 b5 7.Bb3 d6 8.c3 0-0 9.h3 Na5 10.Bc2
+E Spanish: Chigorin
+13.cxd4
+E Spanish: Chigorin(Panov)

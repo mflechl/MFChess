@@ -1,0 +1,11 @@
+C 1.d4 Nf6 2.c4 c5
+E Benoni:
+3.d5 Ne4
+E Benoni: Vulture
+3.d5 d6
+E Benoni: Hrom&aacute;dka
+3.d5 g6
+E Benoni: Fianchetto
+3.d5 e5
+E Benoni: Czech
+3.d5 e5 4.Nc3 d6 5.e4 g6

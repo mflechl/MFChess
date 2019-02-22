@@ -1,0 +1,1035 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win95; U) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<style>
+A {font-weight:bold; text-decoration: none; color: #0000FF;}
+A:link {text-decoration: none; color: #0000FF;}
+A:visited {text-decoration: none; color: #0000FF;}
+A:active {text-decoration: none; color: #0000FF;}
+A:hover {text-decoration: none; color: #FF0000;}
+</style><table BORDER=0 WIDTH="100%" >
+<tr>
+<td ALIGN=LEFT VALIGN=CENTER>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td><a href="/index.php"><img SRC="/ca_logo.gif" HSPACE=10 BORDER=0 height=53 width=264 alt="Chess Archaeology Home"></a></td><td><b>Chess
+is a scientific game and its literature ought to be placed on the basis
+of the strictest truthfulness, which is the foundation of all scientific
+<nobr>research.</b> &#151; <i>W.&nbsp;Steinitz</i></nobr></td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER=0 CELLPADDING=5 COLS=1 WIDTH="80%" >
+<tr>
+<td>
+<center><table BORDER=2 WIDTH="40%" >
+<tr>
+<td>
+<center><b><font size=+3>&nbsp;C00-C19&nbsp;</font></b></center>
+</td>
+</tr>
+</table></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<hr WIDTH="50%"></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C00</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>French:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.f4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Labourdonnais</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.b3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Spielmann</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> R&eacute;ti</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.c4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steiner</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.c4 d5 3.cxd5 exd5 4.Qb3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steiner (Orthoschnapp)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Queen's Knight</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 d5 3.f4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Queen's Knight
+(Pelik&aacute;n)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> King's Knight</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nf3 d5 3.e5 c5 4.b4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> King's Knight
+(Wing Gambit)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nf3 d5 3.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Two Knights</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Bb5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Bird</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Qe2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Chigorin</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.d3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Hanham</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.d3 d5 3.Nd2 Nf6 4.Ngf3 Nc6 5.Be2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Hanham (Reversed
+Philidor)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C01</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>French:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Franco-Benoni</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Lengfellner</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…a6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> St. George</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…a6 3.c4 b5 4.cxb5 axb5 5.Bxb5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> St. George
+(St. George Gambit)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.Be3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Alapin</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Schlechter</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.exd5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Exchange</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.exd5 exd5 4.Nc3 Bb4 5.Bd3 Ne7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Exchange
+(Canal)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.exd5 exd5 4.Nc3 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Exchange
+(Svenonius)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…d5 3.exd5 exd5 4.Nc3 Nf6 5.Bg5 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Exchange
+(Bogolubov)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C02</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.e5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Advance</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Bd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Bishop
+Swap)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.dxc5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Steinitz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Nimzovich
+Attack)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.Qg4 cxd4 5.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Nimzovich
+Gambit)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Nimzovich)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.c3 Qb6 5.Nf3 Bd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Wade)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.c3 Nc6 5.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Paulsen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.c3 Nc6 5.Nf3 Bd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Euwe)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.c3 Nc6 5.Nf3 Qb6 6.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance (Milner-Barry)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C03</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Tarrasch</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Tarrasch
+(Haberditz)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C04</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 Nc6</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Tarrasch (Guimard)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Ngf3 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Tarrasch
+(Byrne)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C05</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 Nf6</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Closed Tarrasch</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.f4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Closed Tarrasch
+(Pawn Center)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.f4 c5 6.c3 Nc6 7.Ndf3 cxd4 8.cxd4
+Nb6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Closed Tarrasch
+(Leningrad)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.Bd3 c5 6.c3 b6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Closed Tarrasch
+(Botvinnik)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C06</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 Nf6 4.e5 Nfd7 5.Bd3 c5 6.c3 Nc6 7.Ne2 cxd4</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Closed Tarrasch</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">8.cxd4 Nb6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Closed Tarrasch
+(Russian)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C07</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 c5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Open Tarrasch</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.exd5 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Open Tarrasch
+(Shaposhnikov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.exd5 Qxd5 5.Ngf3 cxd4 6.Bc4 Qd8</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Open Tarrasch
+(Eliskases)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C08</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 c5 4.exd5 exd5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Open Tarrasch (Exchange)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C09</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nd2 c5 4.exd5 exd5 5.Ngf3 Nc6</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Open Tarrasch (Exchange)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C10</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Paulsen</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Paulsen (Marshall)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…dxe4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Rubinstein</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…dxe4 4.Nxe4 Qd5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Rubinstein
+(Becker)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…dxe4 4.Nxe4 Bd7 5.Nf3 Bc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Rubinstein
+(Fort Knox)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…dxe4 4.Nxe4 Bd7 5.Nf3 Ngf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Rubinstein
+(Capablanca)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C11</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Nf6</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Paulsen</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Be3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Paulsen (Henneberger)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.exd5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Paulsen (Svenonius)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Paulsen (Swiss)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bg5 dxe4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Paulsen (Burn)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz
+(Gledhill)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.f4 c5 6.dxc5 Bxc5 7.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz
+(Bradford)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.f4 c5 6.dxc5 Nc6 7.a3 Bxc5 8.Qg4
+0-0 9.Nf3 f6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz
+(Brodsky-Jones)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.e5 Nfd7 5.f4 c5 6.Nf3 Nc6 7.Be3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Steinitz
+(Boleslavsky)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C12</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Nf6 4.Bg5 Bb4</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+MacCutcheon</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.exd5 Qxd5 6.Bxf6 gxf6 7.Qd2 Qa5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Bogolubov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Advance)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.exf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Chigorin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.exf6 hxg5 7.fxg7 Rg8 8.h4 gxh4 9.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Grigoriev)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Bc1</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Olland)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Bh4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Bernstein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Be3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Janowski)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Bd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Lasker)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Bd2 Nfd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Tartakower)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 h6 6.Bd2 Bxc3 7.bxc3 Ne4 8.Qg4 Kf8 9.Bc1</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> MacCutcheon
+(Duras)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C13</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Nf6 4.Bg5 Be7</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Classical</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.Bxf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Anderssen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.Bxf6 Bxf6 6.e5 Be7 7.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Richter)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Ng8</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Vistaneskis)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Ng8 6.Be3 b6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Frankfurt)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Ne4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Tartakower)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Nfd7 6.h4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Albin</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Nfd7 6.h4 f6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Albin (Teichmann)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Nfd7 6.h4 c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Albin (Breyer)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Nfd7 6.h4 0-0</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Albin (Spielmann)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.e5 Nfd7 6.h4 a6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Albin (Mar&oacute;czy)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C14</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Nf6 4.Bg5 Be7 5.e5 Nfd7 6.Bxe7</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Classical</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.Qd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Rubinstein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.Qd2 0-0 8.f4 c5 9.Nf3 10.0-0-0 c4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(St&aring;hlberg)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Pollock)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Tarrasch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.Nb5</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Alapin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qxe7 7.f4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Classical
+(Steinitz)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C15</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Bb4</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Winawer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Fingerslip)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd3 c5 5.exd5 Qxd5 6.Bd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Kondratiev)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nge2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Mar&oacute;czy)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nge2 dxe4 5.a3 Be7 6.Nxe4 Nf6 7.N2g3 0-0 8.Be2
+Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Alatortsev)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nge2 dxe4 5.a3 Be7 6.Nxe4 Nc6 7.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Alekhine)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nge2 dxe4 5.a3 Bxc3+</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Alekhine
+Gambit)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nge2 dxe4 5.a3 Bxc3+ 6.Nxc3 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Winawer (Kan)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C16</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Bb4 4.e5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Advance Winawer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…Qd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Petrosian)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C17</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Bb4 4.e5 c5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Advance Winawer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Russian)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.Bd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Bogolubov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.a3 Ba5 6.b4 cxd4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Armenian)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.a3 cxd4 6.axb4 dxc3 7.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Rauzer)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C18</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Bb4 4.e5 c5 5.a3 Bxc3+ 6.bxc3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Advance Winawer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Qc7</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Classical)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Ne7 7.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Poisoned Pawn)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Ne7 7.Qg4 Qc7 8.Qxg7 Rg8 9.Qxh7 cxd4 10.Kd1</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Euwe)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">6…Ne7 7.Qg4 Qc7 8.Qxg7 Rg8 9.Qxh7 cxd4 10.Ne2</font></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Konstantinopolsky)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C19</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5
+3.Nc3 Bb4 4.e5 c5 5.a3 Bxc3+ 6.bxc3 Ne7 7.Nf3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>French:</font></b>
+Advance Winawer</font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.e4 e6 2.d4 d5 3.Nc3 Bb4 4.e5
+c5 5.a3 Bxc3+ 6.bxc3 Ne7 7.a4</font></font></b></td>
+
+<td><font color="#000000"><b><font size=+1>French:</font></b> Advance Winawer
+(Smyslov)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table></center>
+<center>
+<hr WIDTH="100%"><b>
+[<a href="/archive/articles.shtml">Archive</a>] 
+[<a href="/excavations/excavations.php">Excavations</a>] 
+[<a href="/gallery/index.php">Gallery</a>] 
+[<a href="/journal/journal.shtml">Journal</a>] 
+[<a href="/library/library.shtml">Library</a>] 
+[<a href="/library/0000_links/links.shtml">Links</a>] 
+[<a href="/legend/legend.shtml">Legend</a>] 
+[<a href="/market/market.shtml">Market</a>] 
+</b>
+<br><font size=-2>&copy; 1999-2019 Jacques N. Pope. All Rights
+ Reserved.</font></center>
+
+</body>
+</html>

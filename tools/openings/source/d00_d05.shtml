@@ -1,0 +1,431 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win95; U) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<style>
+A {font-weight:bold; text-decoration: none; color: #0000FF;}
+A:link {text-decoration: none; color: #0000FF;}
+A:visited {text-decoration: none; color: #0000FF;}
+A:active {text-decoration: none; color: #0000FF;}
+A:hover {text-decoration: none; color: #FF0000;}
+</style><table BORDER=0 WIDTH="100%" >
+<tr>
+<td ALIGN=LEFT VALIGN=CENTER>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td><a href="/index.php"><img SRC="/ca_logo.gif" HSPACE=10 BORDER=0 height=53 width=264 alt="Chess Archaeology Home"></a></td><td><b>Chess
+is a scientific game and its literature ought to be placed on the basis
+of the strictest truthfulness, which is the foundation of all scientific
+<nobr>research.</b> &#151; <i>W.&nbsp;Steinitz</i></nobr></td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER=0 CELLPADDING=5 COLS=1 WIDTH="80%" >
+<tr>
+<td>
+<center><table BORDER=2 WIDTH="40%" >
+<tr>
+<td>
+<center><b><font size=+3>&nbsp;D00-D05&nbsp;</font></b></center>
+</td>
+</tr>
+</table></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<hr WIDTH="50%"></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D00</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>Queen's Pawn:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Bg5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Levitsky</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Qd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Amazon</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e3 ~ 3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Stonewall</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e3 c6 3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Stonewall
+(Zukertort)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e3 e6 3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Stonewall
+(Showalter)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e3 e6 3.Bd3 c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Stonewall
+(Gunsberg)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e3 Nf6 3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Stonewall
+(Pillsbury)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Bf4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Mason</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Bf4 c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Mason
+(Steinitz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e4 dxe4 3.Nc3 e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar
+(Lemberger)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.e4 dxe4 3.Nc3 f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar
+(Netherlands)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Chigorin</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 h5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Chigorin
+(Shropshire)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 b6 3.a4 Nd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Chigorin
+(Cologne)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Bg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Chigorin
+(Anti-Veresov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Lemberg)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 3.e4 Nxe4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(H&uuml;bsch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.Bg5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Popiel)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 Bf5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Vienna)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Qxf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Ryder)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Nxf3 Bg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Teichmann)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Nxf3 c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(O'Kelly)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Nxf3 e6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Euwe)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Nxf3 g6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Bogolubov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2.Nc3 Nf6 2.e4 dxe4 4.f3 exf3 5.Nxf3 g6 6.Bc4
+Bg7 7.0-0 0-0 8.Qe1</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Blackmar-Diemer
+(Studier)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D01</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5 2.Nc3 Nf6
+3.Bg5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b>
+Richter-Veresov</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Bf5 4.f3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Richter-Veresov
+(Richter)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Bf5 4.Bxf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Richter-Veresov
+(Veresov)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D02</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5 2.Nf3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b>
+Zukertort</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(Krause)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…Bg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(Anti-Torre)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(Chigorin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(Symmetrical)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…Nf6 3.Bf4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(London)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">2…Nf6 3.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Zukertort
+(Catalan)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D03</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5 2.Nf3 Nf6
+3.Bg5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b>
+Torre</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D04</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5 2.Nf3 Nf6
+3.e3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b>
+Closed</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Bf5 4.Bd3 e6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Closed
+(Alekhine)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…c5 4.c3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Closed
+(Semi-Colle)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>D05</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.d4 d5 2.Nf3 Nf6
+3.e3 e6</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b>
+Closed</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Closed
+(Zukertort)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd3 c5 5.b3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Closed
+(Rubinstein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bd3 c5 5.c3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Queen's Pawn:</font></b> Closed
+(Colle)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table></center>
+<center>
+<hr WIDTH="100%"><b>
+[<a href="/archive/articles.shtml">Archive</a>] 
+[<a href="/excavations/excavations.php">Excavations</a>] 
+[<a href="/gallery/index.php">Gallery</a>] 
+[<a href="/journal/journal.shtml">Journal</a>] 
+[<a href="/library/library.shtml">Library</a>] 
+[<a href="/library/0000_links/links.shtml">Links</a>] 
+[<a href="/legend/legend.shtml">Legend</a>] 
+[<a href="/market/market.shtml">Market</a>] 
+</b>
+<br><font size=-2>&copy; 1999-2019 Jacques N. Pope. All Rights
+ Reserved.</font></center>
+
+</body>
+</html>

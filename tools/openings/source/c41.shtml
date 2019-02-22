@@ -1,0 +1,309 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win95; U) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<style>
+A {font-weight:bold; text-decoration: none; color: #0000FF;}
+A:link {text-decoration: none; color: #0000FF;}
+A:visited {text-decoration: none; color: #0000FF;}
+A:active {text-decoration: none; color: #0000FF;}
+A:hover {text-decoration: none; color: #FF0000;}
+</style><table BORDER=0 WIDTH="100%" >
+<tr>
+<td ALIGN=LEFT VALIGN=CENTER>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td><a href="/index.php"><img SRC="/ca_logo.gif" HSPACE=10 BORDER=0 height=53 width=264 alt="Chess Archaeology Home"></a></td><td><b>Chess
+is a scientific game and its literature ought to be placed on the basis
+of the strictest truthfulness, which is the foundation of all scientific
+<nobr>research.</b> &#151; <i>W.&nbsp;Steinitz</i></nobr></td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER=0 CELLPADDING=5 COLS=1 WIDTH="80%" >
+<tr>
+<td>
+<center><table BORDER=2 WIDTH="40%" >
+<tr>
+<td>
+<center><b><font size=+3>&nbsp;C41&nbsp;</font></b></center>
+</td>
+</tr>
+</table></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<hr WIDTH="50%"></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.Nf3 d6</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>Philidor:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> L&oacute;pez</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 f5 4.d4 exd4 5.Ng5 Nh6 6.Nxh7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> L&oacute;pez
+(Jaenisch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Be6 4.c3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Steinitz</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Counter-Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 f5 4.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Counter-Gambit
+(Zukertort)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 f5 4.dxe5 fxe4 5.Ng5 d5 6.e6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Counter-Gambit
+(del Rio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 f5 4.dxe5 fxe4 5.Ng5 d5 6.e6 Bc5 7.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Counter-Gambit
+(Berger)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Schlechter)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.0-0</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Krause)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.0-0 Be7 6.dxe5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Steiner)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.Ng5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Kmoch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.Ng5 Nh6 6.f4 Be7 7.c3 0-0
+8.0-0 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Berger)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.c3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Delmar)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nd7 4.Bc4 c6 5.a4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Hanham
+(Nimzovich)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 exd4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Exchange</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 exd4 4.Qxd4 Bd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Exchange
+(Boden)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 exd4 4.Nxd4 d5 5.exd5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Exchange
+(Paulsen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 exd4 4.Nxd4 g6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Exchange
+(Larsen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Ng5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Locock)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Ng5 h6 5.Nxf7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Locock Gambit)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Bc4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Klein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 exd4 5.Nxd4 Be7 6.Be2 0-0 7.0-0
+c5 8.Nf3 Nc6 9.Bg5 Be6 10.Re1</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Berger)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 Nbd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Hanham)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 Nbd7 5.Bc4 h6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Jansen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 Nbd7 5.Bc4 Be7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Lion)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 Nbd7 5.Bc4 Be7 6.0-0 0-0 7.Qe2
+c6 8.a4 exd4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(Sozin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.Nc3 Nbd7 5.Bc4 Be7 6.Ng5 0-0 7.Bxf7+</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Jaenisch
+(L&auml;robok)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.dxe5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Nimzovich</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.dxe5 Nxe4 5.Qd5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Nimzovich
+(Rellstab)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Nf6 4.dxe5 Nxe4 5.Nbd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Nimzovich
+(Sokolsky)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Bg4 4.dxe5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Blackburne</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4 Bg4 4.dxe5 Nd7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Philidor:</font></b> Blackburne
+(Albin)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table></center>
+<center>
+<hr WIDTH="100%"><b>
+[<a href="/archive/articles.shtml">Archive</a>] 
+[<a href="/excavations/excavations.php">Excavations</a>] 
+[<a href="/gallery/index.php">Gallery</a>] 
+[<a href="/journal/journal.shtml">Journal</a>] 
+[<a href="/library/library.shtml">Library</a>] 
+[<a href="/library/0000_links/links.shtml">Links</a>] 
+[<a href="/legend/legend.shtml">Legend</a>] 
+[<a href="/market/market.shtml">Market</a>] 
+</b>
+<br><font size=-2>&copy; 1999-2019 Jacques N. Pope. All Rights
+ Reserved.</font></center>
+
+</body>
+</html>

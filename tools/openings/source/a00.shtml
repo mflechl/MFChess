@@ -1,0 +1,599 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.5 [en] (Win95; U) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<style>
+A {font-weight:bold; text-decoration: none; color: #0000FF;}
+A:link {text-decoration: none; color: #0000FF;}
+A:visited {text-decoration: none; color: #0000FF;}
+A:active {text-decoration: none; color: #0000FF;}
+A:hover {text-decoration: none; color: #FF0000;}
+</style><table BORDER=0 WIDTH="100%" >
+<tr>
+<td ALIGN=LEFT VALIGN=CENTER>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td><a href="/index.php"><img SRC="/ca_logo.gif" HSPACE=10 BORDER=0 height=53 width=264 alt="Chess Archaeology Home"></a></td><td><b>Chess
+is a scientific game and its literature ought to be placed on the basis
+of the strictest truthfulness, which is the foundation of all scientific
+<nobr>research.</b> &#151; <i>W.&nbsp;Steinitz</i></nobr></td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER=0 CELLPADDING=5 COLS=1 WIDTH="80%" >
+<tr>
+<td>
+<center><table BORDER=2 WIDTH="40%" >
+<tr>
+<td>
+<center><b><font size=+3>&nbsp;A00&nbsp;</font></b></center>
+</td>
+</tr>
+</table></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<hr WIDTH="50%"></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER WIDTH="100%" >
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.a3</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>Anderssen:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…g6 2.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Anderssen:</font></b> Spike</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.Na3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Durkin:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.d3 Bxa3 3.bxa3 d5 4.e3 c5 5.Rb1</font></td>
+
+<td><font color="#000000"><b><font size=+1>Durkin:</font></b> Celadon</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…g6 2.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Durkin:</font></b> Chenoboskian</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.a4</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Ware:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…b5 2.axb5 Bb7</font></td>
+
+<td><font color="#000000"><b><font size=+1>Ware:</font></b> Wing Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.h4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Ware:</font></b> Crab</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.a5 d5 3.e3 f5 4.a6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Ware:</font></b> Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.b4</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Sokolsky:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Birmingham</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Aasum</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Outflank</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.a3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Bugayev</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Bb2 c5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Wolferts</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Bb2 f6 3.e4 Bxb4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Tartakower</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Bb2 f6 3.e4 Bxb4 4.Bc4 Nc6 5.f4 Qe7 6.f5
+g6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Tartakower
+(Brinckmann)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…Nh6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> T&uuml;bingen</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…Nf6 2.Bb2 g6 3.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Sokolsky:</font></b> Spike</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.c3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Saragossa:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.Nc3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Dunst:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…c5 2.Rb1</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Twyble</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…c5 2.d4 cxd4 3.Qxd4 Nc6 4.Qh4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Novosibirsk</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Nimzovich</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.a3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Nimzovich
+(Battambang)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Nf3 Nc6 3.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Nimzovich
+(Napoleon)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.d4 exd4 3.Qxd4 Nc6 4.Qa4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Nimzovich
+(Scandinavian)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.e4 dxe4 3.d3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…f5 2.e4 fxe4 3.d3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Kluver</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…g6 2.h3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> Anti-Pirc</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…Nf6 2.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Dunst:</font></b> T&uuml;bingen</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.d3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Mieses:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…g6 2.g4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Mieses: </font></b>Spike</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Mieses: </font></b>Rat</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Nd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>Mieses: </font></b>Rat (Valencia)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Nc3 Nc6 3.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Mieses: </font></b>Venezolana</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.e3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>van't Kruijs:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.f3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Barnes:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Kf2</font></td>
+
+<td><font color="#000000"><b><font size=+1>Barnes:</font></b> Hammerschlag</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.g3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Benko:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…h5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Benko:</font></b> Lasker</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.Nf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Benko:</font></b> Alekhine</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.g4</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Grob:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Bg2 c6 3.g5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Spike</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Bg2 e5 3.c4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Hurst</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Bg2 Bxg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Bg2 Bxg4 3.c4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Gambit (Fritz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.Bg2 Bxg4 3.c4 d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Gambit (Romford)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Alessi</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…g5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Symmetrical</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.h3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Macho</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.h3 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Macho (London)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.h3 d5 3.Bg2 c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>Grob:</font></b> Macho (Keene)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.h3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Clemenz:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.a3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Clemenz: </font></b>Global</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…e5 2.a3 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Clemenz: </font></b>Global (Creepy
+Crawly)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.Nh3</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Amar:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.g3 e5 3.f4</font></td>
+
+<td><font color="#000000"><b><font size=+1>Amar: </font></b>Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.g3 e5 3.f4 Bxh3 4.Bxh3 exf4 5.0-0 fxg3
+6.hxg3</font></td>
+
+<td><font color="#000000"><b><font size=+1>Amar: </font></b>Gambit (Gent)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">1…d5 2.f3 e5 3.e4 f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>Amar: </font></b>Paris Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><font color="#000000"></font></td>
+
+<td><font color="#000000"></font></td>
+</tr>
+
+<tr>
+<td><b><font color="#000000"><font size=+1>1.h4</font></font></b></td>
+
+<td><b><font color="#000000"><font size=+1>Despr&egrave;s:</font></font></b></td>
+</tr>
+</table>
+<font color="#000000"></font></td>
+</tr>
+</table></center>
+<center>
+<hr WIDTH="100%"><b>
+[<a href="/archive/articles.shtml">Archive</a>] 
+[<a href="/excavations/excavations.php">Excavations</a>] 
+[<a href="/gallery/index.php">Gallery</a>] 
+[<a href="/journal/journal.shtml">Journal</a>] 
+[<a href="/library/library.shtml">Library</a>] 
+[<a href="/library/0000_links/links.shtml">Links</a>] 
+[<a href="/legend/legend.shtml">Legend</a>] 
+[<a href="/market/market.shtml">Market</a>] 
+</b>
+<br><font size=-2>&copy; 1999-2019 Jacques N. Pope. All Rights
+ Reserved.</font></center>
+
+</body>
+</html>

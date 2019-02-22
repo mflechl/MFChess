@@ -1,0 +1,887 @@
+<!doctype html public "-//w3c//dtd html 4.0 transitional//en">
+<html>
+<head>
+   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+   <meta name="GENERATOR" content="Mozilla/4.7 [en] (Win95; U) [Netscape]">
+</head>
+<body text="#000000" bgcolor="#FFFFFF" link="#0000EE" vlink="#551A8B" alink="#FF0000">
+<style>
+A {font-weight:bold; text-decoration: none; color: #0000FF;}
+A:link {text-decoration: none; color: #0000FF;}
+A:visited {text-decoration: none; color: #0000FF;}
+A:active {text-decoration: none; color: #0000FF;}
+A:hover {text-decoration: none; color: #FF0000;}
+</style><table BORDER=0 WIDTH="100%" >
+<tr>
+<td ALIGN=LEFT VALIGN=CENTER>
+<table BORDER=0 CELLSPACING=0 CELLPADDING=0 COLS=2 WIDTH="100%" >
+<tr>
+<td><a href="/index.php"><img SRC="/ca_logo.gif" HSPACE=10 BORDER=0 height=53 width=264 alt="Chess Archaeology Home"></a></td><td><b>Chess
+is a scientific game and its literature ought to be placed on the basis
+of the strictest truthfulness, which is the foundation of all scientific
+<nobr>research.</b> &#151; <i>W.&nbsp;Steinitz</i></nobr></td>
+ </tr>
+</table>
+</td>
+</tr>
+</table>
+<center>
+<hr WIDTH="100%"></center>
+
+<center><table BORDER=0 CELLPADDING=5 COLS=1 WIDTH="80%" >
+<tr>
+<td>
+<center><table BORDER=2 WIDTH="40%" >
+<tr>
+<td>
+<center><b><font size=+3>&nbsp;C33-C39</font></b></center>
+</td>
+</tr>
+</table></center>
+</td>
+</tr>
+
+<tr>
+<td>
+<hr WIDTH="50%"></td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C33</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4</font></font></b></td>
+
+<td WIDTH="45%"><b><font color="#000000"><font size=+1>King's Gambit Accepted:</font></font></b></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.b3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Orsini</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Villemson</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Gaga</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.h4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Calvi</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Ne2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Paris</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Be2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Lesser Bishop</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Schurig</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Kf2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Tumbleweed</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Qe2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Carrera</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Qh5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Carrera Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Qf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Breyer</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Qg4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Dodo</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Mason</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Nh3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Eisenberg</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 b5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Lesser Bryan)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Gianutio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 f5 4.Qe2 Qh4+ 5.Kd1 fxe4 6.Nc3 Kd8</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Hein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Maurian)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (L&oacute;pez)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Ne7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Steinitz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 d6 5.Qf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Lesser Cozio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 Bc5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Greco)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 b5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Bryan)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Boden)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Classical)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5 5.Qf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Cozio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5 5.Nc3 Bg7 6.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (McDonnell Attack)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5 5.Nc3 Bg7 6.g3 fxg3 7.Qf3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Fraser)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5 5.Nc3 Bg7 6.d4 Ne7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (McDonnell Defense)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Qh4+ 4.Kf1 g5 5.Nc3 Bg7 6.d4 d6 7.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bishop's Gambit (Grimm)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bledow</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 d5 4.Bxd5 c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bledow (Anderssen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 d5 4.Bxd5 Qh4+ 5.Kf1 Bd6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>Bledow
+(Bor&eacute;n-Svenonius)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 d5 4.Bxd5 Qh4+ 5.Kf1 g5 6.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bledow (Gifford)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 d5 4.Bxd5 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Bledow (Morphy)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cozio</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Nf6 4.Nc3 Bb4 5.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cozio (Paulsen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3.Bc4 Nf6 4.Nc3 c6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cozio (Jaenisch)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C34</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…f5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Gianutio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…f5 4.e5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Alapin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…h6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Becker)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Ne7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Bonsch-Osmolovsky)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Schallopp)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…Nf6 4.e5 Nh5 5.Qe2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Keres)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">3…d6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Knight's Gambit (Fischer)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C35</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3 Be7</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cunningham</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 Bh4+ 5.g3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cunningham (Bertin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 Bh4+ 5.g3 fxg3 6.0-0 gxh2+ 7.Kh1</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cunningham (Three Pawns)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Cunningham (Euwe)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C36</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3 d5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Abazzia</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.exd5 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Abazzia (Modern)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.exd5 Nf6 5.Bb5+ c6 6.dxc6 bxc6 7.Bc4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Abazzia (Botvinnik)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C37</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3 g5</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Classical Knight</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Quaade</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Rosentreter</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.d4 h6 5.h4 Bg7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Rosentreter (Becker)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Ne5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Sorensen</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Blachly</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Ghulam Kassim</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Ne5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Salvio</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 f3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Salvio (Cochrane)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 Nh6 7.d4 f3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Salvio (Silberschmidt)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 Nh6 7.d4 d6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Salvio (Anderssen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Ne5 Qh4+ 6.Kf1 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Salvio (Herzfeld)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+McDonnell</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Bxf7+</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Lolli</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.Bxf7+ Kxf7 6.0-0 gxf3 7.Qxf3 Qf6 8.d4
+Qxd4+ 9.Be3 Qf6 10.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Lolli (Young)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 Qe7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (Kling &amp; Horwitz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (Brentano)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 gxf3 6.Qxf3 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (Holloway)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 gxf3 6.Qxf3 Qe7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (From)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 gxf3 6.Qxf3 Qf6 7.e5 Qxe5 8.Bxf7+</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (Double Muzio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4.Bc4 g4 5.0-0 gxf3 6.Qxf3 Qf6 7.e5 Qxe5 8.d3
+Bh6 9.Nc3 Ne7 10.Bd2 Nbc6 11.Rae1</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Muzio (Paulsen)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C38</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3 g5 4.Bc4 Bg7</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Classical Knight</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Classical Knight (Hanstein)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.h4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Philidor</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.h4 h6 6.d4 d6 7.Nc3 c6 8.hxg5 hxg5 9.Rxh8 Bxh8
+10.Ne5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Philidor (Greco)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.h4 h6 6.d4 d6 7.Qd3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Philidor (Schultz)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">5.0-0</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Hanstein</font></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td>
+<table BORDER COLS=2 WIDTH="100%" >
+<caption><b><u><font size=+2>C39</font></u></b></caption>
+
+<tr>
+<td WIDTH="55%"><b><font color="#000000"><font size=+1>1.e4 e5 2.f4 exf4
+3.Nf3 g5 4.h4</font></font></b></td>
+
+<td WIDTH="45%"><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Classical Knight</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Schlechter)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.Bc4+</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Walker)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.Bc4+ d5 8.Bxd5+ Kg7
+9.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Urusov)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.Qxg4 Nf6 8.Qxf4 Bd6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Horny)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.d4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Thorold)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.d4 d5 8.Bxf4 dxe4
+9.Bc4+ Kg7 10.Be5+</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Cook)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ng5 h6 6.Nxf7 Kxf7 7.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Allgaier (Blackburne)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 d6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Kolisch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Campell)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 d5 6.d4 Nf6 7.Bxf4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Brentano)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 d5 6.d4 Nf6 7.Bxf4 Nxe4 8.Nd2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Caro)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 d5 6.d4 Nf6 7.exd5 Qxd5 8.Nc3 Bb4
+9.Kf2</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Kaplanek)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Qe7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Salvio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Qe7 6.d4 f5 7.Bc4</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Cozio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Nc6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Neumann)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 h5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Stockwhip)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 h5 6.Bc4 Rh7 7.d4 Bh6 8.Nc3</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Jaenisch)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Bg7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Paulsen)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Be7</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Polerio)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Nf6</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Berlin)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Nf6 6.Nxg4 d5</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (de Rivi&egrave;re)</font></td>
+</tr>
+
+<tr>
+<td><font color="#000000">4…g4 5.Ne5 Nf6 6.Bc4 d5 7.exd5 8.Bd6 8.0-0</font></td>
+
+<td><font color="#000000"><b><font size=+1>King's Gambit Accepted:</font></b>
+Kieseritzky (Rice)</font></td>
+</tr>
+</table>
+</td>
+</tr>
+</table></center>
+<center>
+<hr WIDTH="100%"><b>
+[<a href="/archive/articles.shtml">Archive</a>] 
+[<a href="/excavations/excavations.php">Excavations</a>] 
+[<a href="/gallery/index.php">Gallery</a>] 
+[<a href="/journal/journal.shtml">Journal</a>] 
+[<a href="/library/library.shtml">Library</a>] 
+[<a href="/library/0000_links/links.shtml">Links</a>] 
+[<a href="/legend/legend.shtml">Legend</a>] 
+[<a href="/market/market.shtml">Market</a>] 
+</b>
+<br><font size=-2>&copy; 1999-2019 Jacques N. Pope. All Rights
+ Reserved.</font></center>
+
+</body>
+</html>

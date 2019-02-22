@@ -1,0 +1,36 @@
+
+C 1.e4 e5 2.f4
+E King's Gambit Declined:
+2. ... Qf6
+E King's Gambit Declined: Norwalde
+2. ... Qf6 3.Nf3 Qxf4 4.Nc3 Bb4 5.Bc4
+E King's Gambit Declined: Norwalde (Buecker)
+2. ... c5
+E King's Gambit Declined: Mafia
+2. ... Nf6
+E King's Gambit Declined: Petrov
+2. ... Qh4+ 3.g3 Qe7
+E King's Gambit Declined: Keene
+2. ... d6
+E King's Gambit Declined: Nimzovich
+2. ... Bc5
+E King's Gambit Declined: Classical
+2. ... Bc5 3.Nf3 g5
+E King's Gambit Declined: Classical (Senechaud)
+2. ... Bc5 3.Nf3 d6 4.fxe5
+E King's Gambit Declined: Classical (Soldatenkov)
+2. ... Bc5 3.Nf3 d6 4.b4
+E King's Gambit Declined: Classical (Heath)
+2. ... Bc5 3.Nf3 d6 4.c3 f5
+E King's Gambit Declined: Classical (Counter-Gambit)
+2. ... Bc5 3.Nf3 d6 4.c3 f5 5.fxe5 dxe5 6.d4 fxe4 7.Bc4
+E King's Gambit Declined: Classical (R&eacute;ti)
+2. ... Bc5 3.Nf3 d6 4.c3 Bg4 5.fxe5 dxe5 6.Qa4+
+E King's Gambit Declined: Classical (Marshall)
+2. ... Bc5 3.Nf3 d6 4.Nc3 Nd7
+E King's Gambit Declined: Classical (Hanham)
+2. ... Bc5 3.Nf3 d6 4.Nc3 Nf6 5.Bc4 Nc6 6.d3 Bg4
+E King's Gambit Declined: Classical (Blackburne)
+2. ... Bc5 3.Nf3 d6 4.Nc3 Nf6 5.Bc4 Nc6 6.d3 Bg4 7.h3 Bxf3 8.Qxf3 exf4
+E King's Gambit Declined: Classical (Svenonius)
+

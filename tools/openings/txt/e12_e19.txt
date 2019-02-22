@@ -1,0 +1,62 @@
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6
+E Queen's Indian:
+4.Bf4
+E Queen's Indian: Miles
+4.a3
+E Queen's Indian: Petrosian
+4.a3 Bb7 5.Nc3 d5 6.cxd5 Nxd5 7.Qc2 c5 8.e4 Nxc3 9.bxc3 Nc6 10.Bb2 cxd4 11.cxd4 Rc8 12.Rd1 Bd6
+E Queen's Indian: Petrosian(Murey)
+4.Nc3
+E Queen's Indian: Russian
+4.Nc3 Bb7 5.Bg5 h6 6.Bh4 g5 7.Bg3 Nh5
+E Queen's Indian: Russian(Botvinnik)
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.Nc3 Bb7 5.Bg5 h6 6.Bh4 Bb4
+E Queen's Indian: Russian
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.e3
+E Queen's Indian: Spassky
+4. ... Bb7 5.0-0 Be7 6.b3 0-0 8.Bb2 cxd4 9.Nxd4
+E Queen's Indian: Spassky(Averbakh)
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.g3
+E Queen's Indian: Fianchetto
+4. ... Ba6
+E Queen's Indian: Fianchetto(Nimzovich)
+4. ... Bb7 5.Bg2 Qc8 6.0-0 c5 7.d5
+E Queen's Indian: Fianchetto(Fine)
+4. ... Bb7 5.Bg2 c5
+E Queen's Indian: Fianchetto(S&auml;misch)
+4. ... Bb7 5.Bg2 c5 6.d5 exd5 7.Nh4
+E Queen's Indian: Fianchetto(Rubinstein)
+4. ... Bb7 5.Bg2 c5 6.d5 exd5 7.Ng5
+E Queen's Indian: Fianchetto(Buerger)
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.g3 Bb7 5.Bg2 Bb4+
+E Queen's Indian: Capablanca
+6.Bd2 a5
+E Queen's Indian: Capablanca(Yates)
+6.Bd2 Be7
+E Queen's Indian: Capablanca(Riumin)
+6.Bd2 Bxd2+ 7.Qxd2 0-0 8.Nc3 Ne4 9.Qc2 Nxc3 10.Ng5
+E Queen's Indian: Capablanca(Monticelli Trap)
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.g3 Bb7 5.Bg2 Be7
+E Queen's Indian: Classical
+6.Nc3
+E Queen's Indian: Classical(Anti-Queen's Indian)
+6.Nc3 Ne4 7.Bd2
+E Queen's Indian: Classical(Opocensky)
+6.0-0 0-0 7.b3
+E Queen's Indian: Classical(Euwe)
+6.0-0 0-0 7.d5 exd5 8.Nh4
+E Queen's Indian: Classical(Polugayevsky)
+6.0-0 0-0 7.Re1
+E Queen's Indian: Classical(Kramnik)
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.g3 Bb7 5.Bg2 Be7 6.0-0 0-0 7.Nc3
+E Queen's Indian: Classical
+E 
+C 1.d4 Nf6 2.c4 e6 3.Nf3 b6 4.g3 Bb7 5.Bg2 Be7 6.0-0 0-0 7.Nc3 Ne4 8.Qc2 Nxc3 9.Qxc3
+E Queen's Indian: Classical

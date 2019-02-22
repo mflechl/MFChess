@@ -1,0 +1,96 @@
+C 1.e4 e5 2.Nf3 Nc6
+E King's Knight:
+3.c4
+E King's Knight: Dresden
+3.g3
+E King's Knight: Konstantinopolsky
+3.Nxe5 Nxe5 4.d4
+E King's Knight: Chicago Gambit
+3.Be2
+E King's Knight: Hungarian
+3.Be2 Nf6 4.d3 d5 5.Nbd2
+E King's Knight: Hungarian(Hanham)
+3.Be2 Nf6 4.d4
+E King's Knight: Hungarian(Tayler)
+
+
+
+
+C 1.e4 e5 2.Nf3 Nc6 3.c3
+E Ponziani:
+3. ... d5 4.Qa4 Bd7
+E Ponziani: Caro
+3. ... d5 4.Qa4 Bd7 5.exd5 Nd4 6.Qd1 Nxf3+ 7.Qxf3
+E Ponziani: Caro (Tartakower)
+3. ... d5 4.Qa4 f6
+E Ponziani: Steinitz
+3. ... d5 4.Qa4 dxe4
+E Ponziani: Bird
+3. ... d5 4.Qa4 Qd6
+E Ponziani: Worrall
+3. ... d5 4.Qa4 Nf6
+E Ponziani: Leonhardt
+3. ... d5 4.Bb5 dxe4 5.Nxe5
+E Ponziani: Staunton
+3. ... d5 4.Bb5 dxe4 5.Nxe5 Qg5
+E Ponziani: Staunton(Sozin)
+3. ... f5
+E Ponziani: Counter-Gambit
+3. ... f5 4.d4 d6 5.d5
+E Ponziani: Counter-Gambit(Schmidt)
+3. ... f5 4.d4 d6 5.d5 fxe4 6.Ng5 Nb8 7.Nxe4 Nf6 8.Bd3 Be7
+E Ponziani: Counter-Gambit(Cordel)
+3. ... Nge7
+E Ponziani: R&eacute;ti
+3. ... Be7
+E Ponziani: Romanishin
+3. ... Bc5 4.b4
+E Ponziani: Classical
+3. ... Nf6
+E Ponziani: Jaenisch
+3. ... Nf6 4.d4 Nxe4 5.d5 Bc5
+E Ponziani: Jaenisch(Fraser)
+3. ... Nf6 4.d4 exd4
+E Ponziani: Jaenisch(Gunsberg)
+3. ... Nf6 4.d4 d6
+E Ponziani: Jaenisch(Pirc)
+3. ... Nf6 4.Qc2
+E Ponziani: Jaenisch(Wayte)
+3. ... Nf6 4.Qa4
+E Ponziani: Jaenisch(Potter)
+3. ... Nf6 4.d3
+E Ponziani: Jaenisch(Modern)
+
+
+
+
+C 1.e4 e5 2.Nf3 Nc6 3.d4
+E Scotch:
+3. ... Nxd4
+E Scotch: Lolli
+3. ... Nxd4 4.Nxe5 Ne6 5.Bc4 c6 6.Nxf7
+E Scotch: Lolli (Cochrane)
+3. ... Nxd4 4.Nxe5 Ne6 5.Bc4 c6 6.0-0 Nf6 7.Nxf7
+E Scotch: Lolli (Delayed Cochrane)
+3. ... exd4 4.c3
+E Scotch: G&ouml;ring
+3. ... exd4 4.c3 dxc3 5.Nxc3 Bb4 6.Bc4 Nf6
+E Scotch: G&ouml;ring(Bardeleben)
+3. ... exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.0-0 Ne5 8.Nxe5 Bxd1 9.Bxf7+ Ke7 10.Nd5+
+E Scotch: G&ouml;ring(Sea-cadet mate)
+3. ... exd4 4.Bb5
+E Scotch: Relfsson
+3. ... exd4 4.Bc4
+E Scotch: Gambit
+3. ... exd4 4.Bc4 Bb4+ 5.c3 dxc3 6.bxc3 Ba5 7.e5
+E Scotch: Gambit (Cochrane)
+3. ... exd4 4.Bc4 Bb4+ 5.c3 dxc3 6.0-0 cxb2 7.Bxb2 Nf6 8.Ng5 0-0 9.e5 Nxe5
+E Scotch: Gambit (Hanneken)
+3. ... exd4 4.Bc4 Bc5
+E Scotch: Gambit (Haxo)
+3. ... exd4 4.Bc4 Bc5 5.Ng5 Nh6 6.Qh5
+E Scotch: Gambit (Vitzthum)
+3. ... exd4 4.Bc4 Bc5 5.Ng5 Nh6 6.Nxf7 Kxf7 7.Bxf7+ Kxf7 8.Qh5+ g6 9.Qxc5 d6
+E Scotch: Gambit (Cochrane-Shumov)
+3. ... exd4 4.Bc4 Bc5 5.0-0 d6 6.c3 Bg4
+E Scotch: Gambit (Anderssen)

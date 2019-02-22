@@ -1,0 +1,7 @@
+C 1.d4 Nf6 2.c4 e6 3.Nf3 Bb4+
+E Bogo-Indian:
+4.Nbd2
+E Bogo-Indian: Gr&uuml;nfeld
+4.Bd2 Qe7
+E Bogo-Indian: Nimzovich
+

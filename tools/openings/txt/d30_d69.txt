@@ -1,0 +1,356 @@
+E 
+C 1.d4 d5 2.c4 e6
+E Queen's Gambit Declined:
+3.Nf3 Nf6 4.e3 c6 5.Nbd2
+E Queen's Gambit Declined: Semmering
+3.Nf3 Nf6 4.e3 c6 5.Nbd2 g6
+E Queen's Gambit Declined: Semmering (Spielmann)
+3.Nf3 Nf6 4.e3 c6 5.Nbd2 Ne4 6.Bd3 f5
+E Queen's Gambit Declined: Semmering (Stonewall)
+3.Nf3 Nf6 4.e3 c6 5.Nbd2 Nbd7 6.Bd3
+E Queen's Gambit Declined: Semmering (Breyer)
+3.Nf3 Nf6 4.Bg5
+E Queen's Gambit Declined: Vienna
+3.Nf3 Nf6 4.Bg5 h6
+E Queen's Gambit Declined: Vienna (Duras)
+3.Nf3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nbd2
+E Queen's Gambit Declined: Vienna (Capablanca)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3
+E Queen's Gambit Declined:
+3. ... Be7
+E Queen's Gambit Declined: Charousek
+3. ... b6
+E Queen's Gambit Declined: Alapin
+3. ... a6
+E Queen's Gambit Declined: Janowski
+3. ... c6
+E Old Semi-Slav:
+3. ... c6 4.e4
+E Old Semi-Slav: Marshall
+3. ... c6 4.e4 dxe4 5.Nxe4 Bb4+ 6.Bd2 Qxd4 7.Bxb4 Qxe4+
+E Old Semi-Slav: Marshall(Slav Gambit)
+3. ... c6 4.Nf3 dxc4
+E Old Semi-Slav: Noteboom
+3. ... c6 4.Nf3 dxc4 5.a4 Bb4 6.e3 b5
+E Old Semi-Slav: Noteboom(Abrahams)
+3. ... c6 4.Nf3 dxc4 5.a4 Bb4 6.e3 b5 7.Bd2 Qb6
+E Old Semi-Slav: Noteboom(Junge)
+3. ... c6 4.Nf3 dxc4 5.a4 Bb4 6.e3 b5 7.Bd2 Qe7
+E Old Semi-Slav: Noteboom(Koomen)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 c5
+E Tarrasch:
+4.cxd5 cxd4
+E Tarrasch: Schara
+4.cxd5 cxd4 5.Qxd4 Nc6 6.Qd1 exd5 7.Qxd5 Be6
+E Tarrasch: Schara(von Hennig)
+4.cxd5 exd5 5.e4
+E Tarrasch: Marshall
+4.cxd5 exd5 5.dxc5 d4 6.Na4 b5
+E Tarrasch: Tarrasch Gambit
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 exd5 5.Nf3 Nc6 6.g3
+E Tarrasch: Schlechter
+6. ... c4
+E Tarrasch: Schlechter(Folkstone)
+6. ... c4 7.e4
+E Tarrasch: Schlechter(Rey Ardid)
+6. ... Nf6
+E Tarrasch: Schlechter(Prague)
+6. ... Nf6 7.Bg2 Bg4
+E Tarrasch: Schlechter(Wagner)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 c5 4.cxd5 exd5 5.Nf3 Nc6 6.g3 Nf6 7.Bg2 Be7
+E Tarrasch: Rubinstein
+8.0-0 0-0 9.dxc5 Bxc5 10.Na4
+E Tarrasch: Rubinstein(R&eacute;ti)
+8.0-0 0-0 9.Bg5 c4
+E Tarrasch: Rubinstein(Advance)
+8.0-0 0-0 9.Bg5 Be6 10.Rc1 c4
+E Tarrasch: Rubinstein(Bogolubov)
+8.0-0 0-0 9.Bg5 Be6 10.Rc1 b6
+E Tarrasch: Rubinstein(Stoltz)
+8.0-0 0-0 9.Bg5 cxc4 10.Nxd4 Re8
+E Tarrasch: Rubinstein(Petursson)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6
+E Queen's Gambit Declined:
+4.Bf4
+E Queen's Gambit Declined: Harrwitz
+4.cxd5
+E Queen's Gambit Declined: Exchange
+4.cxd5 exd5 5.Nf3 Nbd7 6.Bf4
+E Queen's Gambit Declined: Exchange (S&auml;misch)
+4.cxd5 exd5 5.Bg5 Be7 6.e3 0-0 7.Bd3 Nbd7 8.Qc2 Re8 9.Nge2 Nf8 10.0-0-0
+E Queen's Gambit Declined: Exchange (Chameleon)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.cxd5 exd5 5.Bg5 c6 6.Qc2
+E Queen's Gambit Declined: Exchange
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3
+E Queen's Gambit Declined:
+4. ... Nbd7 5.cxd5
+E Queen's Gambit Declined: Exchange Deferred
+4. ... Be7 5.Bf4
+E Queen's Gambit Declined: Classical
+4. ... Be7 5.Bf4 0-0 6.e3 c5 7.dxc5 Bxc5 8.Qc2 Nc6 9.a3 Qa5 10.Rd1
+E Queen's Gambit Declined: Classical (Old)
+4. ... Be7 5.Bf4 0-0 6.e3 c5 7.dxc5 Bxc5 8.Qc2 Nc6 9.a3 Qa5 10.0-0-0
+E Queen's Gambit Declined: Classical (New)
+4. ... Be7 5.Bf4 0-0 6.e3 b6
+E Queen's Gambit Declined: Classical (Fianchetto)
+4. ... Be7 5.Bf4 0-0 6.e3 c6
+E Queen's Gambit Declined: Classical (Orthodox)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 Bb4
+E Queen's Gambit Declined: Ragozin
+5.Bg5 h6
+E Queen's Gambit Declined: Ragozin (Moscow)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 Bb4 5.Bg5 dxc4
+E Queen's Gambit Declined: Ragozin (Vienna)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c5
+E Queen's Gambit Declined: Semi-Tarrasch
+5.e3 Nc6
+E Queen's Gambit Declined: Semi-Tarrasch (Symmetrical)
+5.e3 Nc6 6.Bd3 Bd6 7.0-0 0-0 8.Qe2 Qe7 9.dxc5 Bxc5 10.e4
+E Queen's Gambit Declined: Semi-Tarrasch (Levenfish)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c5 5.cxd5
+E Queen's Gambit Declined: Semi-Tarrasch
+5. ... Nxd5 6.e4
+E Queen's Gambit Declined: Semi-Tarrasch (Exchange)
+5. ... Nxd5 6.e4 Nxc3 7.bxc3 cxd4 8.cxd4 Bb4+ 9.Bb2 Qa5
+E Queen's Gambit Declined: Semi-Tarrasch (San Sebasti&aacute;n)
+5. ... Nxd5 6.e4 Nxc3 7.bxc3 cxd4 8.cxd4 Bb4+ 9.Bb2 Bxd2+ 10.Qxd2 0-0 11.Bb5
+E Queen's Gambit Declined: Semi-Tarrasch (Kmoch)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c5 5.cxd5 Nxd5 6.e3 Nc6 7.Bd3
+E Queen's Gambit Declined: Semi-Tarrasch
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6
+E Semi-Slav:
+5.Bg5
+E Semi-Slav: Anti-Meran
+5.Bg5 h6 6.Bxf6 Qxf6 7.Qb3
+E Semi-Slav: Anti-Meran(Hastings)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.Bg5 dxc4
+E Semi-Slav: Anti-Meran
+6.e4
+E Semi-Slav: Anti-Meran(Botvinnik)
+6.e4 b5 7.e5 h6 8.Bh4 g5 9.exf6 gxh4 10.Ne5
+E Semi-Slav: Anti-Meran(Ekstr&ouml;m)
+6.e4 b5 7.e5 h6 8.Bh4 g5 9.Nxg5
+E Semi-Slav: Anti-Meran(Gambit)
+6.e4 b5 7.e5 h6 8.Bh4 g5 9.Nxg5 Nd5
+E Semi-Slav: Anti-Meran(Alatortsev)
+6.e4 b5 7.e5 h6 8.Bh4 g5 9.Nxg5 hxg5 10.Bxg5 Nbd7 11.g3
+E Semi-Slav: Anti-Meran(Lilienthal)
+6.e4 b5 7.e5 h6 8.Bh4 g5 9.Nxg5 hxg5 10.Bxg5 Nbd7 11.Qf3
+E Semi-Slav: Anti-Meran(Szab&oacute;)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3
+E Semi-Slav:
+5. ... a6
+E Semi-Slav: Alekhine
+5. ... Nbd7 6.Qc2
+E Semi-Slav: Stoltz
+5. ... Nbd7 6.Ne5
+E Semi-Slav: Rubinstein
+5. ... Nbd7 6.cxd5
+E Semi-Slav: Exchange
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3 Nbd7 6.Bd3
+E Semi-Slav: Meran
+6. ... Be7
+E Semi-Slav: Meran(Bogolubov)
+6. ... Bb4
+E Semi-Slav: Meran(Romih)
+6. ... Bd6
+E Semi-Slav: Meran(Chigorin)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3 Nbd7 6.Bd3 dxc4 7.Bxc4
+E Semi-Slav: Meran
+7. ... b5 8.Bd3 b4
+E Semi-Slav: Meran(Lundin)
+7. ... b5 8.Bd3 Bb7
+E Semi-Slav: Meran(Wade)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3 Nbd7 6.Bd3 dxc4 7.Bxc4 b5 8.Bd3 a6
+E Semi-Slav: Meran
+9.e4 b4
+E Semi-Slav: Meran(Pirc)
+9.e4 c5 10.d5
+E Semi-Slav: Meran(Reynolds)
+9.e4 c5 10.e5
+E Semi-Slav: Meran(Classical)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Nf3 c6 5.e3 Nbd7 6.Bd3 dxc4 7.Bxc4 b5 8.Bd3 a6 9.e4 c5 10.e5
+E Semi-Slav: Blumenfeld
+11. ... Ng4
+E Semi-Slav: Blumenfeld(Rabinovich)
+11. ... Nxe5
+E Semi-Slav: Blumenfeld(Sozin)
+11. ... Nxe5 12.Nxe5 axb5 13.0-0 Qd5 14.Qe2 Ba6 15.Bg5
+E Semi-Slav: Blumenfeld(Rellstab)
+11. ... Nxe5 12.Nxe5 axb5 13.Qf3
+E Semi-Slav: Blumenfeld(St&aring;hlberg)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5
+E Queen's Gambit Declined: Semi-Pillsbury
+4. ... c5
+E Queen's Gambit Declined: Semi-Pillsbury (Been-Koomen)
+4. ... c5 5.cxd5
+E Queen's Gambit Declined: Semi-Pillsbury (Tarrasch)
+4. ... c5 5.cxd5 Qb6
+E Queen's Gambit Declined: Semi-Pillsbury (Venice)
+4. ... c5 5.Nf3 cxd4 6.Qxd4
+E Queen's Gambit Declined: Semi-Pillsbury (Primitive)
+4. ... c5 5.Nf3 cxd4 6.Nxd4 e5 7.Ndb5 a6 8.Qa4
+E Queen's Gambit Declined: Semi-Pillsbury (Krause)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7
+E Queen's Gambit Declined: Semi-Pillsbury
+5.Nf3 c6 6.e4
+E Queen's Gambit Declined: Semi-Pillsbury (Alekhine)
+5.Nf3 c6 6.Rc1 Qa5 7.Bd2
+E Queen's Gambit Declined: Semi-Pillsbury (Rochlin)
+5.Nf3 Bb4
+E Queen's Gambit Declined: Semi-Pillsbury (New York)
+5.e3 Bb4
+E Queen's Gambit Declined: Semi-Pillsbury (Manhattan)
+5.e3 Bb4 6.Nf3 c5
+E Queen's Gambit Declined: Semi-Pillsbury (Westphalia)
+5.e3 c6 6.a3
+E Queen's Gambit Declined: Semi-Pillsbury (Capablanca)
+5.e3 c6 6.cxd5
+E Queen's Gambit Declined: Semi-Pillsbury (Exchange)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nf3
+E Queen's Gambit Declined: Semi-Pillsbury
+6. ... Qa5
+E Queen's Gambit Declined: Cambridge Springs
+6. ... Qa5 7.Bxf6
+E Queen's Gambit Declined: Cambridge Springs (Capablanca)
+6. ... Qa5 7.cxd5 Nxd5
+E Queen's Gambit Declined: Cambridge Springs (Yugoslav)
+6. ... Qa5 7.Nd2 dxc4
+E Queen's Gambit Declined: Cambridge Springs (Rubinstein)
+6. ... Qa5 7.Nd2 Bb4 8.Qc2
+E Queen's Gambit Declined: Cambridge Springs (Bogolubov)
+6. ... Qa5 7.Nd2 Bb4 8.Qc2 0-0 9.Bh4
+E Queen's Gambit Declined: Cambridge Springs (Argentine)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7
+E Queen's Gambit Declined: Pillsbury
+5.Nf3 c6 6.e4
+E Queen's Gambit Declined: Pillsbury (Alekhine)
+5.Nf3 h6 6.Bh4 0-0 7.Rc1 dxc4
+E Queen's Gambit Declined: Pillsbury (Uhlmann)
+5.e3 Ne4
+E Queen's Gambit Declined: Pillsbury (Lasker)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Rc1
+E Queen's Gambit Declined: Pillsbury (Anti-Neo-Orthodox)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3
+E Queen's Gambit Declined: Pillsbury
+6. ... b6 7.Bd3 Bb7 8.cxd5 exd5 9.Ne5
+E Queen's Gambit Declined: Pillsbury (Pillsbury Attack)
+6. ... h6
+E Queen's Gambit Declined: Neo-Orthodox
+6. ... h6 7.Bxf6
+E Queen's Gambit Declined: Neo-Orthodox (Anti-Tartakower)
+6. ... h6 7.Bxf6 Bxf6 8.Rc1 c6 9.Bd3 Nd7 10.0-0 dxc4 11.Bxc4
+E Queen's Gambit Declined: Neo-Orthodox (Petrosian)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 h6 7.Bh4
+E Queen's Gambit Declined: Neo-Orthodox
+7. ... Ne4
+E Queen's Gambit Declined: Lasker
+7. ... Ne4 8.Bxe7 Qxe7 9.Rc1
+E Queen's Gambit Declined: Lasker (Modern)
+7. ... Ne4 8.Bxe7 Qxe7 9.Qc2
+E Queen's Gambit Declined: Lasker (Teichmann)
+7. ... Ne4 8.Bxe7 Qxe7 9.Qc2 Nf6 10.Bd3 dxc4 11.Bxc4
+E Queen's Gambit Declined: Lasker (Russian)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 h6 7.Bh4 Ne4 8.Bxe7 Qxe7 9.cxd5
+E Queen's Gambit Declined: Lasker
+9. ... Nxc3 10.bxc3 exd5 11.Qb3 Qd6
+E Queen's Gambit Declined: Lasker (Bernstein)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 h6 7.Bh4 b6
+E Queen's Gambit Declined: Tartakower
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 h6 7.Bh4 b6 8.cxd5 Nxd5
+E Queen's Gambit Declined: Tartakower (Exchange)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7
+E Queen's Gambit Declined: Orthodox
+7.Qb3
+E Queen's Gambit Declined: Orthodox (Rauzer)
+7.cxd5
+E Queen's Gambit Declined: Orthodox (Exchange)
+7.Bd3
+E Queen's Gambit Declined: Orthodox (Botvinnik)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Qc2
+E Queen's Gambit Declined: Orthodox (Rubinstein)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Qc2 c5 8.cxd5
+E Queen's Gambit Declined: Orthodox (Rubinstein)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1
+E Queen's Gambit Declined: Orthodox
+7. ... a6
+E Queen's Gambit Declined: Orthodox (Henneberger)
+7. ... a6 8.cxd5
+E Queen's Gambit Declined: Orthodox (Carlsbad)
+7. ... b6 8.cxd5 exd5 9.Bb5
+E Queen's Gambit Declined: Orthodox (Capablanca)
+7. ... b6 8.cxd5 exd5 9.Bd3
+E Queen's Gambit Declined: Orthodox (Pillsbury)
+7. ... b6 8.cxd5 exd5 9.Qa4
+E Queen's Gambit Declined: Orthodox (Duras)
+7. ... c6
+E Queen's Gambit Declined: Orthodox (Classical)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Qc2
+E Queen's Gambit Declined: Rubinstein
+8. ... Ne4
+E Queen's Gambit Declined: Rubinstein (Wolf)
+8. ... a6
+E Queen's Gambit Declined: Rubinstein (Carlsbad)
+8. ... a6 9.a3
+E Queen's Gambit Declined: Rubinstein (Gr&uuml;nfeld)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Qc2 a6 9.cxd5
+E Queen's Gambit Declined: Rubinstein (Carlsbad)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Bd3
+E Queen's Gambit Declined: Capablanca
+8. ... dxc4 9.Bxc4 b5
+E Queen's Gambit Declined: Capablanca (Fianchetto)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Bd3 dxc4 9.Bxc4 Nd5
+E Queen's Gambit Declined: Capablanca
+10.h4
+E Queen's Gambit Declined: Capablanca (Janowski)
+10.Bxe7 Qxe7 11.Ne4
+E Queen's Gambit Declined: Capablanca (Alekhine)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Bd3 dxc4 9.Bxc4 Nd5 10.Bxe7 Qxe7 11.0-0 Nxc3 12.Rxc3 e5
+E Queen's Gambit Declined: Capablanca (Classical)
+13.Qb1
+E Queen's Gambit Declined: Capablanca (Mar&oacute;czy)
+13.Qc2
+E Queen's Gambit Declined: Capablanca (Vidmar)
+E 
+C 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Be7 5.e3 0-0 6.Nf3 Nbd7 7.Rc1 c6 8.Bd3 dxc4 9.Bxc4 Nd5 10.Bxe7 Qxe7 11.0-0 Nxc3 12.Rxc3 e5 13.dxe5
+E Queen's Gambit Declined: Capablanca (Classical)
+13. ... Nxe5 14.Nxe5 Qxe5 15.f4
+E Queen's Gambit Declined: Capablanca (Rubinstein)

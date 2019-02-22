@@ -1,0 +1,270 @@
+C 1.e4 c5
+E Sicilian:
+2.a3
+E Sicilian: Mengarini
+2.b3
+E Sicilian: Snyder
+2.b3 b6
+E Sicilian: Snyder(Queen's Fianchetto)
+2.b4
+E Sicilian: Wing Gambit
+2.b4 cxb4 3.c4
+E Sicilian: Wing Gambit(Santasiere)
+2.b4 cxb4 3.a3
+E Sicilian: Wing Gambit(Marshall)
+2.b4 cxb4 3.a3 bxa3
+E Sicilian: Wing Gambit(Carlsbad)
+2.b4 cxb4 3.a3 d5 4.exd5 Qxd5 5.Bb2
+E Sicilian: Wing Gambit(Marienbad)
+2.g3
+E Sicilian: Steinitz
+2.Ne2
+E Sicilian: Keres
+2.Be2
+E Sicilian: Slow Sicilian
+2.Bc4
+E Sicilian: Philidor
+2.c4 d6 3.Nc3 Nc6 4.g3 h5
+E Sicilian: Gloria
+C 1.e4 c5 2.f4
+E Sicilian: Macdonnell
+2. ... d5 3.exd5 Nf6
+E Sicilian: Macdonnell(Tal)
+C 1.e4 c5 2.d4
+E Sicilian: Center Game
+2. ... cxd4 3.Nf3
+E Sicilian: Center Game (Morphy)
+2. ... cxd4 3.Nf3 e5 4.c3
+E Sicilian: Center Game (Andreaschek)
+2. ... cxd4 3.f4
+E Sicilian: Center Game (Larsen)
+2. ... cxd4 3.c3
+E Sicilian: Smith-Morra
+2. ... cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 5.Bc4 e6 7.0-0 a6 8.Qe2 b5 9.Bb3 Ra7
+E Sicilian: Smith-Morra(Chicago)
+C 1.e4 c5 2.c3
+E Sicilian: Alapin
+2. ... Nf6 3.e5 Nd5 4.Nf3 Nc6 5.Na3
+E Sicilian: Alapin(Heidenfeld)
+2. ... Nf6 3.e5 Nd5 4.d4 cxd4
+E Sicilian: Alapin(Smith-Morra)
+C 1.e4 c5 2.Nc3
+E Sicilian: Closed
+2. ... e6 3.g3 d5
+E Sicilian: Closed(Korchnoi)
+2. ... Nc6 3.Nge2
+E Sicilian: Closed(Chameleon)
+2. ... Nc6 3.f4
+E Sicilian: Closed(Zukertort)
+2. ... Nc6 3.f4 g6 4.Nf3 Bg7 5.Bc4 e6 6.f5
+E Sicilian: Closed(Schofman)
+C 1.e4 c5 2.Nc3 Nc6 3.g3
+E Sicilian: Closed
+3. ... g6 4.Bg2 Bg7 5.d3 e6 6.Be3 Nd4 7.Nce2
+E Sicilian: Closed(Smyslov)
+C 1.e4 c5 2.Nc3 Nc6 3.g3 g6 4.Bg2 Bg7 5.d3 d6
+E Sicilian: Closed
+6.f4 e5
+E Sicilian: Closed(Russian)
+6.Nge2 e5
+E Sicilian: Closed(Botvinnik)
+C 1.e4 c5 2.Nc3 Nc6 3.g3 g6 4.Bg2 Bg7 5.d3 d6 6.Be3
+E Sicilian: Closed
+C 1.e4 c5 2.Nf3
+E Sicilian:
+2. ... b6
+E Sicilian: Katalimov
+2. ... Qa5
+E Sicilian: Althouse
+2. ... Qc7
+E Sicilian: Quinteros
+2. ... f5
+E Sicilian: Brussels
+2. ... g6
+E Sicilian: Hungarian
+2. ... g6 3.d4 Bg7
+E Sicilian: Hungarian(Pterodactyl)
+2. ... g6 3.d4 f5
+E Sicilian: Hungarian(Fred)
+2. ... g6 3.c4
+E Sicilian: Hungarian(Mar&oacute;czy)
+2. ... g6 3.c4 Bh6
+E Sicilian: Hungarian(Acton)
+C 1.e4 c5 2.Nf3 a6
+E Sicilian: O'Kelly
+3.c4
+E Sicilian: O'Kelly(Mar&oacute;czy)
+C 1.e4 c5 2.Nf3 Nf6
+E Sicilian: Nimzovich
+3.e5 Nd5 4.Nc3 e6 5.Nxd5 exd5 6.d4 Nc6
+E Sicilian: Nimzovich(Rubinstein)
+C 1.e4 c5 2.Nf3 Nc6
+E Sicilian:
+3.Bb5
+E Sicilian: Rossolimo
+3.Bb5 e6 4.Nc3 Nd4
+E Sicilian: Rossolimo(Anderssen)
+C 1.e4 c5 2.Nf3 Nc6 3.Bb5 g6
+E Sicilian: Rossolimo (Fianchetto)
+4.0-0 Bg7 5.Re1 e5 6.b4
+E Sicilian: Rossolimo(Gurgenidze)
+C 1.e4 c5 2.Nf3 Nc6 3.d4
+E Sicilian:
+3. ... cxd4 4.c3
+E Sicilian: Morra
+3. ... cxd4 4.Nxd4 Qc7
+E Sicilian: Flohr
+3. ... cxd4 4.Nxd4 Qb6
+E Sicilian: Godiva
+3. ... cxd4 4.Nxd4 e5
+E Sicilian: Labourdonnais
+3. ... cxd4 4.Nxd4 e5 5.Nb5 d6
+E Sicilian: Labourdonnais(L&ouml;wenthal)
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 Nf6
+E Sicilian:
+5.Nc3 e5
+E Sicilian: Pelik&aacute;n
+5.Nc3 e5 6.Ndb5 d6 7.Bg5 a6 8.Na3 Be6
+E Sicilian: Pelik&aacute;n(Bird)
+5.Nc3 e5 6.Ndb5 d6 7.Bg5 a6 8.Na3 b5
+E Sicilian: Pelik&aacute;n(Chelyabinsk)
+5.Nc3 e5 6.Ndb5 d6 7.Bg5 a6 8.Na3 b5 9.Bxf6 gxf6 10.Nd5 f5
+E Sicilian: Pelik&aacute;n(Sveshnikov)
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6
+E Sicilian: Accelerated Dragon
+5.Nxc6
+E Sicilian: Accelerated Dragon (Exchange)
+5.Nc3
+E Sicilian: Accelerated Dragon (Simagin)
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6 5.Nc3 Bg7 6.Be3 Nf6 7.Bc4
+E Sicilian: Accelerated Dragon (Modern)
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6 5.c4
+E Sicilian: Mar&oacute;czy
+5. ... Nf6 6.Nc3 Nxd4 7.Qxd4 d6
+E Sicilian: Mar&oacute;czy(Gurgenidze)
+C 1.e4 c5 2.Nf3 Nc6 3.d4
+E Sicilian: Mar&oacute;czy
+6.Nc2 d6 7.Be2 Nh6
+E Sicilian: Mar&oacute;czy(Simagin)
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6 5.c4 Bg7 6.Be3
+E Sicilian: Mar&oacute;czy
+C 1.e4 c5 2.Nf3 Nc6 3.d4 cxd4 4.Nxd4 g6 5.c4 Bg7 6.Be3 Nf6 7.Nc3 Ng4
+E Sicilian: Mar&oacute;czy (Breyer)
+C 1.e4 c5 2.Nf3 e6
+E Sicilian:
+3.d4 d5
+E Sicilian: Marshall
+3.d4 cxd4 4.Nxd4 Qb6
+E Sicilian: Kveinis
+3.d4 cxd4 4.Nxd4 Nf6
+E Sicilian: Anderssen
+3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Bb4
+E Sicilian: Anderssen(Pin)
+3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Bb4 6.Bd3 e5
+E Sicilian: Anderssen(Jaffe)
+3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Bb4 6.e5
+E Sicilian: Anderssen(Koch)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 a6
+E Sicilian: Paulsen
+5.c4
+E Sicilian: Paulsen(R&eacute;ti)
+5.c4 Nf6 6.Nc3 Bb4 7.Bb3 Nc6 8.Bc2
+E Sicilian: Paulsen(Bronstein)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 a6 5.Bd3
+E Sicilian: Paulsen
+5. ... g6
+E Sicilian: Paulsen(Swiss Cheese)
+5. ... Bc5
+E Sicilian: Paulsen(Polugaevsky)
+5. ... Nf6 6.0-0 d6 7.c4 g6
+E Sicilian: Paulsen(Gipslis)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 a6 5.Nc3
+E Sicilian: Paulsen
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6
+E Sicilian: Barnes
+5.Nb5
+E Sicilian: Barnes(Sz&eacute;n)
+5.Nb5 d6
+E Sicilian: Barnes(Kasparov)
+5.Nb5 d6 6.c4 Nf6 7.N1c3 a6 8.Na3 d5
+E Sicilian: Barnes(Dely)
+5.Nb5 d6 6.c4 Nf6 7.N1c3 a6 8.Na3 Be7 9.Be2 0-0 10.0-0 b6
+E Sicilian: Barnes(Hedgehog)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3
+E Sicilian: Barnes
+5. ... Nf6 6.Ndb5 Bb4
+E Sicilian: Barnes(Paulsen)
+5. ... Nf6 6.Nbd5 Bb4 7.Nd6+
+E Sicilian: Barnes(American)
+5. ... Nf6 6.Be2 Bb4 7.0-0
+E Sicilian: Barnes(Gambit)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3 a6
+E Sicilian: Barnes (Russian)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3 Qc7
+E Sicilian: Barnes (Bastrikov)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3 Qc7 6.Be3
+E Sicilian: Barnes (Bastrikov)
+C 1.e4 c5 2.Nf3 e6 3.d4 cxd4 4.Nxd4 Nc6 5.Nc3 Qc7 6.Be3 a6 7.Be2
+E Sicilian: Barnes (Bastrikov)
+7. ... b5 8.Nxc6 Qxc6 9.a3 Bb7 10.Qd4
+E Sicilian: Barnes(Bronstein)
+C 1.e4 c5 2.Nf3 d6
+E Sicilian:
+3.b4
+E Sicilian: Wing Gambit Deferred
+C 1.e4 c5 2.Nf3 d6 3.Bb5+
+E Sicilian: Moscow
+3. ... Nc6
+E Sicilian: Moscow(Nimzovich)
+C 1.e4 c5 2.Nf3 d6 3.Bb5+ Bd7
+E Sicilian: Moscow
+4.Bxd7+ Qxd7 5.c4
+E Sicilian: Moscow(Sokolsky)
+4.Bxd7+ Qxd7 5.0-0 Nc6 6.c3 Nf6 7.d4
+E Sicilian: Moscow(Bronstein)
+C 1.e4 c5 2.Nf3 d6 3.d4
+E Sicilian:
+3. ... Nf6
+E Sicilian: Alatortsev
+3. ... cxd4 4.c3
+E Sicilian: Tartakower
+3. ... cxd4 4.Qxd4
+E Sicilian: Chekhover
+3. ... cxd4 4.Qxd4 Nc6 5.Bb5 Qd7
+E Sicilian: Chekhover(Zaitsev)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4
+E Sicilian: Open
+4. ... g6
+E Sicilian: Open (Dragon)
+4. ... g6 5.c4
+E Sicilian: Open (Mar&oacute;czy)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6
+E Sicilian: Open
+5.f3
+E Sicilian: Prins
+5.f3 e5 6.Nb3
+E Sicilian: Prins (Rauzer)
+5.f3 e5 6.Bb5+
+E Sicilian: Prins (Venice)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3
+E Sicilian: Open
+5. ... e5 6.Bb5+
+E Sicilian: Open (Venice)
+5. ... Nc6
+E Sicilian: Open (Two Knights)
+5. ... Bd7
+E Sicilian: Open (Kupreichik)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 d6 6.Bc4
+E Sicilian: Sozin
+6. ... g6 7.Nxc6 bxc6 8.e5
+E Sicilian: Sozin (Magnus Smith Trap)
+6. ... Qb6
+E Sicilian: Sozin (Benko)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 d6 6.Be2
+E Sicilian: Classical
+6. ... e5
+E Sicilian: Boleslavsky
+6. ... e5 7.Nxc6
+E Sicilian: Boleslavsky(Louma)
+C 1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 d6 6.Be2 e5 7.Nb3
+E Sicilian: Boleslavsky

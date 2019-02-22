@@ -1,0 +1,28 @@
+E 
+C 1.e4 e5 2.f4 d5
+E Falkbeer Counter-Gambit:
+3.Nc3
+E Falkbeer Counter-Gambit: Milner-Barry
+3.Nf3
+E Falkbeer Counter-Gambit: Tartakower
+3.exd5 c6
+E Falkbeer Counter-Gambit: Marshall
+3.exd5 e4 4.Bb5+
+E Falkbeer Counter-Gambit: Nimzovich
+3.exd5 e4 4.Nc3 Nf6 5.Qe2
+E Falkbeer Counter-Gambit: Rubinstein
+E 
+C 1.e4 e5 2.f4 d5 3.exd5 e4 4.d3 Nf6
+E Falkbeer Counter-Gambit:
+5.Nc3 Bb4 6.Bd2 e3
+E Falkbeer Counter-Gambit: Morphy
+5.Qe2
+E Falkbeer Counter-Gambit: R&eacute;ti
+5.Nd2
+E Falkbeer Counter-Gambit: Keres
+5.dxe4 Nxe4 6.Qe2
+E Falkbeer Counter-Gambit: Charousek
+5.dxe4 Nxe4 6.Nf3 Bc5 7.Qe2 Bf5 8.g4 0-0
+E Falkbeer Counter-Gambit: Tarrasch
+5.dxe4 Nxe4 6.Nf3 Bc5 7.Qe2 Bf2+ 8.Kd1 Qxd5+ 9.Nfd2
+E Falkbeer Counter-Gambit: Alapin

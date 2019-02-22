@@ -1,0 +1,39 @@
+
+E &nbsp;C40&nbsp;
+
+
+C 1.e4 e5 2.Nf3
+E Irregular King's Knight:
+2. ... d5
+E Irregular King's Knight: Queen's Pawn
+2. ... d5 3.exd5 e4
+E Irregular King's Knight: Queen's Pawn (Paulsen)
+2. ... d5 3.exd5 Bd6
+E Irregular King's Knight: Queen's Pawn (Mar&oacute;czy)
+2. ... d5 3.Nxe5 dxe4 4.Bc4 Qg5
+E Irregular King's Knight: Queen's Pawn (Wasp)
+2. ... Qf6
+E Irregular King's Knight: Greco
+2. ... Qe7
+E Irregular King's Knight: Gunderam
+2. ... f6
+E Irregular King's Knight: Damiano
+2. ... f5
+E Irregular King's Knight: Latvian
+2. ... f5 3.g4
+E Irregular King's Knight: Latvian (Lobster)
+2. ... f5 3.Bc4 fxe4 4.Nxe5 d5
+E Irregular King's Knight: Latvian (Polerio)
+2. ... f5 3.Bc4 fxe4 4.Nxe5 Qg5 5.d4 Qxg2
+E Irregular King's Knight: Latvian (Poisoned Pawn)
+2. ... f5 3.Bc4 fxe4 4.Nxe5 Qg5 5.Nf7 Qxg2 6.Rf1 d5 7.Nxh8 Nf6
+E Irregular King's Knight: Latvian (Behting)
+2. ... f5 3.Bc4 fxe4 4.Nxe5 Nf6
+E Irregular King's Knight: Latvian (Corkscrew)
+2. ... f5 3.Nxe5 Qf6 4.d4 d6 5.Nc4 fxe4 6.Nc3 Qg6
+E Irregular King's Knight: Latvian (Modern)
+2. ... f5 3.Nxe5 Qf6 4.d4 d6 5.Nc4 fxe4 6.Ne3
+E Irregular King's Knight: Latvian (Nimzovich)
+2. ... f5 3.Nxe5 Nc6
+E Irregular King's Knight: Latvian (Fraser)
+

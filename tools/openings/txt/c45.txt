@@ -1,0 +1,42 @@
+C 1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.Nxd4
+E Scotch:
+4. ... Nxd4 5.Qxd4 d6 6.Bd3
+E Scotch: Ghulam Kassim
+4. ... Qh4
+E Scotch: Pulling
+4. ... Qh4 5.Nf3
+E Scotch: Pulling (Fraser)
+4. ... Qh4 5.Nc3
+E Scotch: Pulling (Steinitz)
+4. ... Qh4 5.Nb5
+E Scotch: Pulling (Horwitz)
+4. ... Qh4 5.Nb5 Bb4+ 6.Bd2 Qxe4+ 7.Be2 Kd8 8.0-0 Bxd2 9.Nxd2 Qg6
+E Scotch: Pulling (Rosenthal)
+4. ... Qh4 5.Nb5 Bb4+ 6.Nd2 Qxe4+ 7.Be2 Qxg2 8.Bf3 Qh3 9.Nxc7+ Kd8 10.Nxa8 Nf6 11.a3
+E Scotch: Pulling (Berger)
+4. ... Nf6
+E Scotch: Schmid
+4. ... Nf6 5.Nxc6 bxc6 6.Nd2
+E Scotch: Schmid (Tartakower)
+4. ... Nf6 5.Nxc6 bxc6 6.e5
+E Scotch: Schmid (Mieses)
+4. ... Bc5 5.Nb3
+E Scotch: Potter
+4. ... Bc5 5.Nb3 Bb4+
+E Scotch: Potter (Romanishin)
+4. ... Bc5 5.Be3
+E Scotch: Golmayo
+4. ... Bc5 5.Be3 Bb6
+E Scotch: Golmayo (Loyd)
+4. ... Bc5 5.Be3 Qf6 6.Nb5
+E Scotch: Golmayo (Blumenfeld)
+4. ... Bc5 5.Be3 Qf6 6.c3 Nge7 7.Nc2
+E Scotch: Golmayo (Meitner)
+4. ... Bc5 5.Be3 Qf6 6.c3 Nge7 7.Bb5
+E Scotch: Golmayo (Paulsen)
+4. ... Bc5 5.Be3 Qf6 6.c3 Nge7 7.Bb5 Nd8
+E Scotch: Golmayo (Gunsberg)
+4. ... Bc5 5.Be3 Qf6 6.c3 Nge7 7.Qd2
+E Scotch: Golmayo (Blackburne)
+4. ... Bc5 5.Be3 Qf6 6.c3 Nge7 7.Qd2 d5 8.Nb5 Bxe3 9.Qxe3 0-0 10.Nxc7 Rb8 11.Nxd5 Nxd5 12.exd5 Nb4
+E Scotch: Golmayo (Gottschall)

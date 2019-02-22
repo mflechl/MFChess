@@ -1,0 +1,45 @@
+E 
+C 1.e4 e5 2.d4
+E Center Game:
+2. ... d5
+E Center Game: Breyer
+2. ... d6
+E Center Game: Mar&oacute;czy
+2. ... d6 3.dxe5 Bd7
+E Center Game: Mar&oacute;czy(Philidor)
+2. ... exd4 3.f4
+E Center Game: Halasz
+2. ... exd4 3.Nf3 c5 4.Bc4 b5
+E Center Game: Kieseritzky
+2. ... exd4 3.c3
+E Center Game: Danish
+2. ... exd4 3.c3 Ne7
+E Center Game: Danish(Svenonius)
+2. ... exd4 3.c3 Qe7 4.cxd4 Qxe4+ 5.Be2 Qxg2 6.Bf3 Qg6
+E Center Game: Danish(Rosentreter)
+2. ... exd4 3.c3 d5
+E Center Game: Danish(Sorensen)
+2. ... exd4 3.c3 d5 4.exd5 Nf6 5.cxd4 Bb4+
+E Center Game: Danish(Schlechter Attack)
+2. ... exd4 3.c3 dxc3 4.Nxc3 Bb4 5.Bc4
+E Center Game: Danish(Alekhine)
+2. ... exd4 3.c3 dxc3 4.Bc4 cxb2 5.Bxb2 Qe7
+E Center Game: Danish(Collijn)
+2. ... exd4 3.c3 dxc3 4.Bc4 cxb2 5.Bxb2 d5
+E Center Game: Danish(Schlechter Defense)
+
+
+C 1.e4 e5 2.d4 exd4 3.Qxd4
+E Center Game:
+3. ... Nc6 4.Qc4
+E Center Game: Hall
+3. ... Nc6 4.Qe3
+E Center Game: Paulsen
+3. ... Nc6 4.Qe3 f5
+E Center Game: Paulsen(L'Hermet)
+3. ... Nc6 4.Qe3 Bb4+ 5.c3 Be7
+E Center Game: Paulsen(Charousek)
+3. ... Nc6 4.Qe3 Nf6
+E Center Game: Paulsen(Berger)
+3. ... Nc6 4.Qe3 Nf6 5.Nc3 Bb4 6.Bd2 0-0 7.0-0-0 Re8 8.Bc4 d6 9.Nh3
+E Center Game: Paulsen(Kupreichik)

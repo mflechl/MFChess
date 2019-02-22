@@ -1,0 +1,62 @@
+C 1.d4 Nf6 2.c4 c5 3.d5 e6
+E Modern Benoni:
+4.Nc3 exd5 5.cxd5 Bd6
+E Modern Benoni: Snake
+4.Nc3 exd5 5.cxd5 d6 6.Nf3 Be7
+E Modern Benoni: Kurz
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.Nf3 g6
+E Modern Benoni: Knight's Tour
+7.g3
+E Modern Benoni: Knight's Tour (Fianchetto)
+7.Nd2
+E Modern Benoni: Knight's Tour (Nimzovich)
+7.Bd2
+E Modern Benoni: Knight's Tour (Penrose)
+7.Bg5
+E Modern Benoni: Knight's Tour (Uhlmann)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.Nf3 g6 7.g3 Bg7
+E Modern Benoni: Fianchetto
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.Nf3 g6 7.g3 Bg7 8.Bg2 0-0 9.0-0 a6 10.a4 Nbd7
+E Modern Benoni: Fianchetto (Hastings)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.Nf3 g6 7.g3 Bg7 8.Bg2 0-0 9.0-0 a6 10.a4 Nbd7 11.Nd2 Re8
+E Modern Benoni: Fianchetto (Hastings)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4
+E Modern Benoni: King's Pawn
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.f4
+E Modern Benoni: Pawn Storm
+7. ... Bg7 8.e5
+E Modern Benoni: Pawn Storm (Mikenas)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.f4 Bg7 8.Bb5+
+E Modern Benoni: Pawn Storm (Taimanov)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.f4 Bg7 8.Nf3 0-0
+E Modern Benoni: Pawn Storm (Four Pawns)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.f4 Bg7 8.Nf3 0-0 9.Be2 Re8
+E Modern Benoni: Pawn Storm (Four Pawns)
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3
+E Modern Benoni: Classical
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Bg5
+E Modern Benoni: Classical
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0
+E Modern Benoni: Classical
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0
+E Modern Benoni: Classical
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 a6
+E Modern Benoni: Classical
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 a6 10.a4 Bg4
+E Modern Benoni: Classical (Argentine)
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 Re8
+E Modern Benoni: Classical (Czerniak)
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 Re8 10.Nd2
+E Modern Benoni: Classical (Czerniak)
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 Re8 10.Nd2 Na6
+E Modern Benoni: Classical (Czerniak)
+E &nbsp;
+C 1.d4 Nf6 2.c4 c5 3.d5 e6 4.Nc3 exd5 5.cxd5 d6 6.e4 g6 7.Nf3 Bg7 8.Be2 0-0 9.0-0 Re8 10.Nd2 Na6 11.f3
+E Modern Benoni: Classical (Czerniak)
