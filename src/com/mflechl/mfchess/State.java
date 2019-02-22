@@ -14,11 +14,11 @@ class State {
         this.check = st.check;
     }
 
-    void update(int movingPiece, int fromLine, int toLine, int aRow) {
+    void update(int movingPiece, int fromLine, int toLine, int fromRow) {
         turnOf *= -1;
         if (turnOf == ChessBoard.WHITE) moveNumber++;
         nMoves++;
-        if (Math.abs(movingPiece) == ChessBoard.PAWN && Math.abs(fromLine - toLine) == 2) enPassantPossible = aRow;
+        if (Math.abs(movingPiece) == ChessBoard.PAWN && Math.abs(fromLine - toLine) == 2) enPassantPossible = fromRow;
         else enPassantPossible = -1;
     }
 

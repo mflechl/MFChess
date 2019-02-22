@@ -21,11 +21,7 @@ class Notation extends JLabel {
         notationStrings.add(""); //entry for state of new board
     }
 
-    //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
-    //void addMove(int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, boolean check, boolean mate, boolean remis) {
-    void addMove(IBoard board, int pos, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
-        //	int eliminatedPiece=com.mflechl.mfchess.ChessBoard.board_content[toLine][toRow];
-        //for display
+    static String getMoveNotation(IBoard board, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
         String lbl = "";
         int apiece = Math.abs(piece);
 
@@ -73,11 +69,16 @@ class Notation extends JLabel {
 
 
         lbl += " ";
-        updateText(lbl, pos);
-
+        return lbl;
+    }
+    //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
+    //void addMove(int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, boolean check, boolean mate, boolean remis) {
+    void addMove(IBoard board, int pos, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
+        String lbl = getMoveNotation(board, imove, aLine, aRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
+        if (pos >= 0) updateText(lbl, pos);
     }
 
-    private void updateText(String newText, int pos) {
+    void updateText(String newText, int pos) {
         notationStrings.add(pos, newText);
         setWidth(w);
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
@@ -92,7 +93,7 @@ class Notation extends JLabel {
         setText("<html><body style='width: " + width + "px'>" + str + "</html>");
     }
 
-    String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, State state) {
+    static String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, State state) {
         // isLegal(IBoard _iBoard, ChessBoard.SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, State _state);
         String amb = "";
         int namb = 0;
@@ -100,7 +101,7 @@ class Notation extends JLabel {
             for (int iRow = 0; iRow < 8; iRow++) {
                 if (iLine == fromLine && iRow == fromRow) continue;
                 if (board.setup[iLine][iRow] == piece) {
-                    if (Move.isLegal(board, Move.sDummy, iLine, iRow, toLine, toRow, state)) {
+                    if (Move.isLegal(board, Move.sMove, iLine, iRow, toLine, toRow, state)) {
                         namb++;
                         //on same line?
                         if (iRow != fromRow && Math.abs(piece) != ChessBoard.PAWN) amb = CoordBoard.alpha[fromRow + 1];

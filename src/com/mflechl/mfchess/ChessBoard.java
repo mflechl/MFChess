@@ -133,7 +133,7 @@ public class ChessBoard implements ActionListener {
     private int aRow = -1;
 
     private void changeBoardState(int _l, int _r) {
-        //TODO: Special cases - promotion: ask for piece; notation: origin field if ambiguous
+        //TODO: Special cases - promotion: ask for piece
 
         //piece of right color?; change setActiveBorder field if needed
         if (tiles[_l][_r].getPiece() * state.turnOf > 0) {
@@ -180,9 +180,7 @@ public class ChessBoard implements ActionListener {
                 _state.update(movingPiece, aLine, _l, aRow);
 
                 //if this list is empty: check mate or remis
-                ArrayList<IBoard> moveList = Move.allLegalMoves(iBoard, _state, true);
-
-                if (moveList.size() == 0) {
+                if (Move.noLegalMoves(iBoard, _state)) {
                     if (state.check) mate = true;
                     else remis = true;
                 }
@@ -205,6 +203,7 @@ public class ChessBoard implements ActionListener {
                 state = _state;
                 //save to history
                 IBoardState currentMove = new IBoardState(iBoard, state);
+                System.out.println("MM " + _state.nMoves);
                 pastMoves.add(_state.nMoves, currentMove);
 
                 //tiles[aLine][aRow].setBorderInactive();
@@ -247,8 +246,10 @@ public class ChessBoard implements ActionListener {
     }
 
     static void getNextState() {
+        System.out.println("gNS: " + state.nMoves + " " + pastMoves.size());
         int gotoState = state.nMoves + 1;
         if (gotoState < pastMoves.size()) restoreState(pastMoves.get(gotoState), gotoState);
+        else computerMove();
     }
 
     static void getBeginState() {
@@ -270,7 +271,7 @@ public class ChessBoard implements ActionListener {
         else Chess.btnThis.setText(getMoveString(gotoState));
     }
 
-    //moving piece
+    //if some castling options get eliminated, check and set it here
     private void updateCastlingState(int piece, int fromLine, int fromRow, boolean castlingDone) {
         int colIndex = 0; //black
         if (piece > 0) colIndex = 1; //white
@@ -306,6 +307,27 @@ public class ChessBoard implements ActionListener {
             setPieceBoard(toLine, rookToRow, (int) Math.signum(piece) * ROOK, hypo);
             setPieceBoard(toLine, rookFromRow, 0, hypo);
         }
+    }
+
+    private static void computerMove() {
+        //TODO: check openings
+        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, state);
+
+        //TODO: choose move
+        IBoardState chosenMove = allMoves.get(0);
+        System.out.println(chosenMove);
+
+        //TODO: append to notation (save string of last move in state)
+        Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
+
+        //update state
+        System.out.println("MM2 " + chosenMove.state.nMoves);
+        pastMoves.add(chosenMove.state.nMoves, chosenMove);
+        restoreState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
+
+        System.out.println("cM:  " + state.nMoves + " " + pastMoves.size());
+
+
     }
 
     //set both iBoard int array and the content of the correspond tile "tiles"

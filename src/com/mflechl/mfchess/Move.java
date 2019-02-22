@@ -7,7 +7,7 @@ public final class Move {
         //no instance
     }
 
-    public static ChessBoard.SpecialMove sDummy = new ChessBoard.SpecialMove();
+    public static ChessBoard.SpecialMove sMove = new ChessBoard.SpecialMove();
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, ChessBoard.SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -139,7 +139,7 @@ public final class Move {
                 if (_iBoard.setup[fromLine][j] != 0) return false;
                 if (checkCheck) { //only needed for castling
                     ChessBoard.hypo_iBoard = _iBoard;
-                    ChessBoard.processMove(fromLine, fromRow, toLine, j, _iBoard.setup[fromLine][fromRow], true, sDummy);
+                    ChessBoard.processMove(fromLine, fromRow, toLine, j, _iBoard.setup[fromLine][fromRow], true, sMove);
                     if (isChecked(ChessBoard.hypo_iBoard, _state.turnOf)) return false;
                 }
             }
@@ -177,21 +177,30 @@ public final class Move {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * col < 0) {
                     //		    if ( isLegal(_iBoard, il, ir, lineKing, rowKing) ) return true;
-                    if (isLegal(_iBoard, sDummy, il, ir, lineKing, rowKing)) return true;
+                    if (isLegal(_iBoard, sMove, il, ir, lineKing, rowKing)) return true;
                 }
             }
         }
         return false;
     }
 
+    static Boolean noLegalMoves(IBoard _iBoard, State _state) {
+        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true);
+        return moveList.isEmpty();
+    }
+
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state) {
+        return allLegalMoves(_iBoard, _state, false);
+    }
+
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
-    static ArrayList<IBoard> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst) {
-        ArrayList<IBoard> list = new ArrayList<>();
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst) {
+        ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-                    ArrayList<IBoard> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
                     list.addAll(listPiece);
                     if (stopAfterFirst && list.size() > 0) return list;
                 }
@@ -201,18 +210,35 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<IBoard> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
-        ArrayList<IBoard> list = new ArrayList<>();
+    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
+        ArrayList<IBoardState> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
-                if (isLegal(_iBoard, sDummy, fromLine, fromRow, toLine, toRow, _state)) {
-                    sDummy = new ChessBoard.SpecialMove();
+                ChessBoard.SpecialMove sMove = new ChessBoard.SpecialMove();
+                if (isLegal(_iBoard, Move.sMove, fromLine, fromRow, toLine, toRow, _state)) {
                     ChessBoard.hypo_iBoard = new IBoard(_iBoard); //deep copy
-                    ChessBoard.processMove(fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sDummy);
+                    ChessBoard.processMove(fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, Move.sMove);
                     //System.out.println(_iBoard.setup[1][2]+" "+ChessBoard.hypo_iBoard.setup[1][2]);
                     System.out.println("from: " + fromLine + " " + fromRow + "   to: " + toLine + " " + toRow);
-                    list.add(ChessBoard.hypo_iBoard);
-                    if (stopAfterFirst) return list;
+
+                    if (stopAfterFirst) {
+                        list.add(new IBoardState(ChessBoard.hypo_iBoard));
+                        return list;
+                    }
+
+                    State updatedState = new State(_state);
+                    updatedState.update(_iBoard.setup[fromLine][fromRow], fromLine, toLine, fromRow); //TODO: need to check more stuff: check etc
+                    boolean mate = false, remis = false;
+                    /*
+                    if ( noLegalMoves(ChessBoard.hypo_iBoard, updatedState) ) { //TODO: second move is written! Hand over iBoard and do not use hypo_iBoard
+                        if (updatedState.check) mate = true;
+                        else remis = true;
+                    }
+                    */
+                    String moveNotation = Notation.getMoveNotation(_iBoard, updatedState.nMoves, fromLine, fromRow, toLine, toRow,
+                            _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove.enPassant, sMove.castling, _state, mate, remis);
+
+                    list.add(new IBoardState(ChessBoard.hypo_iBoard, updatedState, moveNotation)); //TODO: associate updated state
                 }
             }
         }
@@ -223,7 +249,7 @@ public final class Move {
         ArrayList<int[]> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
-                if (isLegal(_iBoard, sDummy, fromLine, fromRow, toLine, toRow, _state)) {
+                if (isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, _state)) {
                     int[] dest = {toLine, toRow};
                     list.add(dest);
                     if (stopAfterFirst) return list;
