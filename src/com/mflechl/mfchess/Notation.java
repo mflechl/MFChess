@@ -21,7 +21,11 @@ class Notation extends JLabel {
         notationStrings.add(""); //entry for currentStaticState of new board
     }
 
-    static String getMoveNotation(IBoard board, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
+    static String getMoveNotation(IBoard board, State state, State prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
+        return getMoveNotation(board, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
+    }
+
+    static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
         String lbl = "";
         int apiece = Math.abs(piece);
 
@@ -56,7 +60,7 @@ class Notation extends JLabel {
             lbl += CoordBoard.alpha[toRow + 1];
             lbl += Integer.toString(toLine + 1);
         }
-        if (mate || remis || state.check) {
+        if (mate || remis || check) {
             lbl += "<font color='red'>";
             if (mate) {
                 lbl += "# ";
@@ -72,8 +76,12 @@ class Notation extends JLabel {
         return lbl;
     }
     //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
-    void addMove(IBoard board, int pos, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
-        String lbl = getMoveNotation(board, imove, aLine, aRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
+    void addMove(IBoard board, State state, State prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
+        addMove(board, state.nMoves, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
+    }
+
+    void addMove(IBoard board, int pos, int imove, boolean check, int fromLine, int fromRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
+        String lbl = getMoveNotation(board, imove, check, fromLine, fromRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
         if (pos >= 0) updateText(lbl, pos);
     }
 

@@ -221,13 +221,10 @@ public final class Move {
         ArrayList<IBoardState> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
-                //System.out.println("1 from: " + CoordBoard.alpha[fromRow+1] + " " + (fromLine+1) + "   to: " + CoordBoard.alpha[toRow+1] + " " + (toLine+1) );
                 SpecialMove sMove = new SpecialMove();
                 if (isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, _state)) {
-                    //System.out.println("2 from: " + CoordBoard.alpha[fromRow+1] + " " + (fromLine+1) + "   to: " + CoordBoard.alpha[toRow+1] + " " + (toLine+1) );
                     ChessBoard.hypo_iBoard = new IBoard(_iBoard); //deep copy
                     ChessBoard.processMove(fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
-                    //System.out.println(_iBoard.setup[1][2]+" "+ChessBoard.hypo_iBoard.setup[1][2]);
                     System.out.println(_iBoard.setup[fromLine][fromRow] + " from: " + CoordBoard.alpha[fromRow + 1] + " " + (fromLine + 1) + "   to: " + CoordBoard.alpha[toRow + 1] + " " + (toLine + 1));
 
                     if (stopAfterFirst) {
@@ -239,15 +236,16 @@ public final class Move {
                     updatedState.update(_iBoard.setup[fromLine][fromRow], fromLine, toLine, fromRow); //TODO: need to check more stuff: check etc
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
 
-                    boolean mate = false, remis = false;
                     /*
-                    if ( noLegalMoves(ChessBoard.hypo_iBoard, updatedState) ) { //TODO: second move is written! Hand over iBoard and do not use hypo_iBoard
-                        if (updatedState.check) mate = true;
-                        else remis = true;
+                    IBoard _hypo_iBoard=new IBoard(ChessBoard.hypo_iBoard);
+                    if ( noLegalMoves(_hypo_iBoard, updatedState) ) { //TODO: second move is written! Hand over iBoard and do not use hypo_iBoard in pieceLegalMove & processMove
+                        if (updatedState.check) updatedState.mate = true;
+                        else updatedState.remis = true;
                     }
                     */
-                    String moveNotation = Notation.getMoveNotation(_iBoard, updatedState.moveNumber, fromLine, fromRow, toLine, toRow,
-                            _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove.enPassant, sMove.castling, _state, mate, remis);
+
+                    String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
+                            _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                     list.add(new IBoardState(ChessBoard.hypo_iBoard, updatedState, moveNotation)); //TODO: associate updated currentStaticState
                 }

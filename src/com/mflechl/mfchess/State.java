@@ -36,4 +36,6 @@ class State {
     boolean[] castlingPossibleK = {true, true};  //same for king-side
     int enPassantPossible = -1;
     boolean check = false; //currently, is opponent in check?
+    boolean remis = false; //currently, no more moves, remis?
+    boolean mate = false; //currently, no more moves, mate?
 }

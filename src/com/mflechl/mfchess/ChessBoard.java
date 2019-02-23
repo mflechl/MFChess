@@ -31,8 +31,8 @@ public class ChessBoard implements ActionListener {
 
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
-    private boolean mate = false;
-    private boolean remis = false;
+//    private boolean mate = false;
+//    private boolean remis = false;
 
     // Constructor
     ChessBoard(Color color1, Color color2) {
@@ -167,16 +167,17 @@ public class ChessBoard implements ActionListener {
 
                 processMove(aLine, aRow, _l, _r, movingPiece, false, sMove);
 
-                updateCastlingState(currentStaticState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
-                currentStaticState.check = Move.isChecked(iBoard, currentStaticState.turnOf * -1); //check of opponent result of the move?
-
                 State updatedState = new State(currentStaticState);
                 updatedState.update(movingPiece, aLine, _l, aRow);
 
+                updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
+                updatedState.check = Move.isChecked(iBoard, updatedState.turnOf); //check of opponent result of the move?
+
+
                 //if this list is empty: check mate or remis
                 if (Move.noLegalMoves(iBoard, updatedState)) {
-                    if (updatedState.check) mate = true;
-                    else remis = true;
+                    if (updatedState.check) updatedState.mate = true;
+                    else updatedState.remis = true;
                 }
 
                 //fastest remis:
@@ -187,8 +188,8 @@ public class ChessBoard implements ActionListener {
                     Notation.notationStrings.subList(updatedState.nMoves, Notation.notationStrings.size()).clear();
                 }
 
-                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState.nMoves, updatedState.moveNumber, aLine, aRow, _l, _r,
-                        movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, currentStaticState, mate, remis);
+                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState, currentStaticState, aLine, aRow, _l, _r,
+                        movingPiece, eliminatedPiece, sMove);
 
                 //update currentStaticState
                 currentStaticState = updatedState;
@@ -327,10 +328,14 @@ public class ChessBoard implements ActionListener {
     private static void computerMove() {
         //TODO: check openings
         ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
+        if (allMoves.isEmpty()) {
+            System.out.println("cannot move");
+            return; //mate or remis
+        }
 
         //TODO: choose move
         IBoardState chosenMove = allMoves.get(0);
-        System.out.println(chosenMove);
+        System.out.println("chosenMove = \n " + chosenMove);
 
         //append to notation
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
