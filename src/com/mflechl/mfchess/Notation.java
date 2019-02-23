@@ -18,7 +18,7 @@ class Notation extends JLabel {
         this.setOpaque(true);
         this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 5)); //top left bottom right
         this.setFont(font);
-        notationStrings.add(""); //entry for state of new board
+        notationStrings.add(""); //entry for currentStaticState of new board
     }
 
     static String getMoveNotation(IBoard board, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
@@ -72,7 +72,6 @@ class Notation extends JLabel {
         return lbl;
     }
     //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
-    //void addMove(int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, boolean check, boolean mate, boolean remis) {
     void addMove(IBoard board, int pos, int imove, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, State state, boolean mate, boolean remis) {
         String lbl = getMoveNotation(board, imove, aLine, aRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
         if (pos >= 0) updateText(lbl, pos);
@@ -94,14 +93,13 @@ class Notation extends JLabel {
     }
 
     static String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, State state) {
-        // isLegal(IBoard _iBoard, ChessBoard.SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, State _state);
         String amb = "";
         int namb = 0;
         for (int iLine = 0; iLine < 8; iLine++) {
             for (int iRow = 0; iRow < 8; iRow++) {
                 if (iLine == fromLine && iRow == fromRow) continue;
                 if (board.setup[iLine][iRow] == piece) {
-                    if (Move.isLegal(board, Move.sMove, iLine, iRow, toLine, toRow, state)) {
+                    if (Move.isLegal(board, Move.sDummy, iLine, iRow, toLine, toRow, state)) {
                         namb++;
                         //on same line?
                         if (iRow != fromRow && Math.abs(piece) != ChessBoard.PAWN) amb = CoordBoard.alpha[fromRow + 1];

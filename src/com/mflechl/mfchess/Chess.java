@@ -158,7 +158,6 @@ public class Chess extends JFrame {
     class DrawCanvas extends JPanel {
         @Override
         public void paintComponent(Graphics g) {
-            //btnThis.setText(String.valueOf(ChessBoard.state.moveNumber));
             super.paintComponent(g);
             setBackground(CANVAS_BACKGROUND);
             //	  System.out.println("YY "+scrollPane.getSize().width);

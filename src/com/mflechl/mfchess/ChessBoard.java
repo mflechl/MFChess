@@ -27,7 +27,7 @@ public class ChessBoard implements ActionListener {
     static ImageIcon[] wpieces = new ImageIcon[7];
     static ImageIcon[] bpieces = new ImageIcon[7];
 
-    static State state = new State();
+    static State currentStaticState = new State();
 
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
@@ -39,7 +39,7 @@ public class ChessBoard implements ActionListener {
         this.color1 = color1;
         this.color2 = color2;
         initBoard();
-        pastMoves.add(new IBoardState(iBoard, state));
+        pastMoves.add(new IBoardState(iBoard, currentStaticState));
     }
 
     void setMaxFontSize() {
@@ -136,19 +136,18 @@ public class ChessBoard implements ActionListener {
         //TODO: Special cases - promotion: ask for piece
 
         //piece of right color?; change setActiveBorder field if needed
-        if (tiles[_l][_r].getPiece() * state.turnOf > 0) {
+        if (tiles[_l][_r].getPiece() * currentStaticState.turnOf > 0) {
 //            if (aLine >= 0 && aRow >= 0) tiles[aLine][aRow].setBorderInactive();
             if (aLine >= 0 && aRow >= 0) setAllBordersInactive();
             tiles[_l][_r].setActiveBorder();
             aLine = _l;
             aRow = _r;
             tileActive = true;
-            ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, state, false);
+            ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
             for (int[] pos : list) {
                 tiles[pos[0]][pos[1]].setDestinationBorder();
             }
         }
-
         //there is an setActiveBorder tile
         else if (tileActive) {
             if (_l == aLine && _r == aRow) {  //clicking on setActiveBorder tile: make it setBorderInactive
@@ -159,52 +158,45 @@ public class ChessBoard implements ActionListener {
                 tileActive = false;
             } else { //not clicking on setActiveBorder tile: move?
 
-                SpecialMove sMove = new SpecialMove(); //save state: castling, en passant, ...
+                SpecialMove sMove = new SpecialMove(); //save currentStaticState: castling, en passant, ...
                 if (!Move.isLegal(iBoard, sMove, aLine, aRow, _l, _r)) return;
 
                 //Move!
                 int movingPiece = tiles[aLine][aRow].getPiece();
                 int eliminatedPiece = tiles[_l][_r].getPiece();
 
-                //promotion ?
-                int toPiece = movingPiece;
-                if ((movingPiece == BLACK * PAWN && _l == 0) || (movingPiece == WHITE * PAWN && _l == 7)) {
-                    toPiece = (int) Math.signum(movingPiece) * QUEEN; //TODO: choose piece
-                }
-                processMove(aLine, aRow, _l, _r, toPiece, false, sMove);
-                updateCastlingState(movingPiece, aLine, aRow, sMove.castling);
+                processMove(aLine, aRow, _l, _r, movingPiece, false, sMove);
 
-                state.check = Move.isChecked(iBoard, state.turnOf * -1); //check of opponent result of the move?
+                updateCastlingState(currentStaticState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
+                currentStaticState.check = Move.isChecked(iBoard, currentStaticState.turnOf * -1); //check of opponent result of the move?
 
-                State _state = new State(state);
-                _state.update(movingPiece, aLine, _l, aRow);
+                State updatedState = new State(currentStaticState);
+                updatedState.update(movingPiece, aLine, _l, aRow);
 
                 //if this list is empty: check mate or remis
-                if (Move.noLegalMoves(iBoard, _state)) {
-                    if (state.check) mate = true;
+                if (Move.noLegalMoves(iBoard, updatedState)) {
+                    if (updatedState.check) mate = true;
                     else remis = true;
                 }
 
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6Stalemate! All black's
 
-                System.out.println(Notation.notationStrings.size() + " X " + pastMoves.size() + " Y " + _state.nMoves);
-
-                if (pastMoves.size() != _state.nMoves) {     //have moved back in history and adding moves...
-                    pastMoves.subList(_state.nMoves, pastMoves.size()).clear();
-                    Notation.notationStrings.subList(_state.nMoves, Notation.notationStrings.size()).clear();
+                if (pastMoves.size() != updatedState.nMoves) {     //have moved back in history and adding moves...
+                    pastMoves.subList(updatedState.nMoves, pastMoves.size()).clear();
+                    Notation.notationStrings.subList(updatedState.nMoves, Notation.notationStrings.size()).clear();
                 }
 
-                //Chess.notation.addMove(state.moveNumber, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state.check, mate, remis);
-                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), _state.nMoves, state.moveNumber, aLine, aRow, _l, _r,
-                        movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, state, mate, remis);
+                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState.nMoves, updatedState.moveNumber, aLine, aRow, _l, _r,
+                        movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, currentStaticState, mate, remis);
 
-                //update state
-                state = _state;
+                //update currentStaticState
+                currentStaticState = updatedState;
                 //save to history
-                IBoardState currentMove = new IBoardState(iBoard, state);
-                System.out.println("MM " + _state.nMoves);
-                pastMoves.add(_state.nMoves, currentMove);
+                IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
+                pastMoves.add(updatedState.nMoves, currentMove);
+
+                System.out.println("hu: " + currentStaticState);
 
                 //tiles[aLine][aRow].setBorderInactive();
                 setAllBordersInactive();
@@ -241,13 +233,13 @@ public class ChessBoard implements ActionListener {
     }
 
     static void getPreviousState() {
-        int gotoState = state.nMoves - 1;
+        int gotoState = currentStaticState.nMoves - 1;
         if (gotoState >= 0) restoreState(pastMoves.get(gotoState), gotoState);
     }
 
     static void getNextState() {
-        System.out.println("gNS: " + state.nMoves + " " + pastMoves.size());
-        int gotoState = state.nMoves + 1;
+        System.out.println("gNS: " + currentStaticState.nMoves + " " + pastMoves.size());
+        int gotoState = currentStaticState.nMoves + 1;
         if (gotoState < pastMoves.size()) restoreState(pastMoves.get(gotoState), gotoState);
         else computerMove();
     }
@@ -264,31 +256,53 @@ public class ChessBoard implements ActionListener {
 
     static void restoreState(IBoardState boardState, int gotoState) {
         iBoard = new IBoard(boardState);
-        state = new State(boardState.state);
+        currentStaticState = new State(boardState.state);
         fillTilesFromBoard();
         if (gotoState < 0) Chess.btnThis.setText(getLastMoveString());
         else if (gotoState == 0) Chess.btnThis.setText("");
         else Chess.btnThis.setText(getMoveString(gotoState));
+        System.out.println("pc: " + currentStaticState);
     }
 
     //if some castling options get eliminated, check and set it here
-    private void updateCastlingState(int piece, int fromLine, int fromRow, boolean castlingDone) {
-        int colIndex = 0; //black
-        if (piece > 0) colIndex = 1; //white
+    public static void updateCastlingState(State _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
+        int colIndex = 0, colIndexOther = 1; //black/white
+        if (piece > 0) {
+            colIndex = 1;
+            colIndexOther = 0;
+        } //white/black
 
-        if (!state.castlingPossibleQ[colIndex] && !state.castlingPossibleK[colIndex]) return;
+        //       if (!_state.castlingPossibleQ[colIndex] && !_state.castlingPossibleK[colIndex]) return;
 
-        if (Math.abs(piece) == KING || castlingDone) { //king was moved (incl. castling happened)
-            state.castlingPossibleQ[colIndex] = false;
-            state.castlingPossibleK[colIndex] = false;
-        } else if (Math.abs(piece) == ROOK) { //rook was moved - only need to catch first move
-            if (fromLine == (7 * (1 - colIndex)) && fromRow == 0) state.castlingPossibleQ[colIndex] = false;
-            if (fromLine == (7 * (1 - colIndex)) && fromRow == 7) state.castlingPossibleK[colIndex] = false;
+        //rooks eliminated
+        if (toLine == (7 * (1 - colIndexOther)) && toRow == 0) {
+            _state.castlingPossibleQ[colIndexOther] = false;
+        } else if (toLine == (7 * (1 - colIndexOther)) && toRow == 7) {
+            _state.castlingPossibleK[colIndexOther] = false;
+        }
+        //king moved, incl. castling
+        else if (Math.abs(piece) == KING || castlingDone) {
+            _state.castlingPossibleQ[colIndex] = false;
+            _state.castlingPossibleK[colIndex] = false;
+        }
+        //rook was moved - only need to catch first move
+        else if (Math.abs(piece) == ROOK) {
+            if (fromLine == (7 * (1 - colIndex)) && fromRow == 0) _state.castlingPossibleQ[colIndex] = false;
+            if (fromLine == (7 * (1 - colIndex)) && fromRow == 7) _state.castlingPossibleK[colIndex] = false;
         }
     }
 
     //hypo=check hypothetical move, do not execute
+    static void processMove(int fromLine, int fromRow, int toLine, int toRow, int piece, boolean hypo) {
+        processMove(fromLine, fromRow, toLine, toRow, piece, hypo, Move.SDUMMY);
+    }
+
     static void processMove(int fromLine, int fromRow, int toLine, int toRow, int piece, boolean hypo, SpecialMove sMove) {
+
+        if ((piece == BLACK * PAWN && toLine == 0) || (piece == WHITE * PAWN && toLine == 7)) {
+            //System.out.println(toRow+" "+piece+" LLL "+hypo);
+            piece = (int) Math.signum(piece) * QUEEN; //TODO: choose piece (human) / all options (PC)
+        }
 
         setPieceBoard(toLine, toRow, piece, hypo);
         setPieceBoard(fromLine, fromRow, 0, hypo);
@@ -309,29 +323,28 @@ public class ChessBoard implements ActionListener {
         }
     }
 
+    //TODO: promotion (and castling as well?) not done after computer move
     private static void computerMove() {
         //TODO: check openings
-        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, state);
+        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
 
         //TODO: choose move
         IBoardState chosenMove = allMoves.get(0);
         System.out.println(chosenMove);
 
-        //TODO: append to notation (save string of last move in state)
+        //append to notation
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
 
-        //update state
-        System.out.println("MM2 " + chosenMove.state.nMoves);
+        //update currentStaticState //TODO: update castling currentStaticState
         pastMoves.add(chosenMove.state.nMoves, chosenMove);
         restoreState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
-
-        System.out.println("cM:  " + state.nMoves + " " + pastMoves.size());
-
 
     }
 
     //set both iBoard int array and the content of the correspond tile "tiles"
     private static void setPieceBoard(int line, int row, int piece, boolean hypo) {
+        if (line < 0 || line > 7 || row < 0 || row > 7)
+            throw new ArrayIndexOutOfBoundsException("line: " + line + " row: " + row);
         if (hypo) {
             hypo_iBoard.setup[line][row] = piece;
         } else {
@@ -348,11 +361,6 @@ public class ChessBoard implements ActionListener {
         //	System.out.println(iBoard.setup[0][0]);
         //Tile tmp=(Tile)e.getSource();
         changeBoardState(Tile.statLine, Tile.statRow); //line and row clicked as argument
-    }
-
-    static class SpecialMove {
-        boolean castling = false;
-        boolean enPassant = false;
     }
 
 
