@@ -25,7 +25,7 @@ public class Chess extends JFrame {
 
     static Notation notation;
     private static JScrollPane scrollPane;
-    static JLabel btnThis;
+    static JButton btnLastMove;
 
     // Constructor to set up the GUI components and event handlers
     private Chess() {
@@ -38,12 +38,19 @@ public class Chess extends JFrame {
 
         // Set up a panel for the buttons
         //	JPanel btnPanel = new JPanel(new FlowLayout());
+
+        JPanel emptyPanel1 = new JPanel();
+        emptyPanel1.setPreferredSize(new Dimension(CANVAS_WIDTH / 15, BUTTON_HEIGHT));
+        JPanel emptyPanel2 = new JPanel();
+        emptyPanel2.setPreferredSize(new Dimension(CANVAS_WIDTH / 15, BUTTON_HEIGHT));
+
         JPanel btnPanel = new JPanel(new GridLayout(1, 0, 0, 0));
         //JPanel btnPanel = new JPanel();
-        btnPanel.setPreferredSize(new Dimension(CANVAS_WIDTH / 2, BUTTON_HEIGHT));
+        btnPanel.setPreferredSize(new Dimension(CANVAS_WIDTH, BUTTON_HEIGHT));
 
         //btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.PAGE_AXIS));
-        btnPanel.add(new JLabel()); //empty cell
+//X        btnPanel.add(new JLabel()); //empty cell
+
         JButton btnBegin = new JButton("<<");
         btnPanel.add(btnBegin);
         btnBegin.addActionListener(new ActionListener() {
@@ -53,6 +60,7 @@ public class Chess extends JFrame {
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
+
         JButton btnPrev = new JButton("<");
         btnPanel.add(btnPrev);
         btnPrev.addActionListener(new ActionListener() {
@@ -62,8 +70,17 @@ public class Chess extends JFrame {
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
-        btnThis = new JLabel("", SwingConstants.CENTER);
-        btnPanel.add(btnThis);
+
+        btnLastMove = new JButton("");
+        btnPanel.add(btnLastMove);
+        btnLastMove.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                ChessBoard.computerMove();
+                //canvas.repaint();
+                requestFocus(); // change the focus to JFrame to receive KeyEvent
+            }
+        });
+
         JButton btnNext = new JButton(">");
         btnPanel.add(btnNext);
         btnNext.addActionListener(new ActionListener() {
@@ -82,7 +99,7 @@ public class Chess extends JFrame {
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
-        btnPanel.add(new JLabel()); //empty cell
+//X        btnPanel.add(new JLabel()); //empty cell
 
         // Set up the tiles plus coordinates at the edges
         canvas = new DrawCanvas();
@@ -114,7 +131,7 @@ public class Chess extends JFrame {
 
         scrollPane = new JScrollPane(notationPanel, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         scrollPane.setViewportView(notationPanel);
-        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
+        scrollPane.setBorder(BorderFactory.createLineBorder(Color.BLACK, 4));
 
         Dimension d = scrollPane.getPreferredSize();
         d.height = 85;
@@ -123,7 +140,15 @@ public class Chess extends JFrame {
         // Add panels to the JFrame's content-pane
         Container cp = getContentPane();
         cp.setLayout(new BorderLayout());
-        cp.add(btnPanel, BorderLayout.NORTH);
+
+        JPanel cButton = new JPanel();
+        cButton.setLayout(new BorderLayout());
+        cButton.add(emptyPanel1, BorderLayout.LINE_START);
+        cButton.add(btnPanel, BorderLayout.CENTER);
+        cButton.add(emptyPanel2, BorderLayout.LINE_END);
+
+        cp.add(cButton, BorderLayout.NORTH);
+//        cp.add(btnPanel, BorderLayout.NORTH);
         cp.add(canvas, BorderLayout.CENTER);
         //	cp.add(notationPanel, BorderLayout.SOUTH);
         cp.add(scrollPane, BorderLayout.SOUTH);
