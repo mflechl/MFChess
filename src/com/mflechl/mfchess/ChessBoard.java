@@ -196,6 +196,8 @@ public class ChessBoard implements ActionListener {
                 tileActive = false;
                 Chess.btnLastMove.setText(getLastMoveString());
 
+                computerMove(); //by default, always answer a human move with a computer move
+
             }
         }
 

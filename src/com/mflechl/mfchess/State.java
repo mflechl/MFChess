@@ -12,6 +12,8 @@ class State {
         this.castlingPossibleK = st.castlingPossibleK.clone();
         this.enPassantPossible = st.enPassantPossible;
         this.check = st.check;
+        this.remis = st.remis;
+        this.mate = st.mate;
     }
 
     void update(int movingPiece, int fromLine, int toLine, int fromRow) {
@@ -23,7 +25,8 @@ class State {
     }
 
     public String toString() {
-        return "turnOf=" + turnOf + " nMoves=" + nMoves + " moveNumber=" + moveNumber + " enPassantPossible=" + enPassantPossible + " check=" + check +
+        return "turnOf=" + turnOf + " nMoves=" + nMoves + " moveNumber=" + moveNumber + " enPassantPossible=" + enPassantPossible +
+                " check=" + check + " mate=" + mate + " remis=" + remis +
                 " castlingPossibleQ b/w=" + castlingPossibleQ[0] + "/" + castlingPossibleQ[1] +
                 " castlingPossibleK b/w=" + castlingPossibleK[0] + "/" + castlingPossibleK[1];
 

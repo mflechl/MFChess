@@ -264,11 +264,11 @@ public final class Move {
     }
 
     static void updateCheckState(State state, IBoard iBoard) {
+        state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?
         if (noLegalMoves(iBoard, state)) {
             if (state.check) state.mate = true;
             else state.remis = true;
         }
-        state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?
     }
 
 
