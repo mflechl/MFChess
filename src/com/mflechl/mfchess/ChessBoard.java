@@ -140,7 +140,10 @@ public class ChessBoard implements ActionListener {
             Move.updateCheckState(currentStaticState, iBoard);
             IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
             pastMoves.set(currentStaticState.nMoves, currentMove);
-            return;
+            String str = Notation.notationStrings.get(currentStaticState.nMoves);
+            str = str.replaceAll("..$", ChessBoard.lpieces[Math.abs(newPiece)] + " ");
+            Notation.notationStrings.set(currentStaticState.nMoves, str);
+            Chess.notation.display();
         } else {
             Tile.promActive = false;
             for (Tile[] itiles : tiles) {
@@ -159,7 +162,6 @@ public class ChessBoard implements ActionListener {
     private int aLine = -1;
     private int aRow = -1;
 
-    //TODO: Notation for promotion?
     private void changeBoardState(int _l, int _r) {
 
         if (Tile.promActive) {

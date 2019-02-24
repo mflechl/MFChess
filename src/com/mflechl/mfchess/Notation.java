@@ -94,8 +94,12 @@ class Notation extends JLabel {
 
     void updateText(String newText, int pos) {
         notationStrings.add(pos, newText);
-        setWidth(w);
+        display();
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
+    }
+
+    void display() {
+        setWidth(w);
     }
 
     void setWidth(int width) {

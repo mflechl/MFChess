@@ -186,7 +186,7 @@ public class Chess extends JFrame {
             super.paintComponent(g);
             setBackground(CANVAS_BACKGROUND);
             //	  System.out.println("YY "+scrollPane.getSize().width);
-            notation.setWidth(scrollPane.getSize().width * 2 / 3);
+            notation.setWidth(scrollPane.getSize().width * 3 / 4);
             //	  System.out.println( "X " + chessBoard.tiles[0][0].getSize().width );
             chessBoard.setMaxFontSize();
             coordBoard.setMaxFontSize();
