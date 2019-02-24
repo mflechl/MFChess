@@ -48,7 +48,7 @@ class Notation extends JLabel {
                 //	    if (piece>0) lbl+=com.mflechl.mfchess.ChessBoard.upieces[apiece]; //white pieces, unicode
                 //	    else         lbl+=com.mflechl.mfchess.ChessBoard.bupieces[apiece]; //black pieces, unicode
             }
-            lbl += ambiguity(board, piece, aLine, aRow, toLine, toRow, state); //XX
+            lbl += ambiguity(board, piece, aLine, aRow, toLine, toRow, state);
 
             //elimination
             if (eliminatedPiece != 0 || enpassant) {
@@ -60,6 +60,13 @@ class Notation extends JLabel {
             lbl += CoordBoard.alpha[toRow + 1];
             lbl += Integer.toString(toLine + 1);
         }
+
+        // promotion
+        if ((piece == ChessBoard.BLACK * ChessBoard.PAWN && toLine == 0) || (piece == ChessBoard.WHITE * ChessBoard.PAWN && toLine == 7)) {
+            lbl += "Q";
+        }
+
+        // mate / remis /check
         if (mate || remis || check) {
             lbl += "<font color='red'>";
             if (mate) {
@@ -100,12 +107,14 @@ class Notation extends JLabel {
         setText("<html><body style='width: " + width + "px'>" + str + "</html>");
     }
 
+    //check if the notation is ambiguous, i.e. if row and/or line need also be given
+    //board is the board *before* the last move has happened
     static String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, State state) {
         String amb = "";
         int namb = 0;
         for (int iLine = 0; iLine < 8; iLine++) {
             for (int iRow = 0; iRow < 8; iRow++) {
-                if (iLine == fromLine && iRow == fromRow) continue;
+                if (iLine == fromLine && iRow == fromRow) continue; //this is the move that was actually made
                 if (board.setup[iLine][iRow] == piece) {
                     if (Move.isLegal(board, Move.sDummy, iLine, iRow, toLine, toRow, state)) {
                         namb++;

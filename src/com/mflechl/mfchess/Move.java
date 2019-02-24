@@ -238,13 +238,17 @@ public final class Move {
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
                     Move.updateCheckState(updatedState, hypo_iBoard);
 
-                    for (int i = 1; i <= 4; i++) { //in case of promotion, write four possible moves; otherwise no real loop
+                    for (int i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
                         String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
-                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation));
-                        if (!prom) break;
-                        hypo_iBoard.setup[toLine][toRow] = (ChessBoard.QUEEN + i); //2=queen, 3=rook, 4=bishop, 5=knight
+                        if (!prom) {
+                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation));
+                            break; //stop hier if it is not a promotion case
+                        }
+
+                        hypo_iBoard.setup[toLine][toRow] = i; //2=queen, 3=rook, 4=bishop, 5=knight
+                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("..$", ChessBoard.lpieces[i] + " ")));
                     }
                 }
             }

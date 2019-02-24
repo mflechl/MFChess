@@ -130,37 +130,41 @@ public class ChessBoard implements ActionListener {
         }
     }
 
+    private static void promChooseFigure(int _l, int _r) {
+        if (tiles[_l][_r].thisPromActive) {
+            int newPiece = iBoard.setup[_l][_r] - currentStaticState.turnOf;
+            if (Math.abs(newPiece) > Math.abs(KNIGHT)) newPiece = (int) Math.signum(newPiece) * QUEEN;
+            setPieceBoard(iBoard, _l, _r, newPiece, false);
+            //tiles[_l][_r].setPiece( tiles[_l][_r].getPiece()-currentStaticState.turnOf );
+            //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (int)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
+            Move.updateCheckState(currentStaticState, iBoard);
+            IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
+            pastMoves.set(currentStaticState.nMoves, currentMove);
+            return;
+        } else {
+            Tile.promActive = false;
+            for (Tile[] itiles : tiles) {
+                for (Tile itile : itiles) {
+                    if (itile.thisPromActive) {
+                        itile.setBorderInactive();
+                        itile.thisPromActive = false;
+                    }
+                }
+            }
+        }
+    }
+
+
     private boolean tileActive = false;
     private int aLine = -1;
     private int aRow = -1;
 
+    //TODO: Notation for promotion?
     private void changeBoardState(int _l, int _r) {
 
         if (Tile.promActive) {
-            if (tiles[_l][_r].thisPromActive) {
-                int newPiece = iBoard.setup[_l][_r] - currentStaticState.turnOf;
-                if (Math.abs(newPiece) > Math.abs(KNIGHT)) newPiece = (int) Math.signum(newPiece) * QUEEN;
-                setPieceBoard(iBoard, _l, _r, newPiece, false);
-                //tiles[_l][_r].setPiece( tiles[_l][_r].getPiece()-currentStaticState.turnOf );
-                //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (int)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
-
-                IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
-                //TODO: recheck check
-                //TODO: right thing happens if computer move is chosen while prom frame is still on
-                //TODO: turn on auto computer move again
-                pastMoves.set(currentStaticState.nMoves, currentMove);
-                return;
-            } else {
-                Tile.promActive = false;
-                for (Tile[] itiles : tiles) {
-                    for (Tile itile : itiles) {
-                        if (itile.thisPromActive) {
-                            itile.setBorderInactive();
-                            itile.thisPromActive = false;
-                        }
-                    }
-                }
-            }
+            promChooseFigure(_l, _r);
+            if (!Tile.promActive) computerMove();
             return;
         }
 
@@ -237,7 +241,7 @@ public class ChessBoard implements ActionListener {
                 Chess.btnLastMove.setText(getLastMoveString());
                 System.out.println("hu: " + currentStaticState + " promActive" + Tile.promActive);
 
-//                computerMove(); //by default, always answer a human move with a computer move
+                if (!Tile.promActive) computerMove(); //by default, always answer a human move with a computer move
 
             }
         }
@@ -352,7 +356,7 @@ public class ChessBoard implements ActionListener {
 
         if ((piece == BLACK * PAWN && toLine == 0) || (piece == WHITE * PAWN && toLine == 7)) {
             //System.out.println(toRow+" "+piece+" LLL "+hypo);
-            piece = (int) Math.signum(piece) * QUEEN; //TODO: choose piece (human)
+            piece = (int) Math.signum(piece) * QUEEN;
             if (!hypo) {
                 tiles[toLine][toRow].setPromBorder();
                 System.out.println("promActive = " + Tile.promActive);
@@ -403,6 +407,10 @@ public class ChessBoard implements ActionListener {
 
     static void computerMove() {
         //TODO: check openings
+
+        if (Tile.promActive) {
+            promChooseFigure(4, 4); //cannot have an active promotion in line 4... just to trigger to move on.
+        }
 
         setAllBordersInactive();
 
