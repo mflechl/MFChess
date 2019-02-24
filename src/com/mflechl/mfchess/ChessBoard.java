@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+//import java.util.concurrent.TimeUnit;
 
 //import javax.swing.Icon;
 
@@ -121,6 +122,7 @@ public class ChessBoard implements ActionListener {
     }
 
     private static void setAllBordersInactive() {
+        System.out.println("setting all inactive!");
         for (Tile[] tiles : tiles) {
             for (Tile tile : tiles) {
                 tile.setBorderInactive();
@@ -133,6 +135,34 @@ public class ChessBoard implements ActionListener {
     private int aRow = -1;
 
     private void changeBoardState(int _l, int _r) {
+
+        if (Tile.promActive) {
+            if (tiles[_l][_r].thisPromActive) {
+                int newPiece = iBoard.setup[_l][_r] - currentStaticState.turnOf;
+                if (Math.abs(newPiece) > Math.abs(KNIGHT)) newPiece = (int) Math.signum(newPiece) * QUEEN;
+                setPieceBoard(iBoard, _l, _r, newPiece, false);
+                //tiles[_l][_r].setPiece( tiles[_l][_r].getPiece()-currentStaticState.turnOf );
+                //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (int)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
+
+                IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
+                //TODO: recheck check
+                //TODO: right thing happens if computer move is chosen while prom frame is still on
+                //TODO: turn on auto computer move again
+                pastMoves.set(currentStaticState.nMoves, currentMove);
+                return;
+            } else {
+                Tile.promActive = false;
+                for (Tile[] itiles : tiles) {
+                    for (Tile itile : itiles) {
+                        if (itile.thisPromActive) {
+                            itile.setBorderInactive();
+                            itile.thisPromActive = false;
+                        }
+                    }
+                }
+            }
+            return;
+        }
 
         //piece of right color?; change setActiveBorder field if needed
         if (tiles[_l][_r].getPiece() * currentStaticState.turnOf > 0) {
@@ -171,7 +201,6 @@ public class ChessBoard implements ActionListener {
                 updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
                 Move.updateCheckState(updatedState, iBoard);
 
-
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6
 
@@ -180,22 +209,35 @@ public class ChessBoard implements ActionListener {
                 Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState, currentStaticState, aLine, aRow, _l, _r,
                         movingPiece, eliminatedPiece, sMove);
 
-                //update currentStaticState
-                currentStaticState = updatedState;
                 //save to history
-                IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
+                IBoardState currentMove = new IBoardState(iBoard, updatedState);
                 pastMoves.add(updatedState.nMoves, currentMove);
 
-                System.out.println("hu: " + currentStaticState);
+                //update currentStaticState
+                currentStaticState = updatedState;
 
-                //tiles[aLine][aRow].setBorderInactive();
+                System.out.println("hu: " + currentStaticState + " promActive" + Tile.promActive);
+
+                /*
+                while (Tile.promActive){
+                    try
+                    {
+                        TimeUnit.MILLISECONDS.sleep(10);
+                    }
+                    catch(InterruptedException ex)
+                    {
+                    }
+                }
+                */
+
                 setAllBordersInactive();
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
                 Chess.btnLastMove.setText(getLastMoveString());
+                System.out.println("hu: " + currentStaticState + " promActive" + Tile.promActive);
 
-                computerMove(); //by default, always answer a human move with a computer move
+//                computerMove(); //by default, always answer a human move with a computer move
 
             }
         }
@@ -311,6 +353,10 @@ public class ChessBoard implements ActionListener {
         if ((piece == BLACK * PAWN && toLine == 0) || (piece == WHITE * PAWN && toLine == 7)) {
             //System.out.println(toRow+" "+piece+" LLL "+hypo);
             piece = (int) Math.signum(piece) * QUEEN; //TODO: choose piece (human)
+            if (!hypo) {
+                tiles[toLine][toRow].setPromBorder();
+                System.out.println("promActive = " + Tile.promActive);
+            }
             ret = true;
         }
 

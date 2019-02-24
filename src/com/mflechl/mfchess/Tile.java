@@ -1,16 +1,12 @@
 package com.mflechl.mfchess;
 
+import javax.swing.*;
+import javax.swing.border.Border;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import java.awt.Font;
-import java.awt.Color;
-
-import javax.swing.JLabel;
-import javax.swing.border.Border;
-import javax.swing.BorderFactory;
 //import javax.swing.Icon;
 
 public class Tile extends JLabel {
@@ -20,10 +16,13 @@ public class Tile extends JLabel {
 
     static Border activeBorder = BorderFactory.createLineBorder(Color.BLUE, 5);
     static Border destinationBorder = BorderFactory.createLineBorder(Color.RED, 3);
+    static Border promBorder = BorderFactory.createLineBorder(Color.GREEN, 5);
 
     public int piece = 0;
-    public int line, row;
-    public static int statLine, statRow;
+    public int line, row; //line and row of this tile
+    public boolean thisPromActive = false; //this tile: promotion, pick piece
+    public static boolean promActive = false; //any tile: promotion, pick piece
+    public static int statLine, statRow; //line and row of the row that was just clicked
 
     //  public Map<Integer,String> pieceDict = createDict();
 
@@ -55,15 +54,32 @@ public class Tile extends JLabel {
     }
 
     public void setActiveBorder() {
+        if (promActive) {
+            promActive = false;
+            for (Tile[] tiles : ChessBoard.tiles) {
+                for (Tile tile : tiles) {
+                    tile.setBorderInactive();
+                    tile.thisPromActive = false;
+                }
+            }
+        }
         setBorder(activeBorder);
+
     }
 
     public void setDestinationBorder() {
         setBorder(destinationBorder);
     }
 
+    public void setPromBorder() {
+        setBorder(promBorder);
+        thisPromActive = true;
+        promActive = true;
+        System.out.println("PromBorder!");
+    }
+
     public void setBorderInactive() {
-        setBorder(null);
+        if (!thisPromActive || !promActive) setBorder(null);
     }
 
     public int getPiece() {
