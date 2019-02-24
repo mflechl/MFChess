@@ -16,7 +16,10 @@ public class Tile extends JLabel {
 
     static Border activeBorder = BorderFactory.createLineBorder(Color.BLUE, 5);
     static Border destinationBorder = BorderFactory.createLineBorder(Color.RED, 3);
+    static Border lastMoveBorder = BorderFactory.createLineBorder(Color.DARK_GRAY, 5);
     static Border promBorder = BorderFactory.createLineBorder(Color.GREEN, 5);
+
+    static int promLine = -1, promRow = -1;
 
     public int piece = 0;
     public int line, row; //line and row of this tile
@@ -55,13 +58,20 @@ public class Tile extends JLabel {
 
     public void setActiveBorder() {
         if (promActive) {
+            ChessBoard.tiles[promLine][promRow].thisPromActive = false;
+            ChessBoard.tiles[promLine][promRow].setBorderInactive();
             promActive = false;
+            promLine = -1;
+            promRow = -1;
+
+            /*
             for (Tile[] tiles : ChessBoard.tiles) {
                 for (Tile tile : tiles) {
                     tile.setBorderInactive();
                     tile.thisPromActive = false;
                 }
             }
+            */
         }
         setBorder(activeBorder);
 
@@ -71,11 +81,17 @@ public class Tile extends JLabel {
         setBorder(destinationBorder);
     }
 
+    public void setLastMoveBorder() {
+        setBorder(lastMoveBorder);
+    }
+
     public void setPromBorder() {
         setBorder(promBorder);
+        promLine = line;
+        promRow = row;
+
         thisPromActive = true;
         promActive = true;
-        System.out.println("PromBorder!");
     }
 
     public void setBorderInactive() {
