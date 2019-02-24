@@ -133,7 +133,6 @@ public class ChessBoard implements ActionListener {
     private int aRow = -1;
 
     private void changeBoardState(int _l, int _r) {
-        //TODO: Special cases - promotion: ask for piece
 
         //piece of right color?; change setActiveBorder field if needed
         if (tiles[_l][_r].getPiece() * currentStaticState.turnOf > 0) {
@@ -305,16 +304,21 @@ public class ChessBoard implements ActionListener {
         processMove( board, fromLine, fromRow, toLine, toRow, piece, hypo, Move.SDUMMY );
     }
 */
-
-    static void processMove(IBoard board, int fromLine, int fromRow, int toLine, int toRow, int piece, boolean hypo, SpecialMove sMove) {
+    //return value gives row where promotion happened, if applicable, otherwise -1
+    static boolean processMove(IBoard board, int fromLine, int fromRow, int toLine, int toRow, int piece, boolean hypo, SpecialMove sMove) {
+        boolean ret = false;
 
         if ((piece == BLACK * PAWN && toLine == 0) || (piece == WHITE * PAWN && toLine == 7)) {
             //System.out.println(toRow+" "+piece+" LLL "+hypo);
-            piece = (int) Math.signum(piece) * QUEEN; //TODO: choose piece (human) / all options (PC)
+            piece = (int) Math.signum(piece) * QUEEN; //TODO: choose piece (human)
+            ret = true;
         }
 
-        setPieceBoard(board, toLine, toRow, piece, hypo);
+        //remove old piece
         setPieceBoard(board, fromLine, fromRow, 0, hypo);
+
+        //put new piece
+        setPieceBoard(board, toLine, toRow, piece, hypo);
 
         if (sMove.enPassant) setPieceBoard(board, toLine - (int) Math.signum(piece), toRow, 0, hypo);
         if (sMove.castling) {
@@ -330,6 +334,7 @@ public class ChessBoard implements ActionListener {
             setPieceBoard(board, toLine, rookToRow, (int) Math.signum(piece) * ROOK, hypo);
             setPieceBoard(board, toLine, rookFromRow, 0, hypo);
         }
+        return ret;
     }
 
     //set both iBoard int array and the content of the correspond tile "tiles"
@@ -352,16 +357,16 @@ public class ChessBoard implements ActionListener {
 
     static void computerMove() {
         //TODO: check openings
-        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
-        if (allMoves.isEmpty()) {
-            System.out.println("cannot move");
-            return; //mate or remis
-        }
+
         setAllBordersInactive();
+
+        //get list of all possible moves
+        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
+        if (allMoves.isEmpty()) return;   //mate or remis
 
         //TODO: choose move
         IBoardState chosenMove = allMoves.get(0);
-        System.out.println("chosenMove = \n " + chosenMove);
+        System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size());
 
         removeFutureMoves(chosenMove.state);
 

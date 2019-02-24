@@ -225,7 +225,7 @@ public final class Move {
                 if (isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, _state)) {
 
                     IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
-                    ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
+                    boolean prom = ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
                     System.out.println(_iBoard.setup[fromLine][fromRow] + " from: " + CoordBoard.alpha[fromRow + 1] + " " + (fromLine + 1) + "   to: " + CoordBoard.alpha[toRow + 1] + " " + (toLine + 1));
 
                     if (stopAfterFirst) { //only about checking that a legal move exists?
@@ -238,10 +238,14 @@ public final class Move {
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
                     Move.updateCheckState(updatedState, hypo_iBoard);
 
-                    String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
-                            _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
+                    for (int i = 1; i <= 4; i++) { //in case of promotion, write four possible moves; otherwise no real loop
+                        String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
+                                _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
-                    list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation)); //TODO: associate updated currentStaticState
+                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation));
+                        if (!prom) break;
+                        hypo_iBoard.setup[toLine][toRow] = (ChessBoard.QUEEN + i); //2=queen, 3=rook, 4=bishop, 5=knight
+                    }
                 }
             }
         }
