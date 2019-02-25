@@ -33,7 +33,7 @@ class Notation extends JLabel {
         if (piece > 0) {
             lbl += "<font color='blue'>";
             lbl += Integer.toString(imove);
-            lbl += ".";
+            lbl += ". ";
             lbl += "</font>";
         }
 

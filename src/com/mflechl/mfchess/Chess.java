@@ -11,6 +11,7 @@ import java.net.URL;
 /**
  * MFChess: A ...
  */
+
 @SuppressWarnings("serial")
 public class Chess extends JFrame {
     // Define constants for the various dimensions
@@ -30,11 +31,15 @@ public class Chess extends JFrame {
 
     // Constructor to set up the GUI components and event handlers
     private Chess() {
+        this("");
+    }
+
+    private Chess(String initialNotation) {
         // Construct a sprite given x, y, width, height, color
         Color ColorLight = new Color(255, 206, 158);
         Color ColorDark = new Color(209, 139, 71);
         //	chessBoard = new com.mflechl.mfchess.ChessBoard(Color.ORANGE, Color.WHITE);
-        chessBoard = new ChessBoard(ColorDark, ColorLight);
+        chessBoard = new ChessBoard(ColorDark, ColorLight, initialNotation);
         coordBoard = new CoordBoard();
 
         // Set up a panel for the buttons
@@ -206,11 +211,13 @@ public class Chess extends JFrame {
 
     // The entry main() method
     public static void main(String[] args) {
+        String initialNotation = "1. e4 Na6 2. Bxa6 ";
+
         // Run GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {
             @Override
             public void run() {
-                new Chess(); // Let the constructor do the job
+                new Chess(initialNotation); // Let the constructor do the job
             }
         });
     }

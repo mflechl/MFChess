@@ -36,11 +36,14 @@ public class ChessBoard implements ActionListener {
 //    private boolean remis = false;
 
     // Constructor
-    ChessBoard(Color color1, Color color2) {
+    ChessBoard(Color color1, Color color2, String initialNotation) {
         this.color1 = color1;
         this.color2 = color2;
         initBoard();
         pastMoves.add(new IBoardState(iBoard, currentStaticState));
+        if (!initialNotation.equals("")) {
+            setStateFromNotation(initialNotation);
+        }
     }
 
     void setMaxFontSize() {
@@ -306,6 +309,11 @@ public class ChessBoard implements ActionListener {
         }
     }
 
+    //translate notation into board states
+    void setStateFromNotation(String notation) {
+        NotationToState.translate(notation);
+        System.out.println("init: " + notation);
+    }
 
     static void setLabelLastMove(int gotoState) {
         if (gotoState < 0) Chess.btnLastMove.setText(getLastMoveString().replaceAll("<font color='red'>.*</font>", ""));
