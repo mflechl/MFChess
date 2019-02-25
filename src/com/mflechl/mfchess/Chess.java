@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.net.URL;
 
 /**
  * MFChess: A ...
@@ -171,7 +172,15 @@ public class Chess extends JFrame {
         });
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle the CLOSE button
-        setTitle("MF com.mflechl.mfchess.Chess");
+
+        //title and icon
+        setTitle("MFChess");
+        URL url = ClassLoader.getSystemClassLoader().getResource("chess-icon.png");
+        if (url != null) {
+            ImageIcon icon = new ImageIcon(url);
+            setIconImage(icon.getImage());
+        }
+
         pack();           // pack all the components in the JFrame - this triggers the drawing!
         setVisible(true); // show it
         requestFocus();   // set the focus to JFrame to receive KeyEvent
