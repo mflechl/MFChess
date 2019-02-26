@@ -5,10 +5,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 //import java.util.concurrent.TimeUnit;
-
 //import javax.swing.Icon;
-
 
 /**
  *
@@ -18,7 +17,7 @@ public class ChessBoard implements ActionListener {
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
 
-    private static IBoard iBoard = new IBoard();
+    private static IBoard iBoard = new IBoard(); //constructor sets up inital chess board state
     //    static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
 
@@ -29,11 +28,8 @@ public class ChessBoard implements ActionListener {
     static ImageIcon[] bpieces = new ImageIcon[7];
 
     static State currentStaticState = new State();
-
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
-//    private boolean mate = false;
-//    private boolean remis = false;
 
     // Constructor
     ChessBoard(Color color1, Color color2, String initialNotation) {
@@ -41,9 +37,9 @@ public class ChessBoard implements ActionListener {
         this.color2 = color2;
         initBoard();
         pastMoves.add(new IBoardState(iBoard, currentStaticState));
-        if (!initialNotation.equals("")) {
-            setStateFromNotation(initialNotation);
-        }
+//X        if (!initialNotation.equals("")) {
+//X            setStateFromNotation(initialNotation);
+//X        }
     }
 
     void setMaxFontSize() {
@@ -62,11 +58,6 @@ public class ChessBoard implements ActionListener {
     }
 
     private void setFontSize(float fs) {
-/*        for (Tile[] tiles : tiles) {
-            for (Tile tile : tiles) {
-                tile.setFontSize(fs);
-            }
-        }*/
         tiles[0][0].setFontSize(fs);
     }
 
@@ -85,31 +76,6 @@ public class ChessBoard implements ActionListener {
     private void initBoard() {
 
         initPieces();
-
-        for (int j = 0; j < iBoard.setup[1].length; j++) {
-            iBoard.setup[1][j] = WHITE * PAWN;
-            iBoard.setup[6][j] = BLACK * PAWN;
-            iBoard.setup[6][j] = BLACK * PAWN;
-        }
-        iBoard.setup[0][0] = WHITE * ROOK;
-        iBoard.setup[0][7] = WHITE * ROOK;
-        iBoard.setup[7][0] = BLACK * ROOK;
-        iBoard.setup[7][7] = BLACK * ROOK;
-
-        iBoard.setup[0][1] = WHITE * KNIGHT;
-        iBoard.setup[0][6] = WHITE * KNIGHT;
-        iBoard.setup[7][1] = BLACK * KNIGHT;
-        iBoard.setup[7][6] = BLACK * KNIGHT;
-
-        iBoard.setup[0][2] = WHITE * BISHOP;
-        iBoard.setup[0][5] = WHITE * BISHOP;
-        iBoard.setup[7][2] = BLACK * BISHOP;
-        iBoard.setup[7][5] = BLACK * BISHOP;
-
-        iBoard.setup[0][3] = WHITE * QUEEN;
-        iBoard.setup[0][4] = WHITE * KING;
-        iBoard.setup[7][3] = BLACK * QUEEN;
-        iBoard.setup[7][4] = BLACK * KING;
 
         for (int i = 0; i < iBoard.setup.length; i++) {
             for (int j = 0; j < iBoard.setup[i].length; j++) {
@@ -149,16 +115,7 @@ public class ChessBoard implements ActionListener {
         } else {
             tiles[Tile.promLine][Tile.promRow].setBorderInactive();
             tiles[Tile.promLine][Tile.promRow].thisPromActive = false;
-            /*
-            for (Tile[] itiles : tiles) {
-                for (Tile itile : itiles) {
-                    if (itile.thisPromActive) {
-                        itile.setBorderInactive();
-                        itile.thisPromActive = false;
-                    }
-                }
-            }
-            */
+
             Tile.promActive = false;
             Tile.promLine = -1;
             Tile.promRow = -1;
@@ -300,6 +257,7 @@ public class ChessBoard implements ActionListener {
         setLabelLastMove(gotoState);
 
         System.out.println("sAS: " + currentStaticState);
+//        System.out.println(iBoard);
     }
 
     static void removeFutureMoves(State state) {
@@ -311,7 +269,12 @@ public class ChessBoard implements ActionListener {
 
     //translate notation into board states
     void setStateFromNotation(String notation) {
-        NotationToState.translate(notation);
+        ArrayList<IBoardState> list = NotationToState.translate(notation);
+        if (list.size() > 0) pastMoves = list;
+        for (IBoardState move : pastMoves) {
+            //TODO: notation
+            setActiveState(move, move.state.nMoves);
+        }
         System.out.println("init: " + notation);
     }
 

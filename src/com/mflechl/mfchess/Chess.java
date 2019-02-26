@@ -189,6 +189,10 @@ public class Chess extends JFrame {
         pack();           // pack all the components in the JFrame - this triggers the drawing!
         setVisible(true); // show it
         requestFocus();   // set the focus to JFrame to receive KeyEvent
+
+        if (!initialNotation.equals("")) {
+            chessBoard.setStateFromNotation(initialNotation);
+        }
     }
 
     /**

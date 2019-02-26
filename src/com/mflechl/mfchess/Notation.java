@@ -30,12 +30,7 @@ class Notation extends JLabel {
         int apiece = Math.abs(piece);
 
         //write move number
-        if (piece > 0) {
-            lbl += "<font color='blue'>";
-            lbl += Integer.toString(imove);
-            lbl += ". ";
-            lbl += "</font>";
-        }
+        if (piece > 0) lbl += decorateMoveNumber(imove); //makes it colored
 
         //castling
         if (castling) {
@@ -96,6 +91,15 @@ class Notation extends JLabel {
         notationStrings.add(pos, newText);
         display();
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
+    }
+
+    static String decorateMoveNumber(int imove) {
+        String text = "";
+        text += "<font color='blue'>";
+        text += Integer.toString(imove);
+        text += ". ";
+        text += "</font>";
+        return text;
     }
 
     void display() {
