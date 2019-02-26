@@ -215,7 +215,10 @@ public class Chess extends JFrame {
 
     // The entry main() method
     public static void main(String[] args) {
-        String initialNotation = "1. e4 Na6 2. Bxa6 ";
+//        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //simple test
+//        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //en passant
+        String initialNotation = "1. a4 g5 2. a5 g4 3. f4 gxf3 4. exf3 b5 5. axb6 a5 ";
+//        String initialNotation = "";
 
         // Run GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {

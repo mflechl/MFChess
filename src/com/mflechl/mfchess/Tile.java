@@ -64,14 +64,6 @@ public class Tile extends JLabel {
             promLine = -1;
             promRow = -1;
 
-            /*
-            for (Tile[] tiles : ChessBoard.tiles) {
-                for (Tile tile : tiles) {
-                    tile.setBorderInactive();
-                    tile.thisPromActive = false;
-                }
-            }
-            */
         }
         setBorder(activeBorder);
 

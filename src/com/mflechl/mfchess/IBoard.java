@@ -1,5 +1,7 @@
 package com.mflechl.mfchess;
 
+import java.util.ArrayList;
+
 public class IBoard {
 
     IBoard() {
@@ -38,6 +40,19 @@ public class IBoard {
         setup[0][4] = ChessBoard.WHITE * ChessBoard.KING;
         setup[7][3] = ChessBoard.BLACK * ChessBoard.QUEEN;
         setup[7][4] = ChessBoard.BLACK * ChessBoard.KING;
+    }
+
+    static ArrayList<int[]> diff(IBoard b1, IBoard b2) {
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int iline = 0; iline < 8; iline++) {
+            for (int irow = 0; irow < 8; irow++) {
+                if (b1.setup[iline][irow] != b2.setup[iline][irow]) {
+                    int[] coord = {iline, irow};
+                    list.add(coord);
+                }
+            }
+        }
+        return list;
     }
     
     public String toString() {

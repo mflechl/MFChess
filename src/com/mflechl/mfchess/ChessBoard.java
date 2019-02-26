@@ -14,6 +14,8 @@ import java.util.ArrayList;
  *
  */
 public class ChessBoard implements ActionListener {
+    final static boolean COMPUTER_MOVE_ON = false;
+
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
 
@@ -375,6 +377,7 @@ public class ChessBoard implements ActionListener {
 
     static void computerMove() {
         //TODO: check openings
+        if (!COMPUTER_MOVE_ON) return;
 
         if (Tile.promActive) {
             promChooseFigure(4, 4); //cannot have an active promotion in line 4... just to trigger to move on.
@@ -400,8 +403,19 @@ public class ChessBoard implements ActionListener {
         setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
 
         //highlight last move on board
-        //TODO: find changes between boards; mark them (exceptions for en passant, castling? only case where >2 fields change!)
+        if (pastMoves.size() <= 1) return;
 
+        findAndSetLastMoveBorder(chosenMove, pastMoves.get(chosenMove.state.nMoves - 1));
+    }
+
+    static void findAndSetLastMoveBorder(IBoard b1, IBoard b2) {
+        ArrayList<int[]> boardDiff = IBoard.diff(b1, b2);
+
+        //TODO: exceptions  for list length > 2: en passant, castling
+        for (int[] pos : boardDiff) {
+            System.out.println(pos[0] + " " + pos[1] + " ");
+            tiles[pos[0]][pos[1]].setLastMoveBorder();
+        }
     }
 
 

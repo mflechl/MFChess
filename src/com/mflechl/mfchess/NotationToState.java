@@ -57,26 +57,39 @@ public final class NotationToState {
                 str = str.substring(1);                                       //remove piece from string
             }
 
+            //System.out.println(rowMap.keySet().toString().replaceAll("\\W",""));
+            int remFromRow = -1, remFromLine = -1;
+            if (str.substring(0, 2).matches("[abcdefgh]x")) {
+                //System.out.println( str.substring(0,1) );
+                remFromRow = rowMap.get(str.substring(0, 1));
+                str = str.substring(2);                                       //remove piece from string
+            }
+            System.out.print(str + " ");
             if (str.substring(0, 1).equals("x")) str = str.substring(1);     //remove "x"; str is now final state
 
-            //get to coordinates
+            //get TO coordinates
             int toLine = Integer.parseInt(str.substring(1, 2)) - 1;
             int toRow = rowMap.get(str.substring(0, 1));
 
-            //get from coordinates
+            //get FROM coordinates
+            SpecialMove sDummy = new SpecialMove();
             SpecialMove sMove = new SpecialMove();
             int fromLine = -1, fromRow = -1;
             for (int iLine = 0; iLine < 8; iLine++) {
                 for (int iRow = 0; iRow < 8; iRow++) {
                     if (piece != currentBoard.setup[iLine][iRow]) continue;
-                    sMove = new SpecialMove();
-                    if (Move.isLegal(currentBoard, sMove, iLine, iRow, toLine, toRow)) {
+                    if (remFromRow >= 0 && iRow != remFromRow) continue;
+                    sDummy = new SpecialMove();
+                    if (Move.isLegal(currentBoard, sDummy, iLine, iRow, toLine, toRow, currentBoard.state)) {
                         fromLine = iLine;
                         fromRow = iRow;
-                        //TODO: more than one possibility!
+                        sMove = new SpecialMove(sDummy); //so that it does not get overwritten
+                        //TODO: more than one possibility - should not happen anymore. But check!
                     }
                 }
             }
+
+            //move!
             if (fromLine >= 0 && fromRow >= 0) {
                 ChessBoard.processMove(currentBoard, fromLine, fromRow, toLine, toRow, currentBoard.setup[fromLine][fromRow], true, sMove);
                 currentBoard.state.update(piece, fromLine, toLine, fromRow); //also: check and castling update!
