@@ -39,9 +39,6 @@ public class ChessBoard implements ActionListener {
         this.color2 = color2;
         initBoard();
         pastMoves.add(new IBoardState(iBoard, currentStaticState));
-//X        if (!initialNotation.equals("")) {
-//X            setStateFromNotation(initialNotation);
-//X        }
     }
 
     void setMaxFontSize() {
@@ -252,11 +249,16 @@ public class ChessBoard implements ActionListener {
     }
 
     static void setActiveState(IBoardState boardState, int gotoState) {
+        setAllBordersInactive();
+
         iBoard = new IBoard(boardState);
         currentStaticState = new State(boardState.state);
 
         fillTilesFromBoard();
         setLabelLastMove(gotoState);
+
+        if (boardState.state.nMoves > 0 && pastMoves.size() >= boardState.state.nMoves)
+            findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
 
         System.out.println("sAS: " + currentStaticState);
 //        System.out.println(iBoard);
@@ -405,7 +407,7 @@ public class ChessBoard implements ActionListener {
         //highlight last move on board
         if (pastMoves.size() <= 1) return;
 
-        findAndSetLastMoveBorder(chosenMove, pastMoves.get(chosenMove.state.nMoves - 1));
+        //findAndSetLastMoveBorder(chosenMove, pastMoves.get(chosenMove.state.nMoves - 1));
     }
 
     static void findAndSetLastMoveBorder(IBoard b1, IBoard b2) {

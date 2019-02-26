@@ -50,41 +50,62 @@ public final class NotationToState {
             System.out.print(str + " ");
             currentBoard = new IBoardState(currentBoard);                 //since passed by reference to the list
 
-            //which piece moved?
-            int piece = turnOf * ChessBoard.PAWN;
-            if (str.matches(patternPiece)) {
-                piece = turnOf * pieceMap.get(str.substring(0, 1));
-                str = str.substring(1);                                       //remove piece from string
-            }
-
-            //System.out.println(rowMap.keySet().toString().replaceAll("\\W",""));
-            int remFromRow = -1, remFromLine = -1;
-            if (str.substring(0, 2).matches("[abcdefgh]x")) {
-                //System.out.println( str.substring(0,1) );
-                remFromRow = rowMap.get(str.substring(0, 1));
-                str = str.substring(2);                                       //remove piece from string
-            }
-            System.out.print(str + " ");
-            if (str.substring(0, 1).equals("x")) str = str.substring(1);     //remove "x"; str is now final state
-
-            //get TO coordinates
-            int toLine = Integer.parseInt(str.substring(1, 2)) - 1;
-            int toRow = rowMap.get(str.substring(0, 1));
-
-            //get FROM coordinates
-            SpecialMove sDummy = new SpecialMove();
-            SpecialMove sMove = new SpecialMove();
+            int toLine = -1, toRow = -1;
             int fromLine = -1, fromRow = -1;
-            for (int iLine = 0; iLine < 8; iLine++) {
-                for (int iRow = 0; iRow < 8; iRow++) {
-                    if (piece != currentBoard.setup[iLine][iRow]) continue;
-                    if (remFromRow >= 0 && iRow != remFromRow) continue;
-                    sDummy = new SpecialMove();
-                    if (Move.isLegal(currentBoard, sDummy, iLine, iRow, toLine, toRow, currentBoard.state)) {
-                        fromLine = iLine;
-                        fromRow = iRow;
-                        sMove = new SpecialMove(sDummy); //so that it does not get overwritten
-                        //TODO: more than one possibility - should not happen anymore. But check!
+            int piece = 0;
+            SpecialMove sDummy;
+            SpecialMove sMove = new SpecialMove();
+
+            //castling?
+            if (str.startsWith("0-0")) { //castling
+                fromRow = rowMap.get("e");
+                if (turnOf == ChessBoard.WHITE) fromLine = 0;
+                else fromLine = 7;
+                toLine = fromLine;
+                piece = ChessBoard.KING * turnOf;
+
+                if (str.startsWith("0-0-0")) { //queen-side castling
+                    toRow = rowMap.get("c");
+                } else {
+                    toRow = rowMap.get("g");
+                }
+                //check if it is really legal; also sets sMove.castling = true
+                if (!Move.isLegal(currentBoard, sMove, fromLine, fromRow, toLine, toRow, currentBoard.state))
+                    return list;
+            } else {
+                //which piece moved?
+                piece = turnOf * ChessBoard.PAWN;
+                if (str.matches(patternPiece)) {
+                    piece = turnOf * pieceMap.get(str.substring(0, 1));
+                    str = str.substring(1);                                       //remove piece from string
+                }
+
+                //System.out.println(rowMap.keySet().toString().replaceAll("\\W",""));
+                int remFromRow = -1, remFromLine = -1;
+                if (str.substring(0, 2).matches("[abcdefgh]x")) {
+                    //System.out.println( str.substring(0,1) );
+                    remFromRow = rowMap.get(str.substring(0, 1));
+                    str = str.substring(2);                                       //remove piece from string
+                }
+                System.out.print(str + " ");
+                if (str.substring(0, 1).equals("x")) str = str.substring(1);     //remove "x"; str is now final state
+
+                //get TO coordinates
+                toLine = Integer.parseInt(str.substring(1, 2)) - 1;
+                toRow = rowMap.get(str.substring(0, 1));
+
+                //get FROM coordinates
+                for (int iLine = 0; iLine < 8; iLine++) {
+                    for (int iRow = 0; iRow < 8; iRow++) {
+                        if (piece != currentBoard.setup[iLine][iRow]) continue;
+                        if (remFromRow >= 0 && iRow != remFromRow) continue;
+                        sDummy = new SpecialMove();
+                        if (Move.isLegal(currentBoard, sDummy, iLine, iRow, toLine, toRow, currentBoard.state)) {
+                            fromLine = iLine;
+                            fromRow = iRow;
+                            sMove = new SpecialMove(sDummy); //so that it does not get overwritten
+                            //TODO: more than one possibility - should not happen anymore. But check!
+                        }
                     }
                 }
             }

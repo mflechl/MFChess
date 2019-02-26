@@ -215,10 +215,12 @@ public class Chess extends JFrame {
 
     // The entry main() method
     public static void main(String[] args) {
+        //TODO: Check queen-side castling from notation; promotion; promBorder remove after click; update state fully
 //        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //simple test
-//        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //en passant
-        String initialNotation = "1. a4 g5 2. a5 g4 3. f4 gxf3 4. exf3 b5 5. axb6 a5 ";
+//        String initialNotation = "1. a4 g5 2. a5 g4 3. f4 gxf3 4. exf3 b5 5. axb6 a5 "; //en passant
+//        String initialNotation = "1. g3 g6 2. Bh3 Bh6 3. Nf3 Nf6 4. 0-0 0-0 "; //castling king-side
 //        String initialNotation = "";
+        String initialNotation = "1. f4 g5 2. fxg5 h6 3. gxh6 a5 4. h7 a4 5. hxg8R "; //promotion white
 
         // Run GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {
