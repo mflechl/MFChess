@@ -196,6 +196,7 @@ public class ChessBoard implements ActionListener {
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
+                System.out.println("|" + getLastMoveString() + "|");
                 Chess.btnLastMove.setText(getLastMoveString());
 
                 if (AUTO_COMPUTER_MOVE && !Tile.promActive)
@@ -214,12 +215,12 @@ public class ChessBoard implements ActionListener {
         String str = Notation.notationStrings.get(iMove);
         str = str.replaceAll("\\.", ". ");
 
+        System.out.println("XXX " + str + " XXX");
         if (str.length() > 0) {
-            String substr = str.substring(0, 1);
-            if (!substr.equals("<")) {
+            if (!str.matches("\\d+\\. .*")) {
                 if (Notation.notationStrings.size() > 1) {
                     String prev = Notation.notationStrings.get(iMove - 1);
-                    prev = prev.replaceAll("</font>.*", "</font> ... ");
+                    prev = prev.replaceAll("(\\d+\\. ).*", "$1 ... ");
                     str = prev + str;
                 }
             }

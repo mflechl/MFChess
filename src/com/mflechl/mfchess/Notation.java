@@ -87,7 +87,7 @@ class Notation extends JLabel {
 
     void updateText(String newText, int pos) {
         notationStrings.add(pos, newText);
-        System.out.println(String.valueOf(notationStrings).replaceAll("<[^>]*>", "").replaceAll(",", "").replaceAll("[\\[\\]] *", ""));
+        System.out.println(String.valueOf(notationStrings).replaceAll("<[^>]*>", "").replaceAll(",", "").replaceAll("[\\[\\]] *", "").replaceAll(" +", " "));
         display();
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
     }

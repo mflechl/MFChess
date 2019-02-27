@@ -83,9 +83,18 @@ public final class NotationToState {
 
                 //System.out.println(rowMap.keySet().toString().replaceAll("\\W",""));
                 int remFromRow = -1, remFromLine = -1;
-                if (str.substring(0, 2).matches("[abcdefgh]x")) {
-                    //System.out.println( str.substring(0,1) );
+//                if (str.substring(0, 2).matches("[abcdefgh]x?[abcdefgh]")) {
+                if (str.matches("[abcdefgh]x?[abcdefgh].*")) {
                     remFromRow = rowMap.get(str.substring(0, 1));
+                    str = str.substring(1);                                       //remove piece from string
+//                } else if(str.substring(0, 2).matches("\\dx?[abcdefgh]")) {
+                } else if (str.matches("\\dx?[abcdefgh].*")) {
+                    //System.out.println( str.substring(0,1) );
+                    remFromLine = Integer.parseInt(str.substring(0, 1)) - 1;
+                    str = str.substring(1);                                       //remove piece from string
+                } else if (str.matches("[abcdefgh]\\dx?[abcdefgh].*")) {
+                    remFromRow = rowMap.get(str.substring(0, 1));
+                    remFromLine = Integer.parseInt(str.substring(1, 2)) - 1;
                     str = str.substring(2);                                       //remove piece from string
                 }
                 System.out.print(str + " ");
@@ -105,6 +114,7 @@ public final class NotationToState {
                     for (int iRow = 0; iRow < 8; iRow++) {
                         if (piece != currentBoard.setup[iLine][iRow]) continue;
                         if (remFromRow >= 0 && iRow != remFromRow) continue;
+                        if (remFromLine >= 0 && iLine != remFromLine) continue;
                         sDummy = new SpecialMove();
                         if (Move.isLegal(currentBoard, sDummy, iLine, iRow, toLine, toRow, currentBoard.state)) {
                             //Tmore than one possibility - should not happen:
