@@ -42,7 +42,7 @@ public final class NotationToState {
 
         int turnOf = ChessBoard.WHITE;
 
-        String[] split = notation.split(" ");
+        String[] split = notation.split(" +");
         for (String orig_str : split) {
             String str = orig_str;
             if (str.matches(patternMoveNumber)) continue; //remove move number
@@ -50,9 +50,10 @@ public final class NotationToState {
             System.out.print(str + " ");
             currentBoard = new IBoardState(currentBoard);                 //since passed by reference to the list
 
-            int toLine = -1, toRow = -1;
+            int toLine, toRow;
             int fromLine = -1, fromRow = -1;
-            int piece = 0;
+            int piece;
+            int toPiece = -1;
             SpecialMove sDummy;
             SpecialMove sMove = new SpecialMove();
 
@@ -90,9 +91,14 @@ public final class NotationToState {
                 System.out.print(str + " ");
                 if (str.substring(0, 1).equals("x")) str = str.substring(1);     //remove "x"; str is now final state
 
-                //get TO coordinates
+                //get TO coordinates and remove info from string
                 toLine = Integer.parseInt(str.substring(1, 2)) - 1;
                 toRow = rowMap.get(str.substring(0, 1));
+
+                //promotion: to which piece?
+                if (str.length() > 2) {
+                    if (str.substring(2, 3).matches(patternPiece)) toPiece = turnOf * pieceMap.get(str.substring(2, 3));
+                }
 
                 //get FROM coordinates
                 for (int iLine = 0; iLine < 8; iLine++) {
@@ -101,10 +107,11 @@ public final class NotationToState {
                         if (remFromRow >= 0 && iRow != remFromRow) continue;
                         sDummy = new SpecialMove();
                         if (Move.isLegal(currentBoard, sDummy, iLine, iRow, toLine, toRow, currentBoard.state)) {
+                            //Tmore than one possibility - should not happen:
+                            assert fromLine == -1 : fromRow + " " + fromLine + "    " + iRow + " " + iLine; //Run > Edit Configurations... > Configuration > VM options: -ea
                             fromLine = iLine;
                             fromRow = iRow;
                             sMove = new SpecialMove(sDummy); //so that it does not get overwritten
-                            //TODO: more than one possibility - should not happen anymore. But check!
                         }
                     }
                 }
@@ -113,11 +120,14 @@ public final class NotationToState {
             //move!
             if (fromLine >= 0 && fromRow >= 0) {
                 ChessBoard.processMove(currentBoard, fromLine, fromRow, toLine, toRow, currentBoard.setup[fromLine][fromRow], true, sMove);
+                if (Math.abs(toPiece) > 1) currentBoard.setup[toLine][toRow] = toPiece; //promotion
                 currentBoard.state.update(piece, fromLine, toLine, fromRow); //also: check and castling update!
+                ChessBoard.updateCastlingState(currentBoard.state, piece, fromLine, fromRow, toLine, toRow, sMove.castling);
+                Move.updateCheckState(currentBoard.state, currentBoard);
                 list.add(currentBoard);
                 String moveNumberStr = "";
                 if (turnOf == ChessBoard.WHITE)
-                    moveNumberStr = Notation.decorateMoveNumber(currentBoard.state.moveNumber);
+                    moveNumberStr = currentBoard.state.moveNumber + ". ";
                 Chess.notation.updateText(moveNumberStr + orig_str, currentBoard.state.nMoves);
             }
 

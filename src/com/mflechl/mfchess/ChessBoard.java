@@ -14,7 +14,7 @@ import java.util.ArrayList;
  *
  */
 public class ChessBoard implements ActionListener {
-    final static boolean COMPUTER_MOVE_ON = false;
+    final static boolean AUTO_COMPUTER_MOVE = false;
 
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
@@ -34,7 +34,7 @@ public class ChessBoard implements ActionListener {
 
 
     // Constructor
-    ChessBoard(Color color1, Color color2, String initialNotation) {
+    ChessBoard(Color color1, Color color2) {
         this.color1 = color1;
         this.color2 = color2;
         initBoard();
@@ -130,7 +130,7 @@ public class ChessBoard implements ActionListener {
 
         if (Tile.promActive) {
             promChooseFigure(_l, _r);
-            if (!Tile.promActive) computerMove();
+            if (AUTO_COMPUTER_MOVE && !Tile.promActive) computerMove();
             return;
         }
 
@@ -186,7 +186,7 @@ public class ChessBoard implements ActionListener {
 
                 //update currentStaticState
                 currentStaticState = updatedState;
-                System.out.println("hu: " + currentStaticState + " promActive" + Tile.promActive);
+                System.out.println("hu: " + currentStaticState + " promActive=" + Tile.promActive);
 
                 setAllBordersInactive();
                 tiles[aLine][aRow].setLastMoveBorder();
@@ -197,7 +197,8 @@ public class ChessBoard implements ActionListener {
                 tileActive = false;
                 Chess.btnLastMove.setText(getLastMoveString());
 
-                if (!Tile.promActive) computerMove(); //by default, always answer a human move with a computer move
+                if (AUTO_COMPUTER_MOVE && !Tile.promActive)
+                    computerMove(); //by default, always answer a human move with a computer move
 
             }
         }
@@ -276,7 +277,6 @@ public class ChessBoard implements ActionListener {
         ArrayList<IBoardState> list = NotationToState.translate(notation);
         if (list.size() > 0) pastMoves = list;
         for (IBoardState move : pastMoves) {
-            //TODO: notation
             setActiveState(move, move.state.nMoves);
         }
         System.out.println("init: " + notation);
@@ -379,8 +379,6 @@ public class ChessBoard implements ActionListener {
 
     static void computerMove() {
         //TODO: check openings
-        if (!COMPUTER_MOVE_ON) return;
-
         if (Tile.promActive) {
             promChooseFigure(4, 4); //cannot have an active promotion in line 4... just to trigger to move on.
         }
@@ -404,10 +402,6 @@ public class ChessBoard implements ActionListener {
         pastMoves.add(chosenMove.state.nMoves, chosenMove);
         setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
 
-        //highlight last move on board
-        if (pastMoves.size() <= 1) return;
-
-        //findAndSetLastMoveBorder(chosenMove, pastMoves.get(chosenMove.state.nMoves - 1));
     }
 
     static void findAndSetLastMoveBorder(IBoard b1, IBoard b2) {
@@ -415,7 +409,7 @@ public class ChessBoard implements ActionListener {
 
         //TODO: exceptions  for list length > 2: en passant, castling
         for (int[] pos : boardDiff) {
-            System.out.println(pos[0] + " " + pos[1] + " ");
+            //System.out.println(pos[0] + " " + pos[1] + " ");
             tiles[pos[0]][pos[1]].setLastMoveBorder();
         }
     }

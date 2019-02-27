@@ -75,7 +75,7 @@ public final class Move {
             if ((toLine - fromLine == col) && _iBoard.setup[toLine][toRow] == 0) return true;
             //two steps from starting line
             if (((col == 1 && fromLine == 1) || (col == -1 && fromLine == 6)) &&   //in starting line for white or black
-                    (toLine - fromLine == 2 * col)) {                                      //move two steps in the right direction
+                    (toLine - fromLine == 2 * col)) {                              //move two steps in the right direction
                 //no piece in between
                 return (_iBoard.setup[fromLine + col][fromRow] == 0 &&
                         _iBoard.setup[toLine][fromRow] == 0); //needs to be empty
@@ -85,8 +85,10 @@ public final class Move {
         else if (Math.abs(fromRow - toRow) == 1 && (toLine - fromLine) == col) {    //eliminate other piece?
             if (_iBoard.setup[toLine][toRow] * col < 0) return true; //to-field is not empty and has opposite sign
             if (_state.enPassantPossible == toRow) { //en passant?
-                sMove.enPassant = true; //SETTING ENPASSANT
-                return true;
+                if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
+                    sMove.enPassant = true; //SETTING ENPASSANT
+                    return true;
+                }
             }
         }
         return false;
@@ -226,7 +228,7 @@ public final class Move {
 
                     IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
                     boolean prom = ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
-                    System.out.println(_iBoard.setup[fromLine][fromRow] + " from: " + CoordBoard.alpha[fromRow + 1] + " " + (fromLine + 1) + "   to: " + CoordBoard.alpha[toRow + 1] + " " + (toLine + 1));
+                    //System.out.println(_iBoard.setup[fromLine][fromRow] + " from: " + CoordBoard.alpha[fromRow + 1] + " " + (fromLine + 1) + "   to: " + CoordBoard.alpha[toRow + 1] + " " + (toLine + 1));
 
                     if (stopAfterFirst) { //only about checking that a legal move exists?
                         list.add(new IBoardState(hypo_iBoard));

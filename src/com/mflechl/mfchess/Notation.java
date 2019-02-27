@@ -30,7 +30,7 @@ class Notation extends JLabel {
         int apiece = Math.abs(piece);
 
         //write move number
-        if (piece > 0) lbl += decorateMoveNumber(imove); //makes it colored
+        if (piece > 0) lbl += imove + ". ";
 
         //castling
         if (castling) {
@@ -63,14 +63,12 @@ class Notation extends JLabel {
 
         // mate / remis /check
         if (mate || remis || check) {
-            lbl += "<font color='red'>";
             if (mate) {
                 lbl += "# ";
                 if (piece > 0) lbl += "1-0";
                 else lbl += "0-1";
             } else if (remis) lbl += " &#189; - &#189;";
             else lbl += "+";   //must be check
-            lbl += "</font>";
         }
 
 
@@ -89,29 +87,23 @@ class Notation extends JLabel {
 
     void updateText(String newText, int pos) {
         notationStrings.add(pos, newText);
+        System.out.println(String.valueOf(notationStrings).replaceAll("<[^>]*>", "").replaceAll(",", "").replaceAll("[\\[\\]] *", ""));
         display();
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
     }
 
-    static String decorateMoveNumber(int imove) {
-        String text = "";
-        text += "<font color='blue'>";
-        text += Integer.toString(imove);
-        text += ". ";
-        text += "</font>";
-        return text;
-    }
-
     void display() {
-        setWidth(w);
+        setHTML(w);
     }
 
-    void setWidth(int width) {
+    void setHTML(int width) {
         w = width;
         //	System.out.println("XX "+width);
 //        setText("<html><body style='width: " + width + "px'>" + notationStrings + "</html>");
         String str = String.valueOf(notationStrings);
         str = str.replaceAll("[\\[\\],]", "");
+        str = str.replaceAll("(\\d*\\.)", "<font color='blue'>$1</font>");
+        str = str.replaceAll("([+#])", "<font color='red'>$1</font>");
         setText("<html><body style='width: " + width + "px'>" + str + "</html>");
     }
 
