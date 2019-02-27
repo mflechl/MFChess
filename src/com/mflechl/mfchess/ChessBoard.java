@@ -112,10 +112,11 @@ public class ChessBoard implements ActionListener {
             Notation.notationStrings.set(currentStaticState.nMoves, str);
             Chess.notation.display();
         } else {
-            tiles[Tile.promLine][Tile.promRow].setBorderInactive();
             tiles[Tile.promLine][Tile.promRow].thisPromActive = false;
-
             Tile.promActive = false;
+//            tiles[Tile.promLine][Tile.promRow].setBorderInactive();
+            tiles[Tile.promLine][Tile.promRow].setLastMoveBorder();
+
             Tile.promLine = -1;
             Tile.promRow = -1;
         }
@@ -380,7 +381,7 @@ public class ChessBoard implements ActionListener {
     static void computerMove() {
         //TODO: check openings
         if (Tile.promActive) {
-            promChooseFigure(4, 4); //cannot have an active promotion in line 4... just to trigger to move on.
+            promChooseFigure(4, 4); //cannot have an active prom in line 4, just triggers removal of prom status.
         }
 
         setAllBordersInactive();
