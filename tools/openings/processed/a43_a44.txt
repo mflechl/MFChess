@@ -1,13 +1,13 @@
-1.d4 c5
-1.d4 c5 2.dxc5 b6
-1.d4 c5 2.b4
-1.d4 c5 2.d5 f5
-1.d4 c5 2.d5 Na6
-1.d4 c5 2.d5 e6 3.e4
-1.d4 c5 2.d5 Nf6
-1.d4 c5 2.d5 Nf6 3.Nc3 Qa5
-1.d4 c5 2.d5 Nf6 3.Nf3 c4
-1.d4 c5 2.d5 d6 3.Nc3 g6
-1.d4 c5 2.c4 e6
-1.d4 c5 2.d5 e5
-1.d4 c5 2.d5 e5 3.e4 d6
+1 .d4 c5
+1 .d4 c5 2 .dxc5 b6
+1 .d4 c5 2 .b4
+1 .d4 c5 2 .d5 f5
+1 .d4 c5 2 .d5 Na6
+1 .d4 c5 2 .d5 e6 3 .e4
+1 .d4 c5 2 .d5 Nf6
+1 .d4 c5 2 .d5 Nf6 3 .Nc3 Qa5
+1 .d4 c5 2 .d5 Nf6 3 .Nf3 c4
+1 .d4 c5 2 .d5 d6 3 .Nc3 g6
+1 .d4 c5 2 .c4 e6
+1 .d4 c5 2 .d5 e5
+1 .d4 c5 2 .d5 e5 3 .e4 d6

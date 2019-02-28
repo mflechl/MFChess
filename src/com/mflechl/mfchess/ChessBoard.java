@@ -32,6 +32,8 @@ public class ChessBoard implements ActionListener {
     static State currentStaticState = new State();
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
+//    ReadOpenings readOpenings = new ReadOpenings();
+
 
     // Constructor
     ChessBoard(Color color1, Color color2) {
@@ -39,6 +41,9 @@ public class ChessBoard implements ActionListener {
         this.color2 = color2;
         initBoard();
         pastMoves.add(new IBoardState(iBoard, currentStaticState));
+
+        ReadOpenings readOpenings = new ReadOpenings();
+        System.out.println(readOpenings.openings.get(2));
     }
 
     void setMaxFontSize() {

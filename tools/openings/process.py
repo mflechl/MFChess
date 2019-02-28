@@ -1,6 +1,6 @@
 #!/bin/python
-import re
 import os
+import re
 from collections import OrderedDict
 
 MOVEONLY=True
@@ -16,14 +16,16 @@ def process_one_file( filename_in, filename_out ):
         if line[0]=='C':
             #fileout.write("\n")
             firstMoves=line.replace('C ','').replace('\n','')
+            firstMoves = re.sub('(\d+)\.', '\\1 .', firstMoves)
             if MOVEONLY: fileout.write(firstMoves+'\n') #only moves
             else:        fileout.write(firstMoves)  #write name
         elif line[0]!='E':
             if '~' in line: continue         #remove generic openings, ~ is a placeholder for any move
             followingMoves=re.sub('\d+\. \.\.\. ','',line)
+            followingMoves = re.sub('(\d+)\.', '\\1 .', followingMoves)
             if MOVEONLY: fileout.write(firstMoves+" "+followingMoves)                     #only moves
             else:        fileout.write(firstMoves+" "+followingMoves.replace('\n','') )    #write name
-        else:                                                                 #write name
+        else:                           
             if not MOVEONLY: fileout.write("   "+line.replace('E ','') )                       #write name
 
     fileout.close()

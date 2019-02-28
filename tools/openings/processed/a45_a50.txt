@@ -1,42 +1,42 @@
-1.d4 Nf6
-1.d4 Nf6 2.f3
-1.d4 Nf6 2.f3 d5 3.g4
-1.d4 Nf6 2.f3 d5 3.e4
-1.d4 Nf6 2.f4
-1.d4 Nf6 2.g4
-1.d4 Nf6 2.g4 e5
-1.d4 Nf6 2.g4 Nxg4 3.f3 Nf6 4.e4
-1.d4 Nf6 2.g4 Nxg4 3.e4 d6 4.Be2 Nf6 5.Nc3
-1.d4 Nf6 2.Nd2 e5
-1.d4 Nf6 2.Nc3 e5
-1.d4 Nf6 2.Nc3 c5 3.dxc5
-1.d4 Nf6 2.g3 e5
-1.d4 Nf6 2.Bg5
-1.d4 Nf6 2.Bg5 Ne4 3.Bf4 g5
-1.d4 Nf6 2.Bg5 Ne4 3.h4
-1.d4 Nf6 2.Nf3
-1.d4 Nf6 2.Nf3 Ne4
-1.d4 Nf6 2.Nf3 b5
-1.d4 Nf6 2.Nf3 c6
-1.d4 Nf6 2.Nf3 c5
-1.d4 Nf6 2.Nf3 c5 3.d5 b5
-1.d4 Nf6 2.Nf3 e6 3.e3
-1.d4 Nf6 2.Nf3 e6 3.Bf4
-1.d4 Nf6 2.Nf3 e6 3.Bg5
-1.d4 Nf6 2.Nf3 e6 3.Bg5 h6
-1.d4 Nf6 2.Nf3 e6 3.Bg5 c5 4.e4
-1.d4 Nf6 2.Nf3 b6
-1.d4 Nf6 2.Nf3 b6 3.c3 e5
-1.d4 Nf6 2.Nf3 b6 3.g3 Bb7 4.Bg2 c5
-1.d4 Nf6 2.Nf3 b6 3.g3 Bb7 4.Bg2 c5 5.c4 cxd4 Qxd4
-1.d4 Nf6 2.Nf3 b6 3.Bg5
-1.d4 Nf6 2.Nf3 g6
-1.d4 Nf6 2.Nf3 g6 3.Bf4
-1.d4 Nf6 2.Nf3 g6 3.Bg5
-1.d4 Nf6 2.Nf3 g6 3.g3
-1.d4 Nf6 2.c4
-1.d4 Nf6 2.c4 Nc6
-1.d4 Nf6 2.c4 Nc6 3.d5 Ne5 4.f4
-1.d4 Nf6 2.c4 b6
-1.d4 Nf6 2.c4 b6 3.Nc3
-1.d4 Nf6 2.c4 g5
+1 .d4 Nf6
+1 .d4 Nf6 2 .f3
+1 .d4 Nf6 2 .f3 d5 3 .g4
+1 .d4 Nf6 2 .f3 d5 3 .e4
+1 .d4 Nf6 2 .f4
+1 .d4 Nf6 2 .g4
+1 .d4 Nf6 2 .g4 e5
+1 .d4 Nf6 2 .g4 Nxg4 3 .f3 Nf6 4 .e4
+1 .d4 Nf6 2 .g4 Nxg4 3 .e4 d6 4 .Be2 Nf6 5 .Nc3
+1 .d4 Nf6 2 .Nd2 e5
+1 .d4 Nf6 2 .Nc3 e5
+1 .d4 Nf6 2 .Nc3 c5 3 .dxc5
+1 .d4 Nf6 2 .g3 e5
+1 .d4 Nf6 2 .Bg5
+1 .d4 Nf6 2 .Bg5 Ne4 3 .Bf4 g5
+1 .d4 Nf6 2 .Bg5 Ne4 3 .h4
+1 .d4 Nf6 2 .Nf3
+1 .d4 Nf6 2 .Nf3 Ne4
+1 .d4 Nf6 2 .Nf3 b5
+1 .d4 Nf6 2 .Nf3 c6
+1 .d4 Nf6 2 .Nf3 c5
+1 .d4 Nf6 2 .Nf3 c5 3 .d5 b5
+1 .d4 Nf6 2 .Nf3 e6 3 .e3
+1 .d4 Nf6 2 .Nf3 e6 3 .Bf4
+1 .d4 Nf6 2 .Nf3 e6 3 .Bg5
+1 .d4 Nf6 2 .Nf3 e6 3 .Bg5 h6
+1 .d4 Nf6 2 .Nf3 e6 3 .Bg5 c5 4 .e4
+1 .d4 Nf6 2 .Nf3 b6
+1 .d4 Nf6 2 .Nf3 b6 3 .c3 e5
+1 .d4 Nf6 2 .Nf3 b6 3 .g3 Bb7 4 .Bg2 c5
+1 .d4 Nf6 2 .Nf3 b6 3 .g3 Bb7 4 .Bg2 c5 5 .c4 cxd4 Qxd4
+1 .d4 Nf6 2 .Nf3 b6 3 .Bg5
+1 .d4 Nf6 2 .Nf3 g6
+1 .d4 Nf6 2 .Nf3 g6 3 .Bf4
+1 .d4 Nf6 2 .Nf3 g6 3 .Bg5
+1 .d4 Nf6 2 .Nf3 g6 3 .g3
+1 .d4 Nf6 2 .c4
+1 .d4 Nf6 2 .c4 Nc6
+1 .d4 Nf6 2 .c4 Nc6 3 .d5 Ne5 4 .f4
+1 .d4 Nf6 2 .c4 b6
+1 .d4 Nf6 2 .c4 b6 3 .Nc3
+1 .d4 Nf6 2 .c4 g5

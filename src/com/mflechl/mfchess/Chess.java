@@ -182,6 +182,8 @@ public class Chess extends JFrame {
         //title and icon
         setTitle("MFChess");
         URL url = ClassLoader.getSystemClassLoader().getResource("chess-icon.png");
+        System.out.println("URL 1: " + url);
+
         if (url != null) {
             ImageIcon icon = new ImageIcon(url);
             setIconImage(icon.getImage());
