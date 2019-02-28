@@ -72,7 +72,7 @@ class Notation extends JLabel {
         }
 
 
-        lbl += " ";
+        //lbl += " ";
         return lbl;
     }
     //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
@@ -90,6 +90,10 @@ class Notation extends JLabel {
         System.out.println(String.valueOf(notationStrings).replaceAll("<[^>]*>", "").replaceAll(",", "").replaceAll("[\\[\\]] *", "").replaceAll(" +", " "));
         display();
         //	this.setText("<html><body style='width: 100%'>"+notationStrings+"</html>");
+    }
+
+    static String getNotationString() {
+        return String.valueOf(notationStrings).replaceAll("<[^>]*>", "").replaceAll(",", "").replaceAll("[\\[\\]] *", "").replaceAll(" +", " ");
     }
 
     void display() {

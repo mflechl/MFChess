@@ -14,7 +14,7 @@ public class ReadOpenings {
      * (Demonstrates Java FileReader, BufferedReader, and Java5.)
      */
 
-    static List<String> openings = new ArrayList<>();
+    List<String> openings = new ArrayList<>(); //if static, can access it without running constructor
 
     ReadOpenings() {
         this("openings.txt");

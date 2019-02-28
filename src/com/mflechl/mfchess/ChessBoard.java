@@ -5,6 +5,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 //import java.util.concurrent.TimeUnit;
 //import javax.swing.Icon;
@@ -33,7 +35,7 @@ public class ChessBoard implements ActionListener {
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
 //    ReadOpenings readOpenings = new ReadOpenings();
-
+static List<String> openings;
 
     // Constructor
     ChessBoard(Color color1, Color color2) {
@@ -43,7 +45,8 @@ public class ChessBoard implements ActionListener {
         pastMoves.add(new IBoardState(iBoard, currentStaticState));
 
         ReadOpenings readOpenings = new ReadOpenings();
-        System.out.println(readOpenings.openings.get(2));
+        openings = new ArrayList<String>(readOpenings.openings);
+        System.out.println(openings.get(2));
     }
 
     void setMaxFontSize() {
@@ -172,6 +175,8 @@ public class ChessBoard implements ActionListener {
 
                 processMove(iBoard, aLine, aRow, _l, _r, movingPiece, false, sMove);
 
+                removeFutureMoves(currentStaticState);
+
                 State updatedState = new State(currentStaticState);
                 updatedState.update(movingPiece, aLine, _l, aRow);
                 updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
@@ -179,8 +184,6 @@ public class ChessBoard implements ActionListener {
 
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6
-
-                removeFutureMoves(updatedState);
 
                 Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState, currentStaticState, aLine, aRow, _l, _r,
                         movingPiece, eliminatedPiece, sMove);
@@ -271,9 +274,9 @@ public class ChessBoard implements ActionListener {
     }
 
     static void removeFutureMoves(State state) {
-        if (pastMoves.size() != state.nMoves) {     //have moved back in history and adding moves...
-            pastMoves.subList(state.nMoves, pastMoves.size()).clear();
-            Notation.notationStrings.subList(state.nMoves, Notation.notationStrings.size()).clear();
+        if (pastMoves.size() != (state.nMoves + 1)) {     //have moved back in history and adding moves...
+            pastMoves.subList(state.nMoves + 1, pastMoves.size()).clear();
+            Notation.notationStrings.subList(state.nMoves + 1, Notation.notationStrings.size()).clear();
         }
     }
 
@@ -383,22 +386,58 @@ public class ChessBoard implements ActionListener {
     }
 
     static void computerMove() {
-        //TODO: check openings
+
+        //reset tile borders
         if (Tile.promActive) {
             promChooseFigure(4, 4); //cannot have an active prom in line 4, just triggers removal of prom status.
         }
-
         setAllBordersInactive();
+        removeFutureMoves(currentStaticState);
 
-        //get list of all possible moves
-        ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
-        if (allMoves.isEmpty()) return;   //mate or remis
+        //TODO: check openings
+        //compare to openings
+        System.out.println("CM" + Notation.getNotationString() + "CM");
+        String notationString = Notation.getNotationString();
+        List<String> matchingOpenings = new ArrayList<>();
 
-        //TODO: choose move
-        IBoardState chosenMove = allMoves.get(0);
-        System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size());
+        for (String line : openings) {
+            if (line.startsWith(notationString)) {
+                //System.out.println("O:|"+line+"|X|"+line.replaceAll(notationString,"")+"|Y|"+nextMove+"|");
+                //replace takes a literal, replaceAll a regex, but both replace *all* occurrences
+                String[] nm = line.replace(notationString, "").replaceAll("^ *", "").split(" ");
+                if (nm.length == 0) continue;
+                String nextMove = nm[0];
+                if (nextMove.matches("\\d+\\.")) {
+                    if (nm.length == 1) continue;
+                    nextMove = nm[1];
+                }
+                if (nextMove.length() > 1) matchingOpenings.add(nextMove); //only add if opening has *additional* moves
+            }
+        }
+        System.out.println("#Openings: " + matchingOpenings.size());
 
-        removeFutureMoves(chosenMove.state);
+        System.out.println("SSS2 " + Chess.notation.notationStrings.size() + " " + currentStaticState.nMoves);
+
+        IBoardState chosenMove;
+        //take random known opening move
+        if (matchingOpenings.size() > 0) {
+            Random r = new Random();
+            int rnd = r.nextInt(matchingOpenings.size());
+            String chosenOpening = matchingOpenings.get(rnd);
+
+            System.out.println("XXX" + chosenOpening + "XXX");
+            chosenMove = NotationToState.noteToBoard(chosenOpening, pastMoves.get(pastMoves.size() - 1));
+        }
+        //evaluate best move
+        else {
+            //get list of all possible moves
+            ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState);
+            if (allMoves.isEmpty()) return;   //mate or remis
+
+            //TODO: choose move
+            chosenMove = allMoves.get(0);
+            System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size());
+        }
 
         //append to notation
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
