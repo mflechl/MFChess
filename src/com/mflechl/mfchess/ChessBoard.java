@@ -215,7 +215,6 @@ public class ChessBoard implements ActionListener {
         String str = Notation.notationStrings.get(iMove);
         str = str.replaceAll("\\.", ". ");
 
-        System.out.println("XXX " + str + " XXX");
         if (str.length() > 0) {
             if (!str.matches("\\d+\\. .*")) {
                 if (Notation.notationStrings.size() > 1) {
@@ -235,7 +234,6 @@ public class ChessBoard implements ActionListener {
     }
 
     static void getNextState() {
-        System.out.println("gNS: " + currentStaticState.nMoves + " " + pastMoves.size());
         int gotoState = currentStaticState.nMoves + 1;
         if (gotoState < pastMoves.size()) setActiveState(pastMoves.get(gotoState), gotoState);
         else computerMove();
@@ -406,12 +404,19 @@ public class ChessBoard implements ActionListener {
 
     }
 
-    static void findAndSetLastMoveBorder(IBoard b1, IBoard b2) {
-        ArrayList<int[]> boardDiff = IBoard.diff(b1, b2);
+    static void findAndSetLastMoveBorder(IBoard bCurr, IBoard bPrev) {
+        ArrayList<int[]> boardDiff = IBoard.diff(bCurr, bPrev);
 
-        //TODO: exceptions  for list length > 2: en passant, castling
+        //can only happen for en passant or castling
+        if (boardDiff.size() > 2) {
+            //en passant: remove field not touched by move
+            boardDiff.removeIf(aDiff -> bPrev.setup[aDiff[0]][aDiff[1]] == currentStaticState.turnOf * ChessBoard.PAWN);
+            //castling: keep only starting and end field of the king
+            boardDiff.removeIf(aDiff -> bPrev.setup[aDiff[0]][aDiff[1]] != currentStaticState.turnOf * -1 * ChessBoard.KING &&
+                    bCurr.setup[aDiff[0]][aDiff[1]] != currentStaticState.turnOf * -1 * ChessBoard.KING);
+        }
+
         for (int[] pos : boardDiff) {
-            //System.out.println(pos[0] + " " + pos[1] + " ");
             tiles[pos[0]][pos[1]].setLastMoveBorder();
         }
     }

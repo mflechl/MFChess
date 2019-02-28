@@ -216,7 +216,7 @@ public class Chess extends JFrame {
 
     // The entry main() method
     public static void main(String[] args) {
-//        String initialNotation = "";
+        String initialNotation = "";
 //        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //simple test
 //        String initialNotation = "1. a4 g5 2. a5 g4 3. f4 gxf3 4. exf3 b5 5. axb6 a5 "; //en passant
 //        String initialNotation = "1. g3 g6 2. Bh3 Bh6 3. Nf3 Nf6 4. 0-0 0-0 "; //castling king-side
@@ -224,7 +224,7 @@ public class Chess extends JFrame {
 //        String initialNotation = "1. f4 g5 2. fxg5 h6 3. gxh6 a5 4. h7 a4 5. hxg8R a3 6. Nh3 axb2 7. g4 bxa1B "; //promotion white & black
 //        String initialNotation = "1. d4  e5 2. e3 Bb4+ 3. Bd2 d6 4. Bb5+  c6  5. Bc4  a6  6. Qf3  a5  7. Qxf7#"; //checks and mate
 //        String initialNotation = "1. a4 c6 2. h4 d6 3. Rh3 e6 4. Raa3 Be7 5. a5 Bd7 6. a6 Bf8 7. Ra5 Nh6 8. Rha3 g6 9. R5a4"; //line-ambiguity
-        String initialNotation = "1. g4 h5 2. f4 g5 3. gxh5 f6 4. fxg5 Na6 5. gxf6 Nb8 6. fxe7 Na6 7. h6 d6 8. h7 Kd7 9. exf8Q Nb8 10. hxg8Q Na6 11. Qxh8 Nb8 12. d3 Na6 13. Qd2 Nb8 14. Qd2h6 a6 15. Qh8f6 a5 16. Qf8h8 Qf8 17. Qh6xf8";
+//        String initialNotation = "1. g4 h5 2. f4 g5 3. gxh5 f6 4. fxg5 Na6 5. gxf6 Nb8 6. fxe7 Na6 7. h6 d6 8. h7 Kd7 9. exf8Q Nb8 10. hxg8Q Na6 11. Qxh8 Nb8 12. d3 Na6 13. Qd2 Nb8 14. Qd2h6 a6 15. Qh8f6 a5 16. Qf8h8 Qf8 17. Qh6xf8";
 
         // Run GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {
