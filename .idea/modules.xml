@@ -3,6 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MFChess.iml" filepath="$PROJECT_DIR$/MFChess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.iml" filepath="$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.test.iml" filepath="$PROJECT_DIR$/.idea/modules/com.mflechl.mfchess.test.iml" />
     </modules>
   </component>
 </project>
