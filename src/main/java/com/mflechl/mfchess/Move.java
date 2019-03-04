@@ -212,6 +212,9 @@ public final class Move {
                     ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
                     list.addAll(listPiece);
                     if (stopAfterFirst && list.size() > 0) return list;
+                    if ( list.size()>0 ){
+                        return list; //XXX
+                    }
                 }
             }
         }
@@ -245,12 +248,13 @@ public final class Move {
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                         if (!prom) {
-                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation));
-                            break; //stop hier if it is not a promotion case
+                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, EvaluateBoard.eval(hypo_iBoard, updatedState)));
+                            break; //stop here if it is not a promotion case
                         }
 
                         hypo_iBoard.setup[toLine][toRow] = i; //2=queen, 3=rook, 4=bishop, 5=knight
-                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("..$", ChessBoard.lpieces[i] + " ")));
+                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("..$", ChessBoard.lpieces[i] + " "),
+                                EvaluateBoard.eval(hypo_iBoard, updatedState) ));
                     }
                 }
             }

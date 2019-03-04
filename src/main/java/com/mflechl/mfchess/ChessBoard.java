@@ -8,9 +8,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-//import java.util.concurrent.TimeUnit;
-//import javax.swing.Icon;
-
 /**
  *
  *
@@ -416,7 +413,7 @@ static List<String> openings;
         }
         System.out.println("#Openings: " + matchingOpenings.size());
 
-        System.out.println("SSS2 " + Chess.notation.notationStrings.size() + " " + currentStaticState.nMoves);
+        System.out.println("SSS2 " + Notation.notationStrings.size() + " " + currentStaticState.nMoves);
 
         IBoardState chosenMove;
         //take random known opening move
@@ -435,11 +432,13 @@ static List<String> openings;
             if (allMoves.isEmpty()) return;   //mate or remis
 
             //TODO: choose move
-            chosenMove = allMoves.get(0);
+//            chosenMove = allMoves.get(0);
+            chosenMove = EvaluateBoard.getMaxMove(allMoves);
             System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size());
         }
 
         //append to notation
+        System.out.println( "KKK "+chosenMove.getNotation() );
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
 
         //update currentStaticState
