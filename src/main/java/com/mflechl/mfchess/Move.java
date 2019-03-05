@@ -58,11 +58,7 @@ public final class Move {
 
         //make move on hypothetical tiles and test if this would mean "check"
         IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
-        //System.out.println("YY1"+ChessBoard.hypo_iBoard+"YY1");
-        //System.out.println(_iBoard.setup[fromLine][fromRow]+" from: " + CoordBoard.alpha[fromRow+1] + " " + (fromLine+1) + "   to: " + CoordBoard.alpha[toRow+1] + " " + (toLine+1)+" eP="+sMove.enPassant );
         ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
-        //System.out.println("YY2"+ChessBoard.hypo_iBoard+"YY2");
-
         boolean isCheck = isChecked(hypo_iBoard, col);
 
         return (!isCheck);
@@ -147,7 +143,7 @@ public final class Move {
             int direction = Integer.signum(toRow - fromRow);  //+1 if toRow is larger, -1 if fromRow
             for (int j = fromRow + direction; (j * direction) < (toRow * direction); j += direction) {
                 if (_iBoard.setup[fromLine][j] != 0) return false;
-                if (checkCheck) { //only needed for castling
+                if (checkCheck) { //only needed for castling: move on hypo board and then check for check
                     IBoard hypo_iBoard = new IBoard(_iBoard);
                     ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, j, _iBoard.setup[fromLine][fromRow], true, SDUMMY);
                     if (isChecked(hypo_iBoard, _state.turnOf)) return false;
@@ -249,8 +245,8 @@ public final class Move {
                             break; //stop here if it is not a promotion case
                         }
 
-                        hypo_iBoard.setup[toLine][toRow] = i; //2=queen, 3=rook, 4=bishop, 5=knight
-                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("..$", ChessBoard.lpieces[i] + " "),
+                        hypo_iBoard.setup[toLine][toRow] = _state.turnOf * i; //2=queen, 3=rook, 4=bishop, 5=knight
+                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("Q$", ChessBoard.lpieces[i] + " "),
                                 EvaluateBoard.eval(hypo_iBoard, updatedState) ));
                     }
                 }

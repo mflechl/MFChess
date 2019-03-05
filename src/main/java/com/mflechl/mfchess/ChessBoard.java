@@ -393,7 +393,7 @@ static List<String> openings;
 
         //TODO: check openings
         //compare to openings
-        System.out.println("CM" + Notation.getNotationString() + "CM");
+        //System.out.println("CM" + Notation.getNotationString() + "CM");
         String notationString = Notation.getNotationString();
         List<String> matchingOpenings = new ArrayList<>();
 
@@ -411,9 +411,7 @@ static List<String> openings;
                 if (nextMove.length() > 1) matchingOpenings.add(nextMove); //only add if opening has *additional* moves
             }
         }
-        System.out.println("#Openings: " + matchingOpenings.size());
-
-        System.out.println("SSS2 " + Notation.notationStrings.size() + " " + currentStaticState.nMoves);
+//        System.out.println("#Openings: " + matchingOpenings.size());
 
         IBoardState chosenMove;
         //take random known opening move
@@ -422,7 +420,7 @@ static List<String> openings;
             int rnd = r.nextInt(matchingOpenings.size());
             String chosenOpening = matchingOpenings.get(rnd);
 
-            System.out.println("XXX" + chosenOpening + "XXX");
+//            System.out.println("XXX" + chosenOpening + "XXX");
             chosenMove = NotationToState.noteToBoard(chosenOpening, pastMoves.get(pastMoves.size() - 1));
         }
         //evaluate best move
