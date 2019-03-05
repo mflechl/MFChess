@@ -59,6 +59,7 @@ public final class Move {
         //make move on hypothetical tiles and test if this would mean "check"
         IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
         ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
+        System.out.println("isLegal:\n" + hypo_iBoard);
         boolean isCheck = isChecked(hypo_iBoard, col);
 
         return (!isCheck);
@@ -177,6 +178,10 @@ public final class Move {
             if (lineKing > -1) break;
         }
 
+        if (lineKing < 0) {
+            System.out.println("No king found:\n" + _iBoard);
+        }
+
         //check opponent pieces: can eliminate king=is in check
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
@@ -190,16 +195,16 @@ public final class Move {
     }
 
     static Boolean noLegalMoves(IBoard _iBoard, State _state) {
-        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true);
+        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1);
         return moveList.isEmpty();
     }
 
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state) {
-        return allLegalMoves(_iBoard, _state, false);
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth) {
+        return allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth);
     }
 
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst) {
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth) {
         ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
@@ -209,6 +214,18 @@ public final class Move {
                     list.addAll(listPiece);
                     if (stopAfterFirst && list.size() > 0) return list;
                 }
+            }
+        }
+        if (depth < maxDepth && !list.isEmpty()) { //should this be moved to pieceLegalMove?
+            float val;
+            for (IBoardState boardState : list) {
+                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth);
+
+                if (subList.isEmpty()) {
+                    System.out.println("No more moves:\n" + boardState + " depth=" + depth);
+                    val = 999 * boardState.state.turnOf; //no moves - check mate or remis!
+                } else val = EvaluateBoard.getMaxMove(subList).getEval();
+                boardState.setEval(val);
             }
         }
 

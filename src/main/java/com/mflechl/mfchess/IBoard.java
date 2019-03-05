@@ -61,6 +61,7 @@ public class IBoard {
             for (int row = 0; row < 8; row++) {
                 int to_add = setup[line][row];
                 if (to_add >= 0) out.append(" ");
+//                if (to_add >= 0 && !( row==0 && line==7 ) ) out.append(" ");
                 out.append(to_add).append(" ");
             }
             out.append("\n");

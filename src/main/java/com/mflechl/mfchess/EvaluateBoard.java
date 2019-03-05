@@ -1,15 +1,19 @@
 package com.mflechl.mfchess;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public final class EvaluateBoard {
-    EvaluateBoard () {
+    EvaluateBoard() {
         //no instance
     }
 
-    //                               {"", "K", "Q", "R", "B", "N", "P"};
-    static final int[] valueOf = {0, 0, 9, 5, 3, 3, 1};
-//    static final int[] valueOf = { 0,   0,   9,   5,   3,   3, 1  };
+    //                              {"", "K", "Q", "R", "B", "N", "P"};
+    static final double[] VALUE_OF = {0, 0, 9, 5, 3, 3, 1};
+    //bishop pair
+    static final double VALUE_BISHOP_PAIR = 0.5;
+
+    static final int[] indexToSign = {-1, +1};
 
     /*
     static float eval( IBoardState board ) {
@@ -17,40 +21,93 @@ public final class EvaluateBoard {
     }
     */
 
-    static float eval( IBoard board, State state ){
-        float val=0;
+    @SuppressWarnings("unused")
+    static float eval(IBoard board, State state) {
+        float val = 0;
         val += getValSingle(board);
+        val += getValCombi(board);
         return val;
     }
 
-    static IBoardState getMaxMove(ArrayList<IBoardState> list){
-        float maxEval=list.get(0).getEval();
-        IBoardState maxBoard = new IBoardState( list.get(0) );
+    static IBoardState getMaxMove(ArrayList<IBoardState> list) {
+        return getMaxMove(list, false);
+    }
 
+    static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom) {
         //for WHITE: maximize; BLACK: minimize. turnOf holds who will play the *next* turn,hence *-1
+        if (list.size() == 0) return null;
+
         int turn = list.get(0).state.turnOf * -1;
 
+        float maxEval = -999 * turn; //-99 for white, 99 for black
+        IBoardState maxBoard = new IBoardState();
+
         float eval;
-        for ( IBoardState board: list.subList( 1, list.size() ) ){
-            eval = board.getEval() * turn;
-            if (eval > maxEval) {
+        for (IBoardState board : list) {
+            eval = board.getEval();
+            //System.out.println("### VALUE: " + eval + " " + board.getNotation());
+//            if ((turn == ChessBoard.WHITE && (eval > maxEval) ) || (turn == ChessBoard.BLACK && (eval < maxEval))) {
+            if (eval * turn > maxEval * turn) {
                 maxEval = eval;
                 maxBoard = new IBoardState(board);
             }
         }
+
+        //this is done here and not above in the loop so that it does not slow down the search
+        //below is only executed for depth 1 and hence not performance-critical
+        if (pickRandom) {
+            ArrayList<IBoardState> maxList = new ArrayList<>();
+            System.out.println("###############\n");
+            for (IBoardState board : list) {
+                if (Math.abs(board.getEval() - maxEval) < 0.00001) {
+                    System.out.println("not all: " + maxBoard.notation);
+                    maxList.add(board);
+                }
+            }
+            int x = 0;
+            if (maxList.size() > 1) {
+                Random r = new Random();
+                int rnd = r.nextInt(maxList.size());
+                x = rnd;
+                maxBoard = maxList.get(rnd);
+                System.out.println("not all: " + maxBoard.notation);
+            }
+            System.out.println("###############\n" + maxList.size() + " " + x + "\n##############");
+        }
+
         return maxBoard;
     }
 
+    //Functions below should be fast, so use mainly plain arrays
     static float getValSingle(IBoard board) { //value for single pieces (i.e. not combinations)
         float val = 0;
-        int piece = 0;
+        int piece;
         for (int i = 0; i < board.setup.length; i++) {
             for (int j = 0; j < board.setup[i].length; j++) {
                 piece = board.setup[i][j];
                 if (piece == 0) continue; //just to speed up
-                val += valueOf[Math.abs(piece)] * Math.signum(piece);
+                val += VALUE_OF[Math.abs(piece)] * Math.signum(piece);
             }
         }
+        return val;
+    }
+
+    static float getValCombi(IBoard board) { //value for combinations of pieces, e.g. bishop pairs
+        float val = 0;
+        int[][] nPieces = new int[2][7]; //0-black, 1-white
+        int piece;
+        for (int i = 0; i < board.setup.length; i++) {
+            for (int j = 0; j < board.setup[i].length; j++) {
+                piece = board.setup[i][j];
+                nPieces[((int) Math.signum(piece) + 1) / 2][Math.abs(piece)]++;
+            }
+        }
+
+        //double bishop
+        for (int i = 0; i < 2; i++) {
+            if (nPieces[i][ChessBoard.BISHOP] >= 2) val += VALUE_BISHOP_PAIR * indexToSign[i];
+        }
+
         return val;
     }
 
