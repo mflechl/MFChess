@@ -338,7 +338,7 @@ static List<String> openings;
                 tiles[toLine][toRow].setPromBorder();
                 System.out.println("promActive = " + Tile.promActive);
             }
-            ret = true;
+            ret = true; //indicate that prom has happened
         }
 
         //remove old piece
@@ -434,7 +434,7 @@ static List<String> openings;
             //TODO: choose move
 //            chosenMove = allMoves.get(0);
             chosenMove = EvaluateBoard.getMaxMove(allMoves);
-            System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size());
+            System.out.println("chosenMove = \n " + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
         }
 
         //append to notation
