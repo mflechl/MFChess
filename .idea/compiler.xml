@@ -4,6 +4,8 @@
     <bytecodeTargetLevel>
       <module name="com.mflechl.mfchess.main" target="1.8" />
       <module name="com.mflechl.mfchess.test" target="1.8" />
+      <module name="MFChess.com.mflechl.mfchess.main" target="1.8" />
+      <module name="MFChess.com.mflechl.mfchess.test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

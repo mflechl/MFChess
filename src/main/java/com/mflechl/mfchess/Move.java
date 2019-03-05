@@ -212,9 +212,6 @@ public final class Move {
                     ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
                     list.addAll(listPiece);
                     if (stopAfterFirst && list.size() > 0) return list;
-                    if ( list.size()>0 ){
-                        return list; //XXX
-                    }
                 }
             }
         }
