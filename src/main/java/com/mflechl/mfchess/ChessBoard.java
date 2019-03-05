@@ -201,7 +201,6 @@ static List<String> openings;
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
-                System.out.println("|" + getLastMoveString() + "|");
                 Chess.btnLastMove.setText(getLastMoveString());
 
                 if (AUTO_COMPUTER_MOVE && !Tile.promActive)
@@ -436,7 +435,7 @@ static List<String> openings;
         }
 
         //append to notation
-        System.out.println( "KKK "+chosenMove.getNotation() );
+//        System.out.println( "KKK "+chosenMove.getNotation() );
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
 
         //update currentStaticState
