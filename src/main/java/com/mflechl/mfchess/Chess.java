@@ -228,7 +228,7 @@ public class Chess extends JFrame {
 //       String initialNotation = "1. g4 h5 2. f4 g5 3. gxh5 f6 4. fxg5 Na6 5. gxf6 Nb8 6. fxe7 Na6 7. h6 d6 8. h7 Kd7 9. exf8Q Nb8 10. hxg8Q Na6 11. Qxh8 Nb8 12. d3 Na6 13. Qd2 Nb8 14. Qd2h6 a6 15. Qh8f6 a5 16. Qf8h8 Qf8 17. Qh6xf8";
 //        String initialNotation = "1. h4 a5 2. Na3 a4 3. Rb1 b5 4. Nxb5 a3 5. Ra1 axb2 6. Rb1 bxc1Q 7. Qxc1 Rxa2 8. Na7"; //test
 //        String initialNotation = "1. h4 a5 2. Na3 a4 3. Rb1 b5 4. Nxb5 a3 5. Ra1 axb2 6. Rb1 bxc1Q 7. Qxc1 Rxa2 8. Na7 Ba6 9. Rb3 Bc4 10. Rb7 Ra4 11. d3 Bd5 12. Rb5 Ba2 13. Qe3 Be6"; //test
-        String initialNotation = "1. h4 a5 2. Na3 a4 3. Rb1 b5 4. Nxb5 a3 5. Ra1 axb2 6. Rb1 bxc1Q 7. Qxc1 Rxa2 8. Na7 Ba6 9. Rb3 Bc4 10. Rb7 Ra4 11. d3 Bd5 12. Rb5 Ba2 13. Qe3 Be6 14. Kd2 f5 15. Rb2 f4 16. Qc5 g5 17. Qc3 Nf6 18. Nb5 Ra1 19. Nxc7+ Kf7 20. Nxe6 dxe6";
+        String initialNotation = "1. h4 a5 2. Na3 a4 3. Rb1 b5 4. Nxb5 a3 5. Ra1 axb2 6. Rb1 bxc1Q 7. Qxc1 Rxa2 8. Na7 Ba6 9. Rb3 Bc4 10. Rb7 Ra4 11. d3 Bd5 12. Rb5 Ba2 13. Qe3 Be6 14. Kd2 f5 15. Rb2 f4 16. Qc5 g5 17. Qc3 Nf6 18. Nb5 Ra1 19. Nxc7+ Kf7 20. Nxe6 dxe6 21. Rxb8";
 
         // Run GUI codes on the Event-Dispatcher Thread for thread safety
         SwingUtilities.invokeLater(new Runnable() {

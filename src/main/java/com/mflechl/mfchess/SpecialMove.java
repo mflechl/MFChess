@@ -8,6 +8,12 @@ public class SpecialMove {
         castling = s_in.castling;
         enPassant = s_in.enPassant;
     }
+
     boolean castling = false;
     boolean enPassant = false;
+
+    public String toString() {
+        return " castling=" + castling + " , enPassant=" + enPassant;
+    }
+
 }

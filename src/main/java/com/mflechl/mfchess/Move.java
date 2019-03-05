@@ -59,7 +59,7 @@ public final class Move {
         //make move on hypothetical tiles and test if this would mean "check"
         IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
         ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
-        System.out.println("isLegal:\n" + hypo_iBoard);
+        //System.out.println("isLegal:\n" + hypo_iBoard);
         boolean isCheck = isChecked(hypo_iBoard, col);
 
         return (!isCheck);
@@ -67,6 +67,7 @@ public final class Move {
 
 
     private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, State _state) {
+        //System.out.println("legalMovePawn "+fromLine+" "+fromRow+" "+toLine+"-"+toRow+" state="+_state+" sMove="+sMove+"\n"+_iBoard);
         if (fromRow == toRow) {
             //normal move
             if ((toLine - fromLine == col) && _iBoard.setup[toLine][toRow] == 0) return true;
@@ -187,7 +188,7 @@ public final class Move {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * col < 0) {
                     //		    if ( isLegal(_iBoard, il, ir, lineKing, rowKing) ) return true;
-                    if (isLegal(_iBoard, sDummy, il, ir, lineKing, rowKing)) return true;
+                    if (isLegal(_iBoard, new SpecialMove(), il, ir, lineKing, rowKing)) return true;
                 }
             }
         }
@@ -254,6 +255,7 @@ public final class Move {
                     Move.updateCheckState(updatedState, hypo_iBoard);
 
                     for (int i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
+                        //System.out.println("pieceLegalMove from l-r to l-r "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
                         String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 

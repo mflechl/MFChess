@@ -120,7 +120,8 @@ class Notation extends JLabel {
             for (int iRow = 0; iRow < 8; iRow++) {
                 if (iLine == fromLine && iRow == fromRow) continue; //this is the move that was actually made
                 if (board.setup[iLine][iRow] == piece) {
-                    if (Move.isLegal(board, Move.sDummy, iLine, iRow, toLine, toRow, state)) {
+                    //System.out.println("ambiguity: state="+state+"sDummy: "+Move.sDummy+"\n"+board);
+                    if (Move.isLegal(board, new SpecialMove(), iLine, iRow, toLine, toRow, state)) {
                         namb++;
                         //on same line?
                         if (iRow != fromRow && Math.abs(piece) != ChessBoard.PAWN) amb = CoordBoard.alpha[fromRow + 1];

@@ -35,7 +35,7 @@ public final class EvaluateBoard {
 
     static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom) {
         //for WHITE: maximize; BLACK: minimize. turnOf holds who will play the *next* turn,hence *-1
-        if (list.size() == 0) return null;
+        if (list.size() == 0) throw new NullPointerException("getMaxMove: List is empty.");
 
         int turn = list.get(0).state.turnOf * -1;
 
@@ -57,22 +57,16 @@ public final class EvaluateBoard {
         //below is only executed for depth 1 and hence not performance-critical
         if (pickRandom) {
             ArrayList<IBoardState> maxList = new ArrayList<>();
-            System.out.println("###############\n");
             for (IBoardState board : list) {
                 if (Math.abs(board.getEval() - maxEval) < 0.00001) {
-                    System.out.println("not all: " + maxBoard.notation);
                     maxList.add(board);
                 }
             }
-            int x = 0;
             if (maxList.size() > 1) {
                 Random r = new Random();
                 int rnd = r.nextInt(maxList.size());
-                x = rnd;
                 maxBoard = maxList.get(rnd);
-                System.out.println("not all: " + maxBoard.notation);
             }
-            System.out.println("###############\n" + maxList.size() + " " + x + "\n##############");
         }
 
         return maxBoard;

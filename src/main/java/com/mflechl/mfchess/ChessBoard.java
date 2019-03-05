@@ -432,10 +432,9 @@ static List<String> openings;
 //            chosenMove = allMoves.get(0);
             chosenMove = EvaluateBoard.getMaxMove(allMoves, true);
 
-            for (IBoardState board : allMoves) {
-                System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
-            }
-            System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
+
+            // for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+            //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
         }
 
         //append to notation
