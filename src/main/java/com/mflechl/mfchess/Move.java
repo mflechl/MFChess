@@ -180,7 +180,7 @@ public final class Move {
         }
 
         if (lineKing < 0) {
-            System.out.println("No king found:\n" + _iBoard);
+            System.out.println("No king found:" + _iBoard);
         }
 
         //check opponent pieces: can eliminate king=is in check
@@ -223,7 +223,7 @@ public final class Move {
                 ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth);
 
                 if (subList.isEmpty()) {
-                    System.out.println("No more moves:\n" + boardState + " depth=" + depth);
+                    System.out.println("No more moves:" + boardState + " depth=" + depth);
                     val = 999 * boardState.state.turnOf; //no moves - check mate or remis!
                 } else val = EvaluateBoard.getMaxMove(subList).getEval();
                 boardState.setEval(val);

@@ -130,9 +130,7 @@ public final class NotationToState {
             notation.append(moveNumberStr + move);
         }
 
-        System.out.println(piece + "|" + str + "|" + fromRow + "-" + fromLine + "|" + toRow + "-" + toLine);
-
-
+        //System.out.println(piece + "|" + str + "|" + fromRow + "-" + fromLine + "|" + toRow + "-" + toLine);
         return currBoard;
     }
 
@@ -150,7 +148,6 @@ public final class NotationToState {
 
             StringBuilder notationMove = new StringBuilder();
             currentBoard = noteToBoard(str, currentBoard, notationMove);
-            System.out.println("!!!" + notationMove + "!!!");
             list.add(currentBoard);
             Chess.notation.updateText(notationMove.toString(), currentBoard.state.nMoves);
 
