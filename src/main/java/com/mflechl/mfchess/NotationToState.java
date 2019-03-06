@@ -39,7 +39,7 @@ public final class NotationToState {
     }
 
     static IBoardState noteToBoard(final String move, IBoardState prevBoard, StringBuilder notation) {
-        String str = move;
+        String str = move.replaceAll("^\\s+", "").replaceAll("\\s$", "");
         IBoardState currBoard = new IBoardState(prevBoard);
 
         int toLine, toRow;
@@ -142,7 +142,7 @@ public final class NotationToState {
 
         int turnOf = ChessBoard.WHITE;
 
-        String[] split = notation.split(" +");
+        String[] split = notation.replaceAll("^\\s+", "").replaceAll("\\s$", "").split(" +");
         for (String str : split) {
             if (str.matches(patternMoveNumber)) continue; //remove move number
 

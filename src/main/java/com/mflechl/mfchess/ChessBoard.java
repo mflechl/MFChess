@@ -468,7 +468,7 @@ public class ChessBoard implements ActionListener {
 
         if (chosenMove.state.mate) return 1;
         else if (chosenMove.state.remis) return 2;
-        else if (chosenMove.state.nMoves > 100) return 3;
+        else if (chosenMove.state.nMoves > 200) return 3;
         else return 0;
 
     }
