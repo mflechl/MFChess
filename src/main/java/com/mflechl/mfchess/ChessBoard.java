@@ -13,7 +13,9 @@ import java.util.Random;
  *
  */
 public class ChessBoard implements ActionListener {
-    final static boolean AUTO_COMPUTER_MOVE = false;
+
+    private static boolean autoComputerMove = false;
+    private static boolean onlyComputerMove = false;
 
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
@@ -31,8 +33,8 @@ public class ChessBoard implements ActionListener {
     static State currentStaticState = new State();
     private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
-//    ReadOpenings readOpenings = new ReadOpenings();
-static List<String> openings;
+    //    ReadOpenings readOpenings = new ReadOpenings();
+    static List<String> openings;
 
     // Constructor
     ChessBoard(Color color1, Color color2) {
@@ -43,8 +45,24 @@ static List<String> openings;
 
         ReadOpenings readOpenings = new ReadOpenings();
         openings = new ArrayList<String>(readOpenings.openings);
-        System.out.println(openings.get(2));
+
+        //    System.out.println("XX \u265C XX \u0332 b \u0332b \u0332{b}"); //U+0332
+//        System.out.println("\033[1mInsert your String here\033[0m");
+//        System.out.println("\033[4mInsert your String here\033[0m");
+
     }
+
+//    public static void setOnlyComputerMove(boolean onlyComputerMove) { ChessBoard.onlyComputerMove = onlyComputerMove; }
+//    public static void setAutoComputerMove(boolean autoComputerMove) { ChessBoard.autoComputerMove = autoComputerMove; }
+
+    public static void toggleAutoComputerMove() {
+        autoComputerMove = !autoComputerMove;
+    }
+
+    public static void toggleOnlyComputerMove() {
+        onlyComputerMove = !onlyComputerMove;
+    }
+
 
     void setMaxFontSize() {
         float mindim = Math.min(tiles[0][0].getSize().height, tiles[0][0].getSize().width);
@@ -136,7 +154,7 @@ static List<String> openings;
 
         if (Tile.promActive) {
             promChooseFigure(_l, _r);
-            if (AUTO_COMPUTER_MOVE && !Tile.promActive) computerMove();
+            if (autoComputerMove && !Tile.promActive) computerMove();
             return;
         }
 
@@ -203,7 +221,7 @@ static List<String> openings;
                 tileActive = false;
                 Chess.btnLastMove.setText(getLastMoveString());
 
-                if (AUTO_COMPUTER_MOVE && !Tile.promActive)
+                if (autoComputerMove && !Tile.promActive)
                     computerMove(); //by default, always answer a human move with a computer move
 
             }
@@ -381,7 +399,7 @@ static List<String> openings;
         */
     }
 
-    static void computerMove() {
+    static int computerMove() {
 
         //reset tile borders
         if (Tile.promActive) {
@@ -426,7 +444,10 @@ static List<String> openings;
         else {
             //get list of all possible moves
             ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState, false, 3);
-            if (allMoves.isEmpty()) return;   //mate or remis
+            if (allMoves.isEmpty()) {
+                System.out.println("CM no more moves: " + currentStaticState);
+                return 1;   //mate or remis
+            }
 
             //TODO: choose move
 //            chosenMove = allMoves.get(0);
@@ -444,6 +465,11 @@ static List<String> openings;
         //update currentStaticState
         pastMoves.add(chosenMove.state.nMoves, chosenMove);
         setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
+
+        if (chosenMove.state.mate) return 1;
+        else if (chosenMove.state.remis) return 2;
+        else if (chosenMove.state.nMoves > 100) return 3;
+        else return 0;
 
     }
 

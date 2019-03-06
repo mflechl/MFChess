@@ -29,6 +29,8 @@ public class Chess extends JFrame {
     private static JScrollPane scrollPane;
     static JButton btnLastMove;
 
+    String autoComputer = "no";
+
     // Constructor to set up the GUI components and event handlers
 /*
     private Chess(){
@@ -173,9 +175,35 @@ public class Chess extends JFrame {
                         ChessBoard.getNextState();
                         repaint();
                         break;
+                    case KeyEvent.VK_UP:
+                        ChessBoard.computerMove();
+                        repaint();
+                        break;
+                    case KeyEvent.VK_SPACE:
+                        ChessBoard.toggleAutoComputerMove();
+                        break;
+                    case KeyEvent.VK_C:
+                        ChessBoard.toggleOnlyComputerMove();
+                        ChessBoard.computerMove();
+//                        while (ChessBoard.computerMove() == 0){ repaint(); }
+                        while (ChessBoard.computerMove() == 0) {
+                            paint(getGraphics());
+                        }
+                        break;
                 }
             }
         });
+
+        /*
+        addPropertyChangeListener("title", new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
+                System.out.println("!!! ABC !!!");
+                ChessBoard.computerMove();
+                setTitle(getTitle()+"1");
+            }
+        });
+        */
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle the CLOSE button
 

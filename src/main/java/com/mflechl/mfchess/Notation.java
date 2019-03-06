@@ -40,8 +40,8 @@ class Notation extends JLabel {
             //letter of moved piece, unless it is a pawn
             if (apiece != ChessBoard.PAWN) {
                 lbl += ChessBoard.lpieces[apiece];  //letters
-                //	    if (piece>0) lbl+=com.mflechl.mfchess.ChessBoard.upieces[apiece]; //white pieces, unicode
-                //	    else         lbl+=com.mflechl.mfchess.ChessBoard.bupieces[apiece]; //black pieces, unicode
+                //    if (piece>0) lbl+=com.mflechl.mfchess.ChessPieceImage.upieces[apiece]; //white pieces, unicode
+                //    else         lbl+=com.mflechl.mfchess.ChessPieceImage.bupieces[apiece]; //black pieces, unicode
             }
             lbl += ambiguity(board, piece, aLine, aRow, toLine, toRow, state);
 

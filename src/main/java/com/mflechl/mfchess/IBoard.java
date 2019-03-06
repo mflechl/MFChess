@@ -14,6 +14,11 @@ public class IBoard {
 
     int[][] setup = new int[8][8]; // line / row
 
+    static final String U_ = "\033[4m";
+    static final String _U = "\033[0m";
+    static final String B_ = "\033[1m";
+    static final String _B = "\033[0m";
+
     //set up initial chess board, i.e. state before any move
     static void init(int[][] setup) {
         for (int j = 0; j < setup[1].length; j++) {
@@ -57,14 +62,21 @@ public class IBoard {
     
     public String toString() {
         StringBuilder out = new StringBuilder();
+        out.append("\n_________________\n");
         for (int line = 7; line >= 0; line--) {
+            out.append(U_ + "|");
             for (int row = 0; row < 8; row++) {
                 int to_add = setup[line][row];
-                if (to_add >= 0) out.append(" ");
-//                if (to_add >= 0 && !( row==0 && line==7 ) ) out.append(" ");
-                if (to_add != 0) out.append(to_add).append(" ");
-                else out.append("  ");
+                int apiece = Math.abs(to_add);
+//                if (to_add >= 0) out.append(" ");
+                if (to_add != 0) {
+//                    out.append(to_add);
+                    if (to_add > 0) out.append(ChessPieceImage.upieces[apiece]);
+                    if (to_add < 0) out.append(ChessPieceImage.bupieces[apiece]);
+                } else out.append(" ");
+                out.append("|");
             }
+            out.append(_U);
             out.append("\n");
         }
         return out.toString();

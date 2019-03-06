@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 public class ChessPieceImage {
 
-    private static final String[] upieces = {"", "\u2654", "\u2655", "\u2656", "\u2657", "\u2658", "\u2659"};
-    //static final String[] bupieces = {  "", "\u265A", "\u265B",  "\u265C", "\u265D",   "\u265E",   "\u265F" };
+    static final String[] upieces = {"", "\u2654", "\u2655", "\u2656", "\u2657", "\u2658", "\u2659"};
+    static final String[] bupieces = {"", "\u265A", "\u265B", "\u265C", "\u265D", "\u265E", "\u265F"};
 
     private static final Color[] pieceColors = {
             new Color(213, 213, 187), new Color(80, 80, 80)
