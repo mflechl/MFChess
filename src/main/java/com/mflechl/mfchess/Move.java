@@ -224,7 +224,7 @@ public final class Move {
 
                 if (subList.isEmpty()) {
                     System.out.println("No more moves:" + boardState + " depth=" + depth);
-                    val = 999 * boardState.state.turnOf; //no moves - check mate or remis!
+                    val = -999 * boardState.state.turnOf; //no moves - check mate or remis!
                 } else val = EvaluateBoard.getMaxMove(subList).getEval();
                 boardState.setEval(val);
             }
