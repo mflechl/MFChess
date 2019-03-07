@@ -16,8 +16,8 @@ public class IBoard {
 
     static final String U_ = "\033[4m";
     static final String _U = "\033[0m";
-    static final String B_ = "\033[1m";
-    static final String _B = "\033[0m";
+    //static final String B_ = "\033[1m";
+    //static final String _B = "\033[0m";
 
     //set up initial chess board, i.e. state before any move
     static void init(int[][] setup) {

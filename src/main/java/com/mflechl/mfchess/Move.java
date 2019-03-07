@@ -196,16 +196,16 @@ public final class Move {
     }
 
     static Boolean noLegalMoves(IBoard _iBoard, State _state) {
-        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1);
+        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, false);
         return moveList.isEmpty();
     }
 
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth) {
-        return allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth);
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
+        return allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
     }
 
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth) {
+    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
         ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
@@ -219,23 +219,22 @@ public final class Move {
         }
 
 
-        if (maxDepth < 0) { //set adaptive weight
+        if (adaptDepth) { //set adaptive weight
             int nLegalMoves = list.size();
-            System.out.println("nLM=" + nLegalMoves);
-            if (nLegalMoves > 25) maxDepth = 3;
-            else if (nLegalMoves > 15) maxDepth = 4;
-            else if (nLegalMoves > 10) maxDepth = 5;
-            else maxDepth = 6;
-            System.out.println("DEPTH=" + maxDepth);
+            if (nLegalMoves > 25) maxDepth = 5 - depth; //max: 3
+            else if (nLegalMoves > 15) maxDepth = 6 - depth;
+            else if (nLegalMoves > 10) maxDepth = 7 - depth;
+            else maxDepth = 7 - depth;
+            if (depth == 1) System.out.println("nLM=" + nLegalMoves + " DEPTH=" + maxDepth);
         }
 
         if (depth < maxDepth && !list.isEmpty()) { //should this be moved to pieceLegalMove?
             float val;
             for (IBoardState boardState : list) {
-                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth);
+                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth, adaptDepth);
 
                 if (subList.isEmpty()) {
-                    System.out.println("No more moves:" + boardState + " depth=" + depth);
+                    //System.out.println("No more moves:" + boardState + " depth=" + depth);
                     val = -999 * boardState.state.turnOf; //no moves - check mate or remis!
                 } else val = EvaluateBoard.getMaxMove(subList).getEval();
                 boardState.setEval(val);

@@ -107,7 +107,10 @@ class Notation extends JLabel {
         String str = String.valueOf(notationStrings);
         str = str.replaceAll("[\\[\\],]", "");
         str = str.replaceAll("(\\d*\\.)", "<font color='blue'>$1</font>");
-        str = str.replaceAll("([+#])", "<font color='red'>$1</font>");
+        str = str.replaceAll("(&#189; - &#189;)", "<font color='red'>$1</font>");
+        str = str.replaceAll("([+#])$", "<font color='red'>$1</font>");
+        str = str.replaceAll("([+#])([^1])", "<font color='red'>$1</font>$2");
+        str = str.replaceAll("(1-0)", "<font color='red'>$1</font>");
         setText("<html><body style='width: " + width + "px'>" + str + "</html>");
     }
 

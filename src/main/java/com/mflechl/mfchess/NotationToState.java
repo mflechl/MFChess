@@ -127,7 +127,7 @@ public final class NotationToState {
             if (turnOf == ChessBoard.WHITE)
                 moveNumberStr = currBoard.state.moveNumber + ". ";
             currBoard.setNotation(moveNumberStr + move);
-            notation.append(moveNumberStr + move);
+            notation.append(moveNumberStr).append(move);
         }
 
         //System.out.println(piece + "|" + str + "|" + fromRow + "-" + fromLine + "|" + toRow + "-" + toLine);
@@ -140,7 +140,7 @@ public final class NotationToState {
         IBoardState currentBoard = new IBoardState();
         list.add(currentBoard); //empty board
 
-        int turnOf = ChessBoard.WHITE;
+        //int turnOf = ChessBoard.WHITE;
 
         String[] split = notation.replaceAll("^\\s+", "").replaceAll("\\s$", "").split(" +");
         for (String str : split) {
@@ -148,10 +148,11 @@ public final class NotationToState {
 
             StringBuilder notationMove = new StringBuilder();
             currentBoard = noteToBoard(str, currentBoard, notationMove);
-            list.add(currentBoard);
-            Chess.notation.updateText(notationMove.toString(), currentBoard.state.nMoves);
-
-            turnOf *= -1;
+            if (currentBoard != null) {
+                list.add(currentBoard);
+                Chess.notation.updateText(notationMove.toString(), currentBoard.state.nMoves);
+            } else System.out.println("Warning: translate - currentBoard is null.");
+            //turnOf *= -1;
         }
         return list;
     }

@@ -444,7 +444,7 @@ public class ChessBoard implements ActionListener {
         else {
             //get list of all possible moves
             long startTime = System.currentTimeMillis();
-            ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState, false, -1);
+            ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState, false, -1, true);
 
             if (allMoves.isEmpty()) {
                 System.out.println("CM no more moves: " + currentStaticState);
@@ -458,8 +458,8 @@ public class ChessBoard implements ActionListener {
 //            chosenMove = allMoves.get(0);
             chosenMove = EvaluateBoard.getMaxMove(allMoves, true);
 
-            //for (IBoardState board : allMoves)
-            //    System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+            for (IBoardState board : allMoves)
+                System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
             //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
         }
 
