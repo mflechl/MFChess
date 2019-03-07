@@ -217,6 +217,18 @@ public final class Move {
                 }
             }
         }
+
+
+        if (maxDepth < 0) { //set adaptive weight
+            int nLegalMoves = list.size();
+            System.out.println("nLM=" + nLegalMoves);
+            if (nLegalMoves > 25) maxDepth = 3;
+            else if (nLegalMoves > 15) maxDepth = 4;
+            else if (nLegalMoves > 10) maxDepth = 5;
+            else maxDepth = 6;
+            System.out.println("DEPTH=" + maxDepth);
+        }
+
         if (depth < maxDepth && !list.isEmpty()) { //should this be moved to pieceLegalMove?
             float val;
             for (IBoardState boardState : list) {
