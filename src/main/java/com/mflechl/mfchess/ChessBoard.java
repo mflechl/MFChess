@@ -443,23 +443,27 @@ public class ChessBoard implements ActionListener {
         //evaluate best move
         else {
             //get list of all possible moves
-            ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState, false, 3);
+            long startTime = System.currentTimeMillis();
+            ArrayList<IBoardState> allMoves = Move.allLegalMoves(iBoard, currentStaticState, false, -1);
+
             if (allMoves.isEmpty()) {
                 System.out.println("CM no more moves: " + currentStaticState);
                 return 1;   //mate or remis
             }
+            long finishTime = System.currentTimeMillis();
+            System.out.println("That took: " + (finishTime - startTime) + " ms");
+
 
             //TODO: choose move
 //            chosenMove = allMoves.get(0);
             chosenMove = EvaluateBoard.getMaxMove(allMoves, true);
 
-
-            // for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+            //for (IBoardState board : allMoves)
+            //    System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
             //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
         }
 
         //append to notation
-//        System.out.println( "KKK "+chosenMove.getNotation() );
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
 
         //update currentStaticState

@@ -9,9 +9,11 @@ public final class EvaluateBoard {
     }
 
     //                              {"", "K", "Q", "R", "B", "N", "P"};
-    static final double[] VALUE_OF = {0, 0, 9, 5, 3, 3, 1};
+    static final float[] VALUE_OF = {0, 0, 9, 5, 3, 3, 1};
     //bishop pair
-    static final double VALUE_BISHOP_PAIR = 0.5;
+    static final float VALUE_BISHOP_PAIR = 0.5f;
+    //check
+    static final float VALUE_CHECK = 0.1f;
 
     static final int[] indexToSign = {-1, +1};
 
@@ -21,11 +23,14 @@ public final class EvaluateBoard {
     }
     */
 
-    @SuppressWarnings("unused")
+    //@SuppressWarnings("unused")
     static float eval(IBoard board, State state) {
         float val = 0;
         val += getValSingle(board);
         val += getValCombi(board);
+
+        if (state.check) val = VALUE_CHECK * state.turnOf * -1;
+
         return val;
     }
 
@@ -39,13 +44,13 @@ public final class EvaluateBoard {
 
         int turn = list.get(0).state.turnOf * -1;
 
-        float maxEval = -999 * turn; //-99 for white, 99 for black
+        float maxEval = -9999 * turn; //- for white, + for black
         IBoardState maxBoard = new IBoardState();
 
         float eval;
         for (IBoardState board : list) {
             eval = board.getEval();
-            //System.out.println("### VALUE: " + eval + " " + board.getNotation());
+//            System.out.println("### VALUE: " + eval + " " + board.getNotation());
 //            if ((turn == ChessBoard.WHITE && (eval > maxEval) ) || (turn == ChessBoard.BLACK && (eval < maxEval))) {
             if (eval * turn > maxEval * turn) {
                 maxEval = eval;
