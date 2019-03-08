@@ -1,7 +1,7 @@
 package com.mflechl.mfchess;
 
 import java.lang.reflect.Array;
-import java.util.*;
+import java.util.Arrays;
 
 
 /**
@@ -15,12 +15,27 @@ public class Copy {
     }
 
     //works for int 2D arrays
+/*
     public static int[][] deepCopyInt(int[][] original) {
         if (original == null) {
             return null;
         }
 
         final int[][] result = new int[original.length][];
+        for (int i = 0; i < original.length; i++) {
+            result[i] = Arrays.copyOf(original[i], original[i].length);
+            // For Java versions prior to Java 6 use the next:
+            // System.arraycopy(original[i], 0, result[i], 0, original[i].length);
+        }
+        return result;
+    }
+*/
+    public static byte[][] deepCopyInt(byte[][] original) {
+        if (original == null) {
+            return null;
+        }
+
+        final byte[][] result = new byte[original.length][];
         for (int i = 0; i < original.length; i++) {
             result[i] = Arrays.copyOf(original[i], original[i].length);
             // For Java versions prior to Java 6 use the next:

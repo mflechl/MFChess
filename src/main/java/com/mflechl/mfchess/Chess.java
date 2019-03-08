@@ -113,8 +113,8 @@ public class Chess extends JFrame {
         canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
         canvas.setLayout(new GridLayout(10, 10));
 
-        for (int i = 9; i >= 0; i--) {
-            for (int j = 0; j < 10; j++) {
+        for (byte i = 9; i >= 0; i--) {
+            for (byte j = 0; j < 10; j++) {
                 if (i == 0 || j == 0 || i == 9 || j == 9) {
                     canvas.add(coordBoard.coordTiles[i][j]);
                 } else {

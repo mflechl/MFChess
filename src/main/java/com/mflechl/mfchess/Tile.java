@@ -18,27 +18,27 @@ public class Tile extends JLabel {
     static Border lastMoveBorder = BorderFactory.createLineBorder(Color.DARK_GRAY, 5);
     static Border promBorder = BorderFactory.createLineBorder(Color.GREEN, 5);
 
-    static int promLine = -1, promRow = -1;
+    static byte promLine = -1, promRow = -1;
 
-    public int piece = 0;
-    public int line, row; //line and row of this tile
+    public byte piece = 0;
+    public byte line, row; //line and row of this tile
     public boolean thisPromActive = false; //this tile: promotion, pick piece
     public static boolean promActive = false; //any tile: promotion, pick piece
-    public static int statLine, statRow; //line and row of the row that was just clicked
+    public static byte statLine, statRow; //line and row of the row that was just clicked
 
     //  public Map<Integer,String> pieceDict = createDict();
 
-    public Tile(String text, int line, int row) {
+    public Tile(String text, byte line, byte row) {
         super(text);
         init(line, row);
     }
 
-    /*    public Tile(Icon image, int line, int row) {
+    /*    public Tile(Icon image, byte line, byte row) {
 		super(image);
 		init(line,row);
     } */
 
-    public void init(int line, int row) {
+    public void init(byte line, byte row) {
         this.line = line;
         this.row = row;
         statLine = line;
@@ -89,11 +89,11 @@ public class Tile extends JLabel {
         if (!thisPromActive || !promActive) setBorder(null);
     }
 
-    public int getPiece() {
+    public byte getPiece() {
         return piece;
     }
 
-    public void setPiece(int piece) {
+    public void setPiece(byte piece) {
         this.piece = piece;
         if (Integer.signum(piece) < 0) setIcon(ChessBoard.bpieces[-piece]);
         else setIcon(ChessBoard.wpieces[+piece]);

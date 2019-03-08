@@ -16,7 +16,7 @@ class State {
         this.mate = st.mate;
     }
 
-    void update(int movingPiece, int fromLine, int toLine, int fromRow) {
+    void update(byte movingPiece, byte fromLine, byte toLine, byte fromRow) {
         turnOf *= -1;
         if (turnOf == ChessBoard.WHITE) moveNumber++;
         nMoves++;
@@ -32,12 +32,12 @@ class State {
 
     }
 
-    int turnOf = ChessBoard.WHITE;
+    byte turnOf = ChessBoard.WHITE;
     int nMoves = 0; //number of moves that have happened so far, counting b and w separately
     int moveNumber = 1; ////one move=one each black and white, starting with 1 after first white move.
     boolean[] castlingPossibleQ = {true, true};  //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
     boolean[] castlingPossibleK = {true, true};  //same for king-side
-    int enPassantPossible = -1;
+    byte enPassantPossible = -1;
     boolean check = false; //currently, is opponent in check?
     boolean remis = false; //currently, no more moves, remis?
     boolean mate = false; //currently, no more moves, mate?
