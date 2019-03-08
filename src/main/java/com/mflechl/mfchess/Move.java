@@ -196,12 +196,19 @@ public final class Move {
     }
 
     static Boolean noLegalMoves(IBoard _iBoard, State _state) {
-        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, false);
+        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, 1, false);
         return moveList.isEmpty();
     }
 
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
-        return allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
+    static IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
+        ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
+        for (IBoardState board : allMoves)
+            System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+        return EvaluateBoard.getMaxMove(allMoves, true);
+        //            return chosenMove = EvaluateBoard.getMaxMove(allMoves, true);
+        //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
+
+
     }
 
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
