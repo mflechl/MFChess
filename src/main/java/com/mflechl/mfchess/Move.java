@@ -202,8 +202,7 @@ public final class Move {
 
     static IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
         ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
-        for (IBoardState board : allMoves)
-            System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+        //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
         return EvaluateBoard.getMaxMove(allMoves, true);
         //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
     }
@@ -270,7 +269,7 @@ public final class Move {
                     Move.updateCheckState(updatedState, hypo_iBoard);
 
                     for (byte i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
-                        //System.out.println("pieceLegalMove from l-r to l-r "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
+                        //System.out.println("pieceLegalMove from l-random to l-random "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
                         String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 

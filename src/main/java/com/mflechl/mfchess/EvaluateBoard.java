@@ -17,6 +17,8 @@ public final class EvaluateBoard {
 
     static final int[] indexToSign = {-1, +1};
 
+    static Random random = new Random(131737);
+
     /*
     static float eval( IBoardState board ) {
         return eval( board, board.state);
@@ -68,8 +70,7 @@ public final class EvaluateBoard {
                 }
             }
             if (maxList.size() > 1) {
-                Random r = new Random();
-                int rnd = r.nextInt(maxList.size());
+                int rnd = random.nextInt(maxList.size());
                 maxBoard = maxList.get(rnd);
             }
         }

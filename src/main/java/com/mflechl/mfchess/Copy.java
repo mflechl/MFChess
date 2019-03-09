@@ -15,7 +15,7 @@ public class Copy {
     }
 
     //works for int 2D arrays
-/*
+
     public static int[][] deepCopyInt(int[][] original) {
         if (original == null) {
             return null;
@@ -29,7 +29,7 @@ public class Copy {
         }
         return result;
     }
-*/
+
     public static byte[][] deepCopyInt(byte[][] original) {
         if (original == null) {
             return null;
