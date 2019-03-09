@@ -47,12 +47,12 @@ public class IBoard {
         setup[7][4] = ChessBoard.BLACK * ChessBoard.KING;
     }
 
-    static ArrayList<byte[]> diff(IBoard b1, IBoard b2) {
-        ArrayList<byte[]> list = new ArrayList<>();
-        for (byte iline = 0; iline < 8; iline++) {
-            for (byte irow = 0; irow < 8; irow++) {
+    static ArrayList<int[]> diff(IBoard b1, IBoard b2) {
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int iline = 0; iline < 8; iline++) {
+            for (int irow = 0; irow < 8; irow++) {
                 if (b1.setup[iline][irow] != b2.setup[iline][irow]) {
-                    byte[] coord = {iline, irow};
+                    int[] coord = {iline, irow};
                     list.add(coord);
                 }
             }
@@ -63,11 +63,11 @@ public class IBoard {
     public String toString() {
         StringBuilder out = new StringBuilder();
         out.append("\n_________________\n");
-        for (byte line = 7; line >= 0; line--) {
+        for (int line = 7; line >= 0; line--) {
             out.append(U_ + "|");
-            for (byte row = 0; row < 8; row++) {
-                byte to_add = setup[line][row];
-                byte apiece = (byte) Math.abs(to_add);
+            for (int row = 0; row < 8; row++) {
+                int to_add = setup[line][row];
+                int apiece = Math.abs(to_add);
 //                if (to_add >= 0) out.append(" ");
                 if (to_add != 0) {
 //                    out.append(to_add);

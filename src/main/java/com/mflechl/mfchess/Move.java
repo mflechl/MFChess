@@ -11,17 +11,17 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     //move from fromLine, fromRow to toLine,toRow legal?
-    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, byte fromLine, byte fromRow, byte toLine, byte toRow) {
+    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
         return isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, ChessBoard.currentStaticState);
     }
 
-    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, byte fromLine, byte fromRow, byte toLine, byte toRow, State _state) {
+    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, State _state) {
         if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7)
             throw new ArrayIndexOutOfBoundsException("fromLine: " + fromLine + " fromRow: " + fromRow);
         if (toLine < 0 || toLine > 7 || toRow < 0 || toRow > 7)
             throw new ArrayIndexOutOfBoundsException("toLine: " + toLine + " toRow: " + toRow);
 
-        byte col = (byte) Integer.signum(_iBoard.setup[fromLine][fromRow]);
+        int col = Integer.signum(_iBoard.setup[fromLine][fromRow]);
         if (col == Integer.signum(_iBoard.setup[toLine][toRow]))
             return false; //occupied by own piece, including same tile
 
@@ -66,7 +66,7 @@ public final class Move {
     }
 
 
-    private static boolean legalMovePawn(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow, byte col, SpecialMove sMove, State _state) {
+    private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, State _state) {
         //System.out.println("legalMovePawn "+fromLine+" "+fromRow+" "+toLine+"-"+toRow+" state="+_state+" sMove="+sMove+"\n"+_iBoard);
         if (fromRow == toRow) {
             //normal move
@@ -92,26 +92,26 @@ public final class Move {
         return false;
     }
 
-    private static boolean legalMoveRook(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow) {
+    private static boolean legalMoveRook(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow) {
         if ((fromRow == toRow) || (fromLine == toLine)) {
             return emptyBetween(_iBoard, fromLine, fromRow, toLine, toRow, false);
         }
         return false;
     }
 
-    private static boolean legalMoveKnight(byte fromLine, byte fromRow, byte toLine, byte toRow) {
+    private static boolean legalMoveKnight(int fromLine, int fromRow, int toLine, int toRow) {
         return (Math.abs(fromRow - toRow) == 2 && Math.abs(fromLine - toLine) == 1) ||
                 (Math.abs(fromRow - toRow) == 1 && Math.abs(fromLine - toLine) == 2);
     }
 
-    private static boolean legalMoveBishop(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow) {
+    private static boolean legalMoveBishop(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow) {
         if (Math.abs(fromRow - toRow) == Math.abs(fromLine - toLine)) {
             return emptyBetween(_iBoard, fromLine, fromRow, toLine, toRow, false);
         }
         return false;
     }
 
-    private static boolean legalMoveKing(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow, byte col, SpecialMove sMove, State _state) {
+    private static boolean legalMoveKing(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, State _state) {
         //normal move
         if (Math.abs(fromRow - toRow) <= 1 && Math.abs(fromLine - toLine) <= 1) return true;
 
@@ -120,9 +120,9 @@ public final class Move {
         if (fromLine != toLine) return false; //king must be on the starting position to fulfill later criteria
         if (_state.check) return false;
 
-        byte colIndex = (byte) ((col + 1) / 2); //black=0, white=1
-        if ((toRow == 2 && emptyBetween(_iBoard, fromLine, fromRow, toLine, (byte) 1, true, _state) && _state.castlingPossibleQ[colIndex]) ||
-                (toRow == 6 && emptyBetween(_iBoard, fromLine, fromRow, toLine, (byte) 6, true, _state) && _state.castlingPossibleK[colIndex])) {
+        int colIndex = (col + 1) / 2; //black=0, white=1
+        if ((toRow == 2 && emptyBetween(_iBoard, fromLine, fromRow, toLine, 1, true, _state) && _state.castlingPossibleQ[colIndex]) ||
+                (toRow == 6 && emptyBetween(_iBoard, fromLine, fromRow, toLine, 6, true, _state) && _state.castlingPossibleK[colIndex])) {
             sMove.castling = true;
             return true;
         }
@@ -130,20 +130,20 @@ public final class Move {
     }
 
     //overload for case where currentStaticState is not needed, i.e. when there is no castling being checked (checkCheck=false)
-    private static boolean emptyBetween(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow, boolean checkCheck) {
+    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck) {
         return emptyBetween(_iBoard, fromLine, fromRow, toLine, toRow, checkCheck, ChessBoard.currentStaticState);
     }
 
-    private static boolean emptyBetween(IBoard _iBoard, byte fromLine, byte fromRow, byte toLine, byte toRow, boolean checkCheck, State _state) {
+    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck, State _state) {
 
         if (toRow == fromRow) { //rook-type move
-            byte direction = (byte) Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
-            for (byte i = (byte) (fromLine + direction); (i * direction) < (toLine * direction); i += direction) {
+            int direction = Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
+            for (int i = fromLine + direction; (i * direction) < (toLine * direction); i += direction) {
                 if (_iBoard.setup[i][fromRow] != 0) return false;
             }
         } else if (toLine == fromLine) { //rook-type move
-            byte direction = (byte) Integer.signum(toRow - fromRow);  //+1 if toRow is larger, -1 if fromRow
-            for (byte j = (byte) (fromRow + direction); (j * direction) < (toRow * direction); j += direction) {
+            int direction = Integer.signum(toRow - fromRow);  //+1 if toRow is larger, -1 if fromRow
+            for (int j = fromRow + direction; (j * direction) < (toRow * direction); j += direction) {
                 if (_iBoard.setup[fromLine][j] != 0) return false;
                 if (checkCheck) { //only needed for castling: move on hypo board and then check for check
                     IBoard hypo_iBoard = new IBoard(_iBoard);
@@ -152,10 +152,10 @@ public final class Move {
                 }
             }
         } else {   //bishop-type move
-            byte dir1 = (byte) Integer.signum(toRow - fromRow);    //+1 if toRow  is larger, -1 if fromRow
-            byte dir2 = (byte) Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
-            byte i = (byte) (fromLine + dir2);
-            for (byte j = (byte) (fromRow + dir1); (j * dir1) < (toRow * dir1); j += dir1) {
+            int dir1 = Integer.signum(toRow - fromRow);    //+1 if toRow  is larger, -1 if fromRow
+            int dir2 = Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
+            int i = fromLine + dir2;
+            for (int j = fromRow + dir1; (j * dir1) < (toRow * dir1); j += dir1) {
                 if (_iBoard.setup[i][j] != 0) return false;
                 i += dir2;
             }
@@ -165,11 +165,11 @@ public final class Move {
     }
 
     //is col (+1 white, -1 black) in check in this tiles setup?
-    static boolean isChecked(IBoard _iBoard, byte col) {
+    static boolean isChecked(IBoard _iBoard, int col) {
         //find king
-        byte lineKing = -1, rowKing = -1;
-        for (byte il = 0; il < 8; il++) {
-            for (byte ir = 0; ir < 8; ir++) {
+        int lineKing = -1, rowKing = -1;
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] == col * ChessBoard.KING) {
                     lineKing = il;
                     rowKing = ir;
@@ -184,8 +184,8 @@ public final class Move {
         }
 
         //check opponent pieces: can eliminate king=is in check
-        for (byte il = 0; il < 8; il++) {
-            for (byte ir = 0; ir < 8; ir++) {
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * col < 0) {
                     //		    if ( isLegal(_iBoard, il, ir, lineKing, rowKing) ) return true;
                     if (isLegal(_iBoard, new SpecialMove(), il, ir, lineKing, rowKing)) return true;
@@ -211,8 +211,8 @@ public final class Move {
     static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
         ArrayList<IBoardState> list = new ArrayList<>();
 
-        for (byte il = 0; il < 8; il++) {
-            for (byte ir = 0; ir < 8; ir++) {
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
                     ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
                     list.addAll(listPiece);
@@ -238,7 +238,13 @@ public final class Move {
 
                 if (subList.isEmpty()) {
                     //System.out.println("No more moves:" + boardState + " depth=" + depth);
-                    val = -999 * boardState.state.turnOf; //no moves - check mate or remis! //TODO: value for remis
+                    if (boardState.state.mate) val = -999 * boardState.state.turnOf; //no moves - check mate or remis!
+                    else if (boardState.state.remis) val = 0;  //means: pick this move if you are in a bad position
+                    else {
+                        System.out.println("Neither mate nor remis! Something went wrong...");
+                        val = 0;
+                    }
+                    //System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check);
                 } else val = EvaluateBoard.getMaxMove(subList).getEval();
                 boardState.setEval(val);
             }
@@ -247,10 +253,10 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, byte fromLine, byte fromRow, State _state, boolean stopAfterFirst) {
+    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
         ArrayList<IBoardState> list = new ArrayList<>();
-        for (byte toLine = 0; toLine < 8; toLine++) {
-            for (byte toRow = 0; toRow < 8; toRow++) {
+        for (int toLine = 0; toLine < 8; toLine++) {
+            for (int toRow = 0; toRow < 8; toRow++) {
                 SpecialMove sMove = new SpecialMove();
                 if (isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, _state)) {
 
@@ -268,7 +274,7 @@ public final class Move {
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
                     Move.updateCheckState(updatedState, hypo_iBoard);
 
-                    for (byte i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
+                    for (int i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
                         //System.out.println("pieceLegalMove from l-random to l-random "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
                         String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
@@ -288,13 +294,13 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<byte[]> legalDestination(IBoard _iBoard, byte fromLine, byte fromRow, State _state, boolean stopAfterFirst) {
-        ArrayList<byte[]> list = new ArrayList<>();
-        for (byte toLine = 0; toLine < 8; toLine++) {
-            for (byte toRow = 0; toRow < 8; toRow++) {
+    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
+        ArrayList<int[]> list = new ArrayList<>();
+        for (int toLine = 0; toLine < 8; toLine++) {
+            for (int toRow = 0; toRow < 8; toRow++) {
                 sDummy = new SpecialMove();
                 if (isLegal(_iBoard, sDummy, fromLine, fromRow, toLine, toRow, _state)) {
-                    byte[] dest = {toLine, toRow};
+                    int[] dest = {toLine, toRow};
                     list.add(dest);
                     if (stopAfterFirst) return list;
                 }

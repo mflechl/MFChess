@@ -24,9 +24,9 @@ public class ChessBoard implements ActionListener {
     //    static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
 
-    static final byte KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
+    static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
     static final String[] lpieces = {"", "K", "Q", "R", "B", "N", "P"};
-    static final byte WHITE = +1, BLACK = -1;
+    static final int WHITE = +1, BLACK = -1;
     static ImageIcon[] wpieces = new ImageIcon[7];
     static ImageIcon[] bpieces = new ImageIcon[7];
 
@@ -72,8 +72,8 @@ public class ChessBoard implements ActionListener {
     }
 
     static void fillTilesFromBoard() {
-        for (byte i = 0; i < iBoard.setup.length; i++) {
-            for (byte j = 0; j < iBoard.setup[i].length; j++) {
+        for (int i = 0; i < iBoard.setup.length; i++) {
+            for (int j = 0; j < iBoard.setup[i].length; j++) {
                 tiles[i][j].setPiece(iBoard.setup[i][j]);
             }
         }
@@ -88,7 +88,7 @@ public class ChessBoard implements ActionListener {
     }*/
 
     private void initPieces() {
-        for (byte i = 1; i < 7; i++) {
+        for (int i = 1; i < 7; i++) {
             final boolean useGradient = true;
             wpieces[i] = new ImageIcon(ChessPieceImage.getImageForChessPiece(i, 0, useGradient));
             bpieces[i] = new ImageIcon(ChessPieceImage.getImageForChessPiece(i, 1, useGradient));
@@ -99,8 +99,8 @@ public class ChessBoard implements ActionListener {
 
         initPieces();
 
-        for (byte i = 0; i < iBoard.setup.length; i++) {
-            for (byte j = 0; j < iBoard.setup[i].length; j++) {
+        for (int i = 0; i < iBoard.setup.length; i++) {
+            for (int j = 0; j < iBoard.setup[i].length; j++) {
                 //		tiles[i][j] = new com.mflechl.mfchess.Tile(new ImageIcon(getImageForChessPiece(2, 0, false)),i,j);
                 tiles[i][j] = new Tile("", i, j);
                 tiles[i][j].addActionListener(this);
@@ -120,13 +120,13 @@ public class ChessBoard implements ActionListener {
         }
     }
 
-    private static void promChooseFigure(byte _l, byte _r) {
+    private static void promChooseFigure(int _l, int _r) {
         if (tiles[_l][_r].thisPromActive) {
-            byte newPiece = (byte) (iBoard.setup[_l][_r] - currentStaticState.turnOf);
-            if (Math.abs(newPiece) > Math.abs(KNIGHT)) newPiece = (byte) (Math.signum(newPiece) * QUEEN);
+            int newPiece = iBoard.setup[_l][_r] - currentStaticState.turnOf;
+            if (Math.abs(newPiece) > Math.abs(KNIGHT)) newPiece = (int) Math.signum(newPiece) * QUEEN;
             setPieceBoard(iBoard, _l, _r, newPiece, false);
             //tiles[_l][_r].setPiece( tiles[_l][_r].getPiece()-currentStaticState.turnOf );
-            //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (byte)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
+            //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (int)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
             Move.updateCheckState(currentStaticState, iBoard);
             IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
             pastMoves.set(currentStaticState.nMoves, currentMove);
@@ -147,10 +147,10 @@ public class ChessBoard implements ActionListener {
 
 
     private boolean tileActive = false;
-    private byte aLine = -1;
-    private byte aRow = -1;
+    private int aLine = -1;
+    private int aRow = -1;
 
-    private void changeBoardState(byte _l, byte _r) {
+    private void changeBoardState(int _l, int _r) {
 
         if (Tile.promActive) {
             promChooseFigure(_l, _r);
@@ -166,8 +166,8 @@ public class ChessBoard implements ActionListener {
             aLine = _l;
             aRow = _r;
             tileActive = true;
-            ArrayList<byte[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
-            for (byte[] pos : list) {
+            ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
+            for (int[] pos : list) {
                 tiles[pos[0]][pos[1]].setDestinationBorder();
             }
         }
@@ -185,8 +185,8 @@ public class ChessBoard implements ActionListener {
                 if (!Move.isLegal(iBoard, sMove, aLine, aRow, _l, _r)) return;
 
                 //Move!
-                byte movingPiece = tiles[aLine][aRow].getPiece();
-                byte eliminatedPiece = tiles[_l][_r].getPiece();
+                int movingPiece = tiles[aLine][aRow].getPiece();
+                int eliminatedPiece = tiles[_l][_r].getPiece();
 
                 processMove(iBoard, aLine, aRow, _l, _r, movingPiece, false, sMove);
 
@@ -311,8 +311,8 @@ public class ChessBoard implements ActionListener {
     }
 
     //if some castling options get eliminated, check and set it here
-    public static void updateCastlingState(State _state, byte piece, byte fromLine, byte fromRow, byte toLine, byte toRow, boolean castlingDone) {
-        byte colIndex = 0, colIndexOther = 1; //black/white
+    public static void updateCastlingState(State _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
+        int colIndex = 0, colIndexOther = 1; //black/white
         if (piece > 0) {
             colIndex = 1;
             colIndexOther = 0;
@@ -340,17 +340,17 @@ public class ChessBoard implements ActionListener {
 
     //hypo=check hypothetical move, do not execute
 /*
-    static void processMove(IBoard board, byte fromLine, byte fromRow, byte toLine, byte toRow, boolean hypo, byte piece) {
+    static void processMove(IBoard board, int fromLine, int fromRow, int toLine, int toRow, boolean hypo, int piece) {
         processMove( board, fromLine, fromRow, toLine, toRow, piece, hypo, Move.SDUMMY );
     }
 */
     //return value gives row where promotion happened, if applicable, otherwise -1
-    static boolean processMove(IBoard board, byte fromLine, byte fromRow, byte toLine, byte toRow, byte piece, boolean hypo, SpecialMove sMove) {
+    static boolean processMove(IBoard board, int fromLine, int fromRow, int toLine, int toRow, int piece, boolean hypo, SpecialMove sMove) {
         boolean ret = false;
 
         if ((piece == BLACK * PAWN && toLine == 0) || (piece == WHITE * PAWN && toLine == 7)) {
             //System.out.println(toRow+" "+piece+" LLL "+hypo);
-            piece = (byte) (Math.signum(piece) * QUEEN);
+            piece = (int) (Math.signum(piece) * QUEEN);
             if (!hypo) {
                 tiles[toLine][toRow].setPromBorder();
                 System.out.println("promActive = " + Tile.promActive);
@@ -359,14 +359,14 @@ public class ChessBoard implements ActionListener {
         }
 
         //remove old piece
-        setPieceBoard(board, fromLine, fromRow, (byte) 0, hypo);
+        setPieceBoard(board, fromLine, fromRow, 0, hypo);
 
         //put new piece
         setPieceBoard(board, toLine, toRow, piece, hypo);
 
-        if (sMove.enPassant) setPieceBoard(board, (byte) (toLine - Math.signum(piece)), toRow, (byte) 0, hypo);
+        if (sMove.enPassant) setPieceBoard(board, (int) (toLine - Math.signum(piece)), toRow, 0, hypo);
         if (sMove.castling) {
-            byte rookToRow = -1, rookFromRow = -1;
+            int rookToRow = -1, rookFromRow = -1;
             if (toRow == 2) {
                 rookToRow = 3;
                 rookFromRow = 0;
@@ -375,31 +375,34 @@ public class ChessBoard implements ActionListener {
                 rookToRow = 5;
                 rookFromRow = 7;
             }
-            setPieceBoard(board, toLine, rookToRow, (byte) (Math.signum(piece) * ROOK), hypo);
-            setPieceBoard(board, toLine, rookFromRow, (byte) 0, hypo);
+            setPieceBoard(board, toLine, rookToRow, (int) (Math.signum(piece) * ROOK), hypo);
+            setPieceBoard(board, toLine, rookFromRow, 0, hypo);
         }
         return ret;
     }
 
     //set both iBoard byte array and the content of the correspond tile "tiles"
-    private static void setPieceBoard(IBoard board, byte line, byte row, byte piece, boolean hypo) {
+    private static void setPieceBoard(IBoard board, int line, int row, int piece, boolean hypo) {
         if (line < 0 || line > 7 || row < 0 || row > 7)
             throw new ArrayIndexOutOfBoundsException("line: " + line + " row: " + row);
 
-        board.setup[line][row] = piece;
+        board.setup[line][row] = (byte) piece;
         if (!hypo) tiles[line][row].setPiece(piece);
     }
 
     static int computerMove() {
 
+        //cannpt move
+        if (currentStaticState.mate) return 1;
+        else if (currentStaticState.remis) return 2;
+
         //reset tile borders
         if (Tile.promActive) {
-            promChooseFigure((byte) 4, (byte) 4); //cannot have an active prom in line 4, just triggers removal of prom status.
+            promChooseFigure(4, 4); //cannot have an active prom in line 4, just triggers removal of prom status.
         }
         setAllBordersInactive();
         removeFutureMoves(currentStaticState);
 
-        //TODO: check openings
         //compare to openings
         //System.out.println("CM" + Notation.getNotationString() + "CM");
         String notationString = Notation.getNotationString();
@@ -465,7 +468,7 @@ public class ChessBoard implements ActionListener {
     }
 
     static void findAndSetLastMoveBorder(IBoard bCurr, IBoard bPrev) {
-        ArrayList<byte[]> boardDiff = IBoard.diff(bCurr, bPrev);
+        ArrayList<int[]> boardDiff = IBoard.diff(bCurr, bPrev);
 
         //can only happen for en passant or castling
         if (boardDiff.size() > 2) {
@@ -476,7 +479,7 @@ public class ChessBoard implements ActionListener {
                     bCurr.setup[aDiff[0]][aDiff[1]] != currentStaticState.turnOf * -1 * ChessBoard.KING);
         }
 
-        for (byte[] pos : boardDiff) {
+        for (int[] pos : boardDiff) {
             tiles[pos[0]][pos[1]].setLastMoveBorder();
         }
     }

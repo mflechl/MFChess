@@ -115,8 +115,8 @@ public class Chess extends JFrame {
         canvas.setPreferredSize(new Dimension(CANVAS_WIDTH, CANVAS_HEIGHT));
         canvas.setLayout(new GridLayout(10, 10));
 
-        for (byte i = 9; i >= 0; i--) {
-            for (byte j = 0; j < 10; j++) {
+        for (int i = 9; i >= 0; i--) {
+            for (int j = 0; j < 10; j++) {
                 if (i == 0 || j == 0 || i == 9 || j == 9) {
                     canvas.add(coordBoard.coordTiles[i][j]);
                 } else {
@@ -230,8 +230,10 @@ public class Chess extends JFrame {
                 paint(getGraphics());
             }
             long finishTime = System.currentTimeMillis();
-            System.out.println("The game took: " + (finishTime - startTime) + " ms, number of moves = " + chessBoard.currentStaticState.nMoves);
+            System.out.println("The game took: " + (finishTime - startTime) + " ms, number of moves = " + ChessBoard.currentStaticState.nMoves);
             //all byte: 55 / 56 / 56 / 55
+            //byte only for board, some casts: 55 / 54  / 55 / 55 / 55 / 54 (6% mem)
+            //only int 56 / 57 / 56 / 57 (9% mem)
         }
     }
 
@@ -258,7 +260,8 @@ public class Chess extends JFrame {
     // The entry main() method
     public static void main(String[] args) {
 //        String initialNotation = "";
-        String initialNotation = "1. h4"; //avoid openings
+        //String initialNotation = "1. h4"; //avoid openings
+        String initialNotation = "1. h4 g6 2. b3 Bg7 3. Nc3 g5 4. hxg5 Bd4 5. e3 Bg7 6. d4 b6 7. Bb5 Kf8 8. Qd3 Qe8 9. Qe2 Qd8 10. Qd1 a5 11. Qf3 c6 12. Na4 Qe8 13. Nxb6 Ra7 14. Nxc8 Qxc8 15. Bf1 d6 16. Be2 Qc7 17. Rh5 Nd7 18. Bc4 d5 19. Bf1 Bxd4 20. exd4 Ndf6 21. Bf4 Qc8 22. Be5 Qb7 23. a3 Nh6 24. Rxh6 Ng8 25. Bxh8 Nxh6 26. gxh6 Kg8 27. Bg7 c5 28. dxc5 a4 29. b4 Ra5 30. bxa5 Qb8 31. Qh5 f5 32. Qh4 f4 33. 0-0-0 f3 34. gxf3 e6 35. Qxa4 d4 36. Qxd4 Qc7 37. a6 Qb8 38. Re1 Qc7 39. Re5 Qb8 40. Qe4 Qd8 41. c6 Qe7 42. Kb2 Qd8 43. Qb4 Kf7 44. Bd3 Kg8 45. Re1 Qc8 46. Qb5 Qd8 47. a7 Qa8 48. Qb8+ Qxb8+ 49. axb8Q+ Kf7 50. Qc7+ Kg8 51. Re5 &#189; - &#189;";
 //        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //simple test
 //        String initialNotation = "1. a4 g5 2. a5 g4 3. f4 gxf3 4. exf3 b5 5. axb6 a5 "; //en passant
 //        String initialNotation = "1. g3 g6 2. Bh3 Bh6 3. Nf3 Nf6 4. 0-0 0-0 "; //castling king-side

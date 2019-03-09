@@ -12,26 +12,26 @@ public final class NotationToState {
     private static final String patternMoveNumber = "[0-9]*\\.";
     private static final String patternPiece = "^[KQRBN].*";
 
-    private static final Map<String, Byte> pieceMap = new HashMap<>();
+    private static final Map<String, Integer> pieceMap = new HashMap<>();
     static {
-        pieceMap.put("K", (byte) 1);
-        pieceMap.put("Q", (byte) 2);
-        pieceMap.put("R", (byte) 3);
-        pieceMap.put("B", (byte) 4);
-        pieceMap.put("N", (byte) 5);
+        pieceMap.put("K", 1);
+        pieceMap.put("Q", 2);
+        pieceMap.put("R", 3);
+        pieceMap.put("B", 4);
+        pieceMap.put("N", 5);
     }
 
-    private static final Map<String, Byte> rowMap = new HashMap<>();
+    private static final Map<String, Integer> rowMap = new HashMap<>();
 
     static {
-        rowMap.put("a", (byte) 0);
-        rowMap.put("b", (byte) 1);
-        rowMap.put("c", (byte) 2);
-        rowMap.put("d", (byte) 3);
-        rowMap.put("e", (byte) 4);
-        rowMap.put("f", (byte) 5);
-        rowMap.put("g", (byte) 6);
-        rowMap.put("h", (byte) 7);
+        rowMap.put("a", 0);
+        rowMap.put("b", 1);
+        rowMap.put("c", 2);
+        rowMap.put("d", 3);
+        rowMap.put("e", 4);
+        rowMap.put("f", 5);
+        rowMap.put("g", 6);
+        rowMap.put("h", 7);
     }
 
     static IBoardState noteToBoard(final String move, IBoardState prevBoard) {
@@ -42,11 +42,11 @@ public final class NotationToState {
         String str = move.replaceAll("^\\s+", "").replaceAll("\\s$", "");
         IBoardState currBoard = new IBoardState(prevBoard);
 
-        byte toLine, toRow;
-        byte fromLine = -1, fromRow = -1;
-        byte piece;
-        byte toPiece = -1;
-        byte turnOf = prevBoard.state.turnOf;
+        int toLine, toRow;
+        int fromLine = -1, fromRow = -1;
+        int piece;
+        int toPiece = -1;
+        int turnOf = prevBoard.state.turnOf;
         SpecialMove sDummy;
         SpecialMove sMove = new SpecialMove();
 
@@ -56,7 +56,7 @@ public final class NotationToState {
             if (turnOf == ChessBoard.WHITE) fromLine = 0;
             else fromLine = 7;
             toLine = fromLine;
-            piece = (byte) (ChessBoard.KING * turnOf);
+            piece = ChessBoard.KING * turnOf;
 
             if (str.startsWith("0-0-0")) { //queen-side castling
                 toRow = rowMap.get("c");
@@ -68,39 +68,39 @@ public final class NotationToState {
                 return null;
         } else {
             //which piece moved?
-            piece = (byte) (turnOf * ChessBoard.PAWN);
+            piece = turnOf * ChessBoard.PAWN;
             if (str.matches(patternPiece)) {
-                piece = (byte) (turnOf * pieceMap.get(str.substring(0, 1)));
+                piece = turnOf * pieceMap.get(str.substring(0, 1));
                 str = str.substring(1);                                       //remove piece from string
             }
 
-            byte remFromRow = -1, remFromLine = -1;
+            int remFromRow = -1, remFromLine = -1;
             if (str.matches("[abcdefgh]x?[abcdefgh].*")) {
                 remFromRow = rowMap.get(str.substring(0, 1));
                 str = str.substring(1);                                       //remove piece from string
             } else if (str.matches("\\dx?[abcdefgh].*")) {
-                remFromLine = (byte) (Byte.parseByte(str.substring(0, 1)) - 1);
+                remFromLine = Integer.parseInt(str.substring(0, 1)) - 1;
                 str = str.substring(1);                                       //remove piece from string
             } else if (str.matches("[abcdefgh]\\dx?[abcdefgh].*")) {
                 remFromRow = rowMap.get(str.substring(0, 1));
-                remFromLine = (byte) (Byte.parseByte(str.substring(1, 2)) - 1);
+                remFromLine = Integer.parseInt(str.substring(1, 2)) - 1;
                 str = str.substring(2);                                       //remove piece from string
             }
             if (str.substring(0, 1).equals("x")) str = str.substring(1);     //remove "x"; str is now final state
 
             //get TO coordinates and remove info from string
-            toLine = (byte) (Byte.parseByte(str.substring(1, 2)) - 1);
+            toLine = Integer.parseInt(str.substring(1, 2)) - 1;
             toRow = rowMap.get(str.substring(0, 1));
 
             //promotion: to which piece?
             if (str.length() > 2) {
                 if (str.substring(2, 3).matches(patternPiece))
-                    toPiece = (byte) (turnOf * pieceMap.get(str.substring(2, 3)));
+                    toPiece = turnOf * pieceMap.get(str.substring(2, 3));
             }
 
             //get FROM coordinates
-            for (byte iLine = 0; iLine < 8; iLine++) {
-                for (byte iRow = 0; iRow < 8; iRow++) {
+            for (int iLine = 0; iLine < 8; iLine++) {
+                for (int iRow = 0; iRow < 8; iRow++) {
                     if (piece != currBoard.setup[iLine][iRow]) continue;
                     if (remFromRow >= 0 && iRow != remFromRow) continue;
                     if (remFromLine >= 0 && iLine != remFromLine) continue;
@@ -119,7 +119,7 @@ public final class NotationToState {
         //move!
         if (fromLine >= 0 && fromRow >= 0) {
             ChessBoard.processMove(currBoard, fromLine, fromRow, toLine, toRow, currBoard.setup[fromLine][fromRow], true, sMove);
-            if (Math.abs(toPiece) > 1) currBoard.setup[toLine][toRow] = toPiece; //promotion
+            if (Math.abs(toPiece) > 1) currBoard.setup[toLine][toRow] = (byte) toPiece; //promotion
             currBoard.state.update(piece, fromLine, toLine, fromRow); //also: check and castling update!
             ChessBoard.updateCastlingState(currBoard.state, piece, fromLine, fromRow, toLine, toRow, sMove.castling);
             Move.updateCheckState(currBoard.state, currBoard);
@@ -146,6 +146,8 @@ public final class NotationToState {
         String[] split = notation.replaceAll("^\\s+", "").replaceAll("\\s$", "").split(" +");
         for (String str : split) {
             if (str.matches(patternMoveNumber)) continue; //remove move number
+            if (str.startsWith("&") || str.equals("-")) continue; //remis (html)
+            //if (str.matches(".*[01] - [10].*")) continue; //check mate
 
             StringBuilder notationMove = new StringBuilder();
             currentBoard = noteToBoard(str, currentBoard, notationMove);
