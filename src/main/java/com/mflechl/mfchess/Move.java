@@ -222,17 +222,19 @@ public final class Move {
         }
 
 
-        if (adaptDepth) { //set adaptive weight
+        if (adaptDepth && depth == 1) { //set adaptive weight. Readjust in later move might bring bias, have to do this in a smarter way
             int nLegalMoves = list.size();
-            if (nLegalMoves > 25) maxDepth = 5 - depth; //max: 3
-            else if (nLegalMoves > 15) maxDepth = 6 - depth;
-            else if (nLegalMoves > 10) maxDepth = 7 - depth;
-            else maxDepth = 7 - depth;
-            if (depth == 1) System.out.println("nLM=" + nLegalMoves + " DEPTH=" + maxDepth);
+            if (nLegalMoves > 25) maxDepth = 3;
+            else if (nLegalMoves > 15) maxDepth = 4;
+            else if (nLegalMoves > 10) maxDepth = 5;
+            else maxDepth = 5;
+            //if (depth == 1) System.out.println("nLM=" + nLegalMoves + " DEPTH=" + maxDepth);
         }
 
         if (depth < maxDepth && !list.isEmpty()) {
             float val;
+            String moveN = "";
+            IBoardState maxMove;
             for (IBoardState boardState : list) {
                 ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth, adaptDepth);
 
@@ -245,8 +247,15 @@ public final class Move {
                         val = 0;
                     }
                     //System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check);
-                } else val = EvaluateBoard.getMaxMove(subList).getEval();
+                } else {
+//                    val = EvaluateBoard.getMaxMove(subList).getEval();
+                    maxMove = EvaluateBoard.getMaxMove(subList);
+                    val = maxMove.getEval();
+                    moveN = maxMove.getNextMoveNotation();
+                    //System.out.println(depth+": "+moveN+"  XXXXXX  "+maxMove.getNotation());
+                }
                 boardState.setEval(val);
+                boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
             }
         }
 
@@ -280,12 +289,13 @@ public final class Move {
                                 _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                         if (!prom) {
-                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, EvaluateBoard.eval(hypo_iBoard, updatedState)));
+                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, moveNotation, EvaluateBoard.eval(hypo_iBoard, updatedState)));
                             break; //stop here if it is not a promotion case
                         }
 
                         hypo_iBoard.setup[toLine][toRow] = (byte) (_state.turnOf * i); //2=queen, 3=rook, 4=bishop, 5=knight
-                        list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation.replaceAll("Q$", ChessBoard.lpieces[i] + " "),
+                        String adaptedMoveNotation = moveNotation.replaceAll("Q$", ChessBoard.lpieces[i] + " ");
+                        list.add(new IBoardState(hypo_iBoard, updatedState, adaptedMoveNotation, adaptedMoveNotation,
                                 EvaluateBoard.eval(hypo_iBoard, updatedState) ));
                     }
                 }

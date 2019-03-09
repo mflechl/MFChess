@@ -444,6 +444,8 @@ public class ChessBoard implements ActionListener {
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");
 
+            System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
+
 //            if (allMoves.isEmpty()) {
             if (chosenMove == null) {
                 System.out.println("CM no more moves: " + currentStaticState);
