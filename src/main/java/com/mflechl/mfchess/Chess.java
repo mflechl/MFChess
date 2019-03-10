@@ -237,6 +237,9 @@ public class Chess extends JFrame {
             //
             //141 / 138 / 138
             //w/o notation: 129 / 130 / 131
+            //w/o static: 138 / 140 / 139
+            //threads: 267 / 263
+            //futures threads: 150 / 143 / 147
         }
     }
 

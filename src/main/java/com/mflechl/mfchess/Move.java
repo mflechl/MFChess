@@ -1,6 +1,9 @@
 package com.mflechl.mfchess;
 
 import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public final class Move {
     Move() {
@@ -9,6 +12,9 @@ public final class Move {
 
     //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
+    //public final static int NTHREADS = 1;
+
+    ExecutorService executorService = Executors.newFixedThreadPool(1);
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -195,12 +201,41 @@ public final class Move {
         return false;
     }
 
-    static Boolean noLegalMoves(IBoard _iBoard, State _state) {
+    /*
+    public class MoveThread implements Runnable {
+        IBoard _iBoard;
+        State _state;
+        boolean stopAfterFirst;
+        int depth, maxDepth;
+        boolean adaptDepth;
+        ArrayList<IBoardState> list;
+
+        public MoveThread(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth){
+            this._iBoard = _iBoard;
+            this._state = _state;
+            this.stopAfterFirst = stopAfterFirst;
+            this.depth = depth;
+            this.maxDepth = maxDepth;
+            this.adaptDepth = adaptDepth;
+        }
+
+        public void run(){
+            list = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
+//            System.out.println("MyRunnable running");
+        }
+    }
+    */
+
+    public Future<ArrayList<IBoardState>> futureSubList(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+        return executorService.submit(() -> allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth));
+    }
+
+    Boolean noLegalMoves(IBoard _iBoard, State _state) {
         ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, 1, false);
         return moveList.isEmpty();
     }
 
-    static IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
+    IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
         ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
         return EvaluateBoard.getMaxMove(allMoves, true);
@@ -208,16 +243,17 @@ public final class Move {
     }
 
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
-    static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+    ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+        //throws InterruptedException {
         ArrayList<IBoardState> list = new ArrayList<>();
 
-//        System.out.println("################################### IN ALM ############################## " + depth);
+        //      System.out.println("################################### IN ALM ############################## " + depth);
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
 //                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, (depth==1) ); //only get notation for first depth
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true); //only get notation for first depth
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true);
                     list.addAll(listPiece);
                     if (stopAfterFirst && !list.isEmpty()) return list;
                 }
@@ -257,7 +293,51 @@ public final class Move {
                 System.out.println("           "+boardState.getNextMoveNotation());
                 */
 
-                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                ArrayList<IBoardState> subList = new ArrayList<>();
+/*
+                if (NTHREADS > 1) {
+                    //THREAD
+                    MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                    Thread thread = new Thread(runnable);
+                    thread.start();
+
+                    try {
+                        thread.join();
+                    } catch (Exception e) {
+                        System.out.println("A problem when joining...");
+                    }
+                    subList = runnable.list;
+                    //THREAD
+                } else{
+                    subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                }
+*/
+
+/*
+                //THREAD
+                MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+
+
+                Thread thread = new Thread(runnable);
+                thread.start();
+
+                try {
+                    thread.join();
+                } catch (Exception e) {
+                    System.out.println("A problem when joining...");
+                }
+                subList = runnable.list;
+                //THREAD
+*/
+                if (depth == 1) {
+                    try {
+                        subList = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth).get();
+                    } catch (Exception e) {
+                        System.out.println("A problem when getting the future...");
+                    }
+                } else {
+                    subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                }
 
                 if (subList.isEmpty()) {
                     //System.out.println("No more moves:" + boardState + " depth=" + depth);
@@ -309,7 +389,7 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation) {
+    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation) {
         ArrayList<IBoardState> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
@@ -328,13 +408,13 @@ public final class Move {
                     State updatedState = new State(_state);
                     updatedState.update(_iBoard.setup[fromLine][fromRow], fromLine, toLine, fromRow);
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
-                    Move.updateCheckState(updatedState, hypo_iBoard);
+                    updateCheckState(updatedState, hypo_iBoard);
 
                     for (int i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
                         //System.out.println("pieceLegalMove from l-random to l-random "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
                         String moveNotation = "";
                         if (updateNotation)
-                            Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
+                            moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
                                     _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                         if (!prom) {
@@ -368,7 +448,7 @@ public final class Move {
         return list;
     }
 
-    static void updateCheckState(State state, IBoard iBoard) {
+    void updateCheckState(State state, IBoard iBoard) {
         state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?
         if (noLegalMoves(iBoard, state)) {
             if (state.check) state.mate = true;

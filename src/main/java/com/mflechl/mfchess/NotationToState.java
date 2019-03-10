@@ -122,7 +122,8 @@ public final class NotationToState {
             if (Math.abs(toPiece) > 1) currBoard.setup[toLine][toRow] = (byte) toPiece; //promotion
             currBoard.state.update(piece, fromLine, toLine, fromRow); //also: check and castling update!
             ChessBoard.updateCastlingState(currBoard.state, piece, fromLine, fromRow, toLine, toRow, sMove.castling);
-            Move.updateCheckState(currBoard.state, currBoard);
+            Move moveInst = new Move();
+            moveInst.updateCheckState(currBoard.state, currBoard);
 
             String moveNumberStr = "";
             if (turnOf == ChessBoard.WHITE)

@@ -127,7 +127,8 @@ public class ChessBoard implements ActionListener {
             setPieceBoard(iBoard, _l, _r, newPiece, false);
             //tiles[_l][_r].setPiece( tiles[_l][_r].getPiece()-currentStaticState.turnOf );
             //if ( Math.abs( iBoard.setup[_l][_r].getPiece() )>Math.abs(KNIGHT) ) tiles[_l][_r].setPiece( (int)Math.signum(tiles[_l][_r].getPiece())*QUEEN );
-            Move.updateCheckState(currentStaticState, iBoard);
+            Move move = new Move();
+            move.updateCheckState(currentStaticState, iBoard);
             IBoardState currentMove = new IBoardState(iBoard, currentStaticState);
             pastMoves.set(currentStaticState.nMoves, currentMove);
             String str = Notation.notationStrings.get(currentStaticState.nMoves);
@@ -195,7 +196,8 @@ public class ChessBoard implements ActionListener {
                 State updatedState = new State(currentStaticState);
                 updatedState.update(movingPiece, aLine, _l, aRow);
                 updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
-                Move.updateCheckState(updatedState, iBoard);
+                Move move = new Move();
+                move.updateCheckState(updatedState, iBoard);
 
                 //fastest remis:
                 //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6
@@ -440,7 +442,8 @@ public class ChessBoard implements ActionListener {
             long startTime = System.currentTimeMillis();
 
 //            chosenMove = Move.bestMove(iBoard, currentStaticState, false, -1, true);
-            chosenMove = Move.bestMove(iBoard, currentStaticState, false, 3, true);
+            Move move = new Move();
+            chosenMove = move.bestMove(iBoard, currentStaticState, false, 3, true);
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");
