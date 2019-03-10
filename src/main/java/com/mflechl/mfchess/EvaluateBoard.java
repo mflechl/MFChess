@@ -29,6 +29,10 @@ public final class EvaluateBoard {
     //@SuppressWarnings("unused")
     static float eval(IBoard board, State state) {
         float val = 0;
+
+        if (state.mate) return -999 * state.turnOf; //no moves - check mate or remis!
+        else if (state.remis) return 0;  //means: pick this move if you are in a bad position
+
         val += getValSingle(board);
         val += getValCombi(board);
 

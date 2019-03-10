@@ -260,13 +260,16 @@ public final class Move {
 
                 if (subList.isEmpty()) {
                     //System.out.println("No more moves:" + boardState + " depth=" + depth);
+                    /*
                     if (boardState.state.mate) val = -999 * boardState.state.turnOf; //no moves - check mate or remis!
                     else if (boardState.state.remis) val = 0;  //means: pick this move if you are in a bad position
                     else {
                         System.out.println("Neither mate nor remis! Something went wrong...");
                         val = 0;
                     }
+                    */
                     moveN = "";
+                    val = boardState.getEval();
                     //X System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check+"  "+boardState.getNextMoveNotation());
                 } else {
 //                    val = EvaluateBoard.getMaxMove(subList).getEval();
