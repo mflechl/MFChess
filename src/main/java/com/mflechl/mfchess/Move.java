@@ -7,7 +7,7 @@ public final class Move {
         //no instance
     }
 
-    public static SpecialMove sDummy = new SpecialMove();
+    //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     //move from fromLine, fromRow to toLine,toRow legal?
@@ -216,7 +216,8 @@ public final class Move {
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
+//                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, (depth==1) ); //only get notation for first depth
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true); //only get notation for first depth
                     list.addAll(listPiece);
                     if (stopAfterFirst && !list.isEmpty()) return list;
                 }
@@ -245,7 +246,7 @@ public final class Move {
 
         if (depth < maxDepth && !list.isEmpty()) {
             float val;
-            String moveN = "";
+            String moveN;
             IBoardState maxMove;
             for (IBoardState boardState : list) {
 
@@ -282,14 +283,19 @@ public final class Move {
                 boardState.setEval(val);
                 boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
 
+                /*
+                //with nextMoves, inverse
                 System.out.print(depth);
                 for (int i = 0; i < depth; i++) System.out.print("      ");
                 System.out.print(boardState.getNotation());
                 System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + val);
+                */
 
             }
         }
 
+        /*
+        //with nextMoves, inverse
         if (depth == maxDepth) {
             for (IBoardState boardState : list) {
                 System.out.print(depth);
@@ -298,11 +304,12 @@ public final class Move {
                 System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + boardState.getEval());
             }
         }
+        */
 
         return list;
     }
 
-    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
+    static ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation) {
         ArrayList<IBoardState> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
@@ -325,8 +332,10 @@ public final class Move {
 
                     for (int i = 2; i <= 5; i++) { //in case of promotion, write four possible moves; otherwise no real loop
                         //System.out.println("pieceLegalMove from l-random to l-random "+fromLine+"-"+fromRow+" to "+toLine+"-"+toRow+":\n"+_iBoard);
-                        String moveNotation = Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
-                                _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
+                        String moveNotation = "";
+                        if (updateNotation)
+                            Notation.getMoveNotation(_iBoard, updatedState, _state, fromLine, fromRow, toLine, toRow,
+                                    _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                         if (!prom) {
                             list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, moveNotation, EvaluateBoard.eval(hypo_iBoard, updatedState)));
@@ -348,7 +357,7 @@ public final class Move {
         ArrayList<int[]> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
-                sDummy = new SpecialMove();
+                SpecialMove sDummy = new SpecialMove();
                 if (isLegal(_iBoard, sDummy, fromLine, fromRow, toLine, toRow, _state)) {
                     int[] dest = {toLine, toRow};
                     list.add(dest);

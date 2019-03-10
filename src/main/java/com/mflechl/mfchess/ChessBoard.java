@@ -440,7 +440,7 @@ public class ChessBoard implements ActionListener {
             long startTime = System.currentTimeMillis();
 
 //            chosenMove = Move.bestMove(iBoard, currentStaticState, false, -1, true);
-            chosenMove = Move.bestMove(iBoard, currentStaticState, false, 3, false);
+            chosenMove = Move.bestMove(iBoard, currentStaticState, false, 3, true);
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");
@@ -465,7 +465,7 @@ public class ChessBoard implements ActionListener {
 
         if (chosenMove.state.mate) return 1;
         else if (chosenMove.state.remis) return 2;
-        else if (chosenMove.state.nMoves > 200) return 3;
+        else if (chosenMove.state.nMoves > 80) return 3;
         else return 0;
 
     }
