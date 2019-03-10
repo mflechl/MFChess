@@ -211,16 +211,28 @@ public final class Move {
     static ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
         ArrayList<IBoardState> list = new ArrayList<>();
 
+//        System.out.println("################################### IN ALM ############################## " + depth);
+
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
                     ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst);
                     list.addAll(listPiece);
-                    if (stopAfterFirst && list.size() > 0) return list;
+                    if (stopAfterFirst && !list.isEmpty()) return list;
                 }
             }
         }
 
+        /*
+        if (depth==maxDepth) {
+            for (IBoardState boardState : list) {
+                System.out.print(depth);
+                for (int i = 0; i < depth; i++) System.out.print("      ");
+                System.out.print(boardState.getNextMoveNotation());
+                System.out.println("           "+boardState.getNextMoveNotation());
+            }
+        }
+        */
 
         if (adaptDepth && depth == 1) { //set adaptive weight. Readjust in later move might bring bias, have to do this in a smarter way
             int nLegalMoves = list.size();
@@ -236,7 +248,15 @@ public final class Move {
             String moveN = "";
             IBoardState maxMove;
             for (IBoardState boardState : list) {
-                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, stopAfterFirst, depth + 1, maxDepth, adaptDepth);
+
+                /*
+                System.out.print(depth);
+                for (int i = 0; i < depth; i++) System.out.print("      ");
+                System.out.print(boardState.getNextMoveNotation());
+                System.out.println("           "+boardState.getNextMoveNotation());
+                */
+
+                ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
 
                 if (subList.isEmpty()) {
                     //System.out.println("No more moves:" + boardState + " depth=" + depth);
@@ -246,16 +266,33 @@ public final class Move {
                         System.out.println("Neither mate nor remis! Something went wrong...");
                         val = 0;
                     }
-                    //System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check);
+                    moveN = "";
+                    //X System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check+"  "+boardState.getNextMoveNotation());
                 } else {
 //                    val = EvaluateBoard.getMaxMove(subList).getEval();
                     maxMove = EvaluateBoard.getMaxMove(subList);
+                    //X if ( maxMove.getNextMoveNotation().matches(".*1-0 .*") ) System.out.println( "ABC: "+boardState.state.mate + " "+maxMove.state.mate +" "+maxMove.getNextMoveNotation() + " ! "+maxMove.getNotation() );
                     val = maxMove.getEval();
                     moveN = maxMove.getNextMoveNotation();
                     //System.out.println(depth+": "+moveN+"  XXXXXX  "+maxMove.getNotation());
                 }
                 boardState.setEval(val);
                 boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
+
+                System.out.print(depth);
+                for (int i = 0; i < depth; i++) System.out.print("      ");
+                System.out.print(boardState.getNotation());
+                System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + val);
+
+            }
+        }
+
+        if (depth == maxDepth) {
+            for (IBoardState boardState : list) {
+                System.out.print(depth);
+                for (int i = 0; i < depth; i++) System.out.print("      ");
+                System.out.print(boardState.getNotation());
+                System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + boardState.getEval());
             }
         }
 

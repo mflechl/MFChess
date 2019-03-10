@@ -32,7 +32,7 @@ public final class EvaluateBoard {
         val += getValSingle(board);
         val += getValCombi(board);
 
-        if (state.check) val = VALUE_CHECK * state.turnOf * -1;
+        if (state.check) val += VALUE_CHECK * state.turnOf * -1;
 
         return val;
     }
@@ -43,7 +43,9 @@ public final class EvaluateBoard {
 
     static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom) {
         //for WHITE: maximize; BLACK: minimize. turnOf holds who will play the *next* turn,hence *-1
-        if (list.size() == 0) throw new NullPointerException("getMaxMove: List is empty.");
+        if (list.size() == 0) {
+            throw new NullPointerException("getMaxMove: List is empty.");
+        }
 
         int turn = list.get(0).state.turnOf * -1;
 
