@@ -3,7 +3,6 @@ package com.mflechl.mfchess;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 public final class Move {
     Move() {
@@ -226,8 +225,14 @@ public final class Move {
     }
     */
 
-    public Future<ArrayList<IBoardState>> futureSubList(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
-        return executorService.submit(() -> allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth));
+    public void futureSubList(IBoardState _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+//        public Future<ArrayList<IBoardState>> futureSubList(IBoardState _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+//        return executorService.submit(() -> allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth));
+        executorService.submit(() -> {
+            ArrayList<IBoardState> subList = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
+            selectMaxFromList(_iBoard, subList);
+        });
+
     }
 
     Boolean noLegalMoves(IBoard _iBoard, State _state) {
@@ -281,95 +286,21 @@ public final class Move {
         }
 
         if (depth < maxDepth && !list.isEmpty()) {
-            float val;
-            String moveN;
-            IBoardState maxMove;
             for (IBoardState boardState : list) {
 
-                /*
-                System.out.print(depth);
-                for (int i = 0; i < depth; i++) System.out.print("      ");
-                System.out.print(boardState.getNextMoveNotation());
-                System.out.println("           "+boardState.getNextMoveNotation());
-                */
-
-                ArrayList<IBoardState> subList = new ArrayList<>();
-/*
-                if (NTHREADS > 1) {
-                    //THREAD
-                    MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-
-                    try {
-                        thread.join();
-                    } catch (Exception e) {
-                        System.out.println("A problem when joining...");
-                    }
-                    subList = runnable.list;
-                    //THREAD
-                } else{
-                    subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-                }
-*/
-
-/*
-                //THREAD
-                MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-
-
-                Thread thread = new Thread(runnable);
-                thread.start();
-
-                try {
-                    thread.join();
-                } catch (Exception e) {
-                    System.out.println("A problem when joining...");
-                }
-                subList = runnable.list;
-                //THREAD
-*/
                 if (depth == 1) {
                     try {
-                        subList = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth).get();
+//                        subList = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth).get();
+                        futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
                     } catch (Exception e) {
                         System.out.println("A problem when getting the future...");
                     }
                 } else {
-                    subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                    ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                    selectMaxFromList(boardState, subList);
                 }
 
-                if (subList.isEmpty()) {
-                    //System.out.println("No more moves:" + boardState + " depth=" + depth);
-                    /*
-                    if (boardState.state.mate) val = -999 * boardState.state.turnOf; //no moves - check mate or remis!
-                    else if (boardState.state.remis) val = 0;  //means: pick this move if you are in a bad position
-                    else {
-                        System.out.println("Neither mate nor remis! Something went wrong...");
-                        val = 0;
-                    }
-                    */
-                    moveN = "";
-                    val = boardState.getEval();
-                    //X System.out.println("subList empty! remis="+boardState.state.remis+", mate="+boardState.state.mate+" , check="+boardState.state.check+"  "+boardState.getNextMoveNotation());
-                } else {
-//                    val = EvaluateBoard.getMaxMove(subList).getEval();
-                    maxMove = EvaluateBoard.getMaxMove(subList);
-                    //X if ( maxMove.getNextMoveNotation().matches(".*1-0 .*") ) System.out.println( "ABC: "+boardState.state.mate + " "+maxMove.state.mate +" "+maxMove.getNextMoveNotation() + " ! "+maxMove.getNotation() );
-                    val = maxMove.getEval();
-                    moveN = maxMove.getNextMoveNotation();
-                    //System.out.println(depth+": "+moveN+"  XXXXXX  "+maxMove.getNotation());
-                }
-                boardState.setEval(val);
-                boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
-
-                /*
-                //with nextMoves, inverse
-                System.out.print(depth);
-                for (int i = 0; i < depth; i++) System.out.print("      ");
-                System.out.print(boardState.getNotation());
-                System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + val);
-                */
+//                selectMaxFromList(boardState, subList);
 
             }
         }
@@ -387,6 +318,27 @@ public final class Move {
         */
 
         return list;
+    }
+
+    void selectMaxFromList(IBoardState boardState, ArrayList<IBoardState> subList) {
+        float val;
+        String moveN;
+        IBoardState maxMove;
+
+        if (subList.isEmpty()) {
+            moveN = "";
+            val = boardState.getEval();
+        } else {
+//                    val = EvaluateBoard.getMaxMove(subList).getEval();
+            maxMove = EvaluateBoard.getMaxMove(subList);
+            //X if ( maxMove.getNextMoveNotation().matches(".*1-0 .*") ) System.out.println( "ABC: "+boardState.state.mate + " "+maxMove.state.mate +" "+maxMove.getNextMoveNotation() + " ! "+maxMove.getNotation() );
+            val = maxMove.getEval();
+            moveN = maxMove.getNextMoveNotation();
+            //System.out.println(depth+": "+moveN+"  XXXXXX  "+maxMove.getNotation());
+        }
+        boardState.setEval(val);
+        boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
+
     }
 
     ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation) {
