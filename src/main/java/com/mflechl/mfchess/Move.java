@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+//import java.util.concurrent.FutureTask;
 
 public final class Move {
     Move() {
@@ -14,7 +15,7 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
     //public final static int NTHREADS = 1;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(30);
+    ExecutorService executorService = Executors.newFixedThreadPool(3);
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -202,30 +203,6 @@ public final class Move {
     }
 
     /*
-    public class MoveThread implements Runnable {
-        IBoard _iBoard;
-        State _state;
-        boolean stopAfterFirst;
-        int depth, maxDepth;
-        boolean adaptDepth;
-        ArrayList<IBoardState> list;
-
-        public MoveThread(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth){
-            this._iBoard = _iBoard;
-            this._state = _state;
-            this.stopAfterFirst = stopAfterFirst;
-            this.depth = depth;
-            this.maxDepth = maxDepth;
-            this.adaptDepth = adaptDepth;
-        }
-
-        public void run(){
-            list = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
-//            System.out.println("MyRunnable running");
-        }
-    }
-    */
-
     public class test {
         public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
             return executorService.submit(() -> {
@@ -235,8 +212,8 @@ public final class Move {
             });
         }
     }
+    */
 
-    /*
     public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
         return executorService.submit(() -> {
             ArrayList<IBoardState> subList = allLegalMoves(_iBoardState, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
@@ -244,11 +221,6 @@ public final class Move {
             return true;
         });
     }
-    */
-
-    //    public Future<ArrayList<IBoardState>> futureSubList(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
-    //    return executorService.submit(() -> allLegalMoves(_iBoard, _state, stopAfterFirst, depth, maxDepth, adaptDepth));
-    //}
 
     Boolean noLegalMoves(IBoard _iBoard, State _state) {
         ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, 1, false);
@@ -283,10 +255,8 @@ public final class Move {
         /*
         if (depth==maxDepth) {
             for (IBoardState boardState : list) {
-                System.out.print(depth);
-                for (int i = 0; i < depth; i++) System.out.print("      ");
-                System.out.print(boardState.getNextMoveNotation());
-                System.out.println("           "+boardState.getNextMoveNotation());
+                //System.out.print(depth); for (int i = 0; i < depth; i++) System.out.print("      ");
+                //System.out.print(boardState.getNextMoveNotation()+"           "+boardState.getNextMoveNotation());
             }
         }
         */
@@ -301,68 +271,18 @@ public final class Move {
         }
 
         if (depth < maxDepth && !list.isEmpty()) {
-            float val;
-            String moveN;
-            IBoardState maxMove;
             ArrayList<Future<Boolean>> futureBooleans = new ArrayList<>(); // = new ArrayList<>(list.size());
             int ctr = 0;
             for (IBoardState boardState : list) {
 
-                /*
-                System.out.print(depth);
-                for (int i = 0; i < depth; i++) System.out.print("      ");
-                System.out.print(boardState.getNextMoveNotation());
-                System.out.println("           "+boardState.getNextMoveNotation());
-                */
+                //System.out.print(depth); for (int i = 0; i < depth; i++) System.out.print("      ");
+                //System.out.print(boardState.getNextMoveNotation()+"           "+boardState.getNextMoveNotation());
 
-/*
-                if (NTHREADS > 1) {
-                    //THREAD
-                    MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-                    Thread thread = new Thread(runnable);
-                    thread.start();
-
-                    try {
-                        thread.join();
-                    } catch (Exception e) {
-                        System.out.println("A problem when joining...");
-                    }
-                    subList = runnable.list;
-                    //THREAD
-                } else{
-                    subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-                }
-*/
-
-/*
-                //THREAD
-                MoveThread runnable = new MoveThread(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-
-
-                Thread thread = new Thread(runnable);
-                thread.start();
-
-                try {
-                    thread.join();
-                } catch (Exception e) {
-                    System.out.println("A problem when joining...");
-                }
-                subList = runnable.list;
-                //THREAD
-*/
-                boolean success;
                 if (depth == 1) {
                     try {
                         //DOES NOT WORK
-//                        futureBooleans.set(ctr, futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth));
-//                        success = futureBooleans.get(ctr).get();
-                        //WORKS
-//                        success = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth).get();
-                        //WORKS
-//                        Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-//                        success = fb.get();
-                        //WORKS
-                        Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                        Future<Boolean> fb = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                        //Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
                         futureBooleans.add(fb);
                         //success = futureBooleans.get(ctr).get();
                     } catch (Exception e) {
@@ -379,14 +299,9 @@ public final class Move {
 
             if (depth==1){
                 System.out.println("A "+executorService+"   "+list.size()+"    ");
-                boolean isDone;
                 for ( Future<Boolean> futureBoolean: futureBooleans  ) {
                     try {
-                        while(!futureBoolean.isDone()) {
-                            //System.out.println("Calculating...");
-                            Thread.sleep(300);
-                            isDone = futureBoolean.get();
-                        }
+                        futureBoolean.get(); //wait for thread to finish
                     } catch (Exception e) {
                         System.out.println("A problem when getting the future... "+ctr);
                     }

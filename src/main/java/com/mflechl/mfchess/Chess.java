@@ -240,6 +240,13 @@ public class Chess extends JFrame {
             //w/o static: 138 / 140 / 139
             //threads: 267 / 263
             //futures threads: 150 / 143 / 147 / 146
+
+            //futures threads (1):  141 / 141
+            //futures threads (2):  95 / 96 / 94
+            //futures threads (3):  88 / 84 / 85
+            //futures threads (4):  86 / 88 / 84 / 85 / 86
+            //futures threads (10): 87 / 87 / 85
+            //futures concurrent threads (30): 85 / 86 / 85
         }
     }
 
@@ -260,8 +267,8 @@ public class Chess extends JFrame {
         }
     }
 
-    //TODO: Threads for move selection
     //TODO: weights: give some weight also to board after next move to break ties (promote now, not later!)
+    //TODO: check for three-times repetition ( Arrays.hashCode(myArray); )
 
     // The entry main() method
     public static void main(String[] args) {
