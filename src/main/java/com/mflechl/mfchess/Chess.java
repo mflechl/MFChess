@@ -247,6 +247,8 @@ public class Chess extends JFrame {
             //futures threads (4):  86 / 88 / 84 / 85 / 86
             //futures threads (10): 87 / 87 / 85
             //futures concurrent threads (30): 85 / 86 / 85
+
+            //fix=3: 730, bkg
         }
     }
 

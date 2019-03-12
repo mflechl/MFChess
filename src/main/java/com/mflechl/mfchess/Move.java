@@ -8,9 +8,14 @@ import java.util.concurrent.Future;
 
 public final class Move {
     Move() {
-        if (ncores > 1) nthreads = ncores - 1;
-        executorService = Executors.newFixedThreadPool(nthreads);
+        if (USE_THREADS) {
+            if (ncores > 1) nthreads = ncores - 1;
+            executorService = Executors.newFixedThreadPool(nthreads);
+        }
     }
+
+    private final boolean USE_THREADS = false;
+    private final float INF = 100000;
 
     //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
@@ -208,9 +213,9 @@ public final class Move {
 
     /*
     public class test {
-        public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+        public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, boolean isPlyOne) {
             return executorService.submit(() -> {
-                ArrayList<IBoardState> subList = allLegalMoves(_iBoardState, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
+                ArrayList<IBoardState> subList = allLegalMoves(_iBoardState, _state, stopAfterFirst, depth, isPlyOne);
                 selectMaxFromList(_iBoardState, subList);
                 return true;
             });
@@ -218,28 +223,28 @@ public final class Move {
     }
     */
 
-    public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+    public Future<Boolean> futureSubList(IBoardState _iBoardState, State _state, boolean stopAfterFirst, int depth, boolean isPlyOne) {
         return executorService.submit(() -> {
-            ArrayList<IBoardState> subList = allLegalMoves(_iBoardState, _state, stopAfterFirst, depth, maxDepth, adaptDepth);
+            ArrayList<IBoardState> subList = allLegalMoves(_iBoardState, _state, stopAfterFirst, depth, isPlyOne, -INF, +INF);
             selectMaxFromList(_iBoardState, subList);
             return true;
         });
     }
 
     Boolean noLegalMoves(IBoard _iBoard, State _state) {
-        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, 1, false);
+        ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, false, -INF, +INF);
         return moveList.isEmpty();
     }
 
-    IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int maxDepth, boolean adaptDepth) {
-        ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, 1, maxDepth, adaptDepth);
+    IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, boolean isPlyOne) {
+        ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, isPlyOne, -INF, +INF);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
         return EvaluateBoard.getMaxMove(allMoves, true);
         //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
     }
 
     //stopAfterFirst: to check only if any legal move exists, i.e. no check mate or remis
-    ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, int maxDepth, boolean adaptDepth) {
+    ArrayList<IBoardState> allLegalMoves(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, boolean isPlyOne, float alpha, float beta) {
         //throws InterruptedException {
         ArrayList<IBoardState> list = new ArrayList<>();
 
@@ -248,7 +253,6 @@ public final class Move {
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-//                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, (depth==1) ); //only get notation for first depth
                     ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true);
                     list.addAll(listPiece);
                     if (stopAfterFirst && !list.isEmpty()) return list;
@@ -256,44 +260,33 @@ public final class Move {
             }
         }
 
-        /*
-        if (depth==maxDepth) {
-            for (IBoardState boardState : list) {
-                //System.out.print(depth); for (int i = 0; i < depth; i++) System.out.print("      ");
-                //System.out.print(boardState.getNextMoveNotation()+"           "+boardState.getNextMoveNotation());
-            }
-        }
-        */
-
-        if (adaptDepth && depth == 1) { //set adaptive weight. Readjust in later move might bring bias, have to do this in a smarter way
+        if (isPlyOne) { //set adaptive weight. Readjust in later move might bring bias, so should set isPlyOne to false for further moves
             int nLegalMoves = list.size();
-            if (nLegalMoves > 25) maxDepth = 3;
-            else if (nLegalMoves > 15) maxDepth = 4;
-            else if (nLegalMoves > 10) maxDepth = 5;
-            else maxDepth = 5;
-            //if (depth == 1) System.out.println("nLM=" + nLegalMoves + " DEPTH=" + maxDepth);
+            if (nLegalMoves > 25) depth = 2;          //maxDepth = 2 + 1 = 3 (since lowest index is 0)
+            else if (nLegalMoves > 15) depth = 3;
+            else if (nLegalMoves > 10) depth = 4;
+            else depth = 4;
+            //depth=3;
+            System.out.println("nLM=" + nLegalMoves + " DEPTH=" + depth);
         }
 
-        if (depth < maxDepth && !list.isEmpty()) {
+        if (depth > 0 && !list.isEmpty()) {
             ArrayList<Future<Boolean>> futureBooleans = new ArrayList<>(); // = new ArrayList<>(list.size());
             int ctr = 0;
             for (IBoardState boardState : list) {
 
-                //System.out.print(depth); for (int i = 0; i < depth; i++) System.out.print("      ");
-                //System.out.print(boardState.getNextMoveNotation()+"           "+boardState.getNextMoveNotation());
-
-                if (depth == 1) {
+                if (USE_THREADS && isPlyOne) {
                     try {
                         //DOES NOT WORK
-                        Future<Boolean> fb = futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
-                        //Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                        Future<Boolean> fb = futureSubList(boardState, boardState.state, false, depth - 1, false);
+                        //Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth - 1, isPlyOne);
                         futureBooleans.add(fb);
                         //success = futureBooleans.get(ctr).get();
                     } catch (Exception e) {
                         System.out.println("A problem when setting the future... "+ctr);
                     }
                 } else {
-                    ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth + 1, maxDepth, adaptDepth);
+                    ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth - 1, false, alpha, beta);
                     selectMaxFromList(boardState, subList);
                 }
 
@@ -301,7 +294,7 @@ public final class Move {
 
             } //end loop over list of boardStates
 
-            if (depth==1){
+            if (USE_THREADS && isPlyOne) {
                 System.out.println("A "+executorService+"   "+list.size()+"    ");
                 for ( Future<Boolean> futureBoolean: futureBooleans  ) {
                     try {
@@ -315,18 +308,6 @@ public final class Move {
 
 
         }
-
-        /*
-        //with nextMoves, inverse
-        if (depth == maxDepth) {
-            for (IBoardState boardState : list) {
-                System.out.print(depth);
-                for (int i = 0; i < depth; i++) System.out.print("      ");
-                System.out.print(boardState.getNotation());
-                System.out.println("           " + boardState.getNextMoveNotation() + "            val=" + boardState.getEval());
-            }
-        }
-        */
 
         return list;
     }
