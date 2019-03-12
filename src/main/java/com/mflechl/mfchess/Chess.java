@@ -249,6 +249,7 @@ public class Chess extends JFrame {
             //futures concurrent threads (30): 85 / 86 / 85
 
             //fix=3: 730, bkg
+            //no alphabeta: nALMCalls = 21223692
         }
     }
 

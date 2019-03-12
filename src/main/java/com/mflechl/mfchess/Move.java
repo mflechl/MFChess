@@ -17,6 +17,8 @@ public final class Move {
     private final boolean USE_THREADS = false;
     private final float INF = 100000;
 
+    static int nALMCalls = 0;
+
     //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
     //public final static int NTHREADS = 1;
@@ -239,6 +241,7 @@ public final class Move {
     IBoardState bestMove(IBoard _iBoard, State _state, boolean stopAfterFirst, int depth, boolean isPlyOne) {
         ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, isPlyOne, -INF, +INF);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+        System.out.println("nALMCalls = " + nALMCalls);
         return EvaluateBoard.getMaxMove(allMoves, true);
         //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
     }
@@ -248,12 +251,13 @@ public final class Move {
         //throws InterruptedException {
         ArrayList<IBoardState> list = new ArrayList<>();
 
+        nALMCalls++;
         //      System.out.println("################################### IN ALM ############################## " + depth);
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true);
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true, (depth == 0));
                     list.addAll(listPiece);
                     if (stopAfterFirst && !list.isEmpty()) return list;
                 }
@@ -272,8 +276,11 @@ public final class Move {
 
         if (depth > 0 && !list.isEmpty()) {
             ArrayList<Future<Boolean>> futureBooleans = new ArrayList<>(); // = new ArrayList<>(list.size());
-            int ctr = 0;
-            for (IBoardState boardState : list) {
+            float value = -1 * _state.turnOf * INF; //-inf for white, +inf +inf for black
+
+//            for (IBoardState boardState : list) {
+            for (int ib = 0; ib < list.size(); ib++) {
+                IBoardState boardState = list.get(ib);
 
                 if (USE_THREADS && isPlyOne) {
                     try {
@@ -281,16 +288,33 @@ public final class Move {
                         Future<Boolean> fb = futureSubList(boardState, boardState.state, false, depth - 1, false);
                         //Future<Boolean> fb = new test().futureSubList(boardState, boardState.state, false, depth - 1, isPlyOne);
                         futureBooleans.add(fb);
-                        //success = futureBooleans.get(ctr).get();
+                        //success = futureBooleans.get(ib).get();
                     } catch (Exception e) {
-                        System.out.println("A problem when setting the future... "+ctr);
+                        System.out.println("A problem when setting the future... " + ib);
                     }
                 } else {
                     ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth - 1, false, alpha, beta);
                     selectMaxFromList(boardState, subList);
-                }
 
-                ctr++;
+                    //ALPHABETA
+                    if (_state.turnOf == ChessBoard.WHITE) {
+                        value = Math.max(value, boardState.getEval());
+                        alpha = Math.max(alpha, value);
+                        if (alpha >= beta) {
+                            list = new ArrayList<IBoardState>(list.subList(0, ib)); //or ib+1 ?
+                            break;
+                        }
+                    } else {
+                        value = Math.min(value, boardState.getEval());
+                        beta = Math.min(beta, value);
+                        if (alpha >= beta) {
+                            list = new ArrayList<IBoardState>(list.subList(0, ib)); //or ib+1 ?
+                            break;
+                        }
+                    }
+                    //ALPHABETA
+
+                }
 
             } //end loop over list of boardStates
 
@@ -300,7 +324,7 @@ public final class Move {
                     try {
                         futureBoolean.get(); //wait for thread to finish
                     } catch (Exception e) {
-                        System.out.println("A problem when getting the future... "+ctr);
+                        System.out.println("A problem when getting the future... ");
                     }
                 }
                 System.out.println("B "+executorService+"   "+list.size()+"    ");
@@ -334,8 +358,9 @@ public final class Move {
     }
 
 
-    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation) {
+    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
         ArrayList<IBoardState> list = new ArrayList<>();
+        float eval = -9999;
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
                 SpecialMove sMove = new SpecialMove();
@@ -363,14 +388,16 @@ public final class Move {
                                     _iBoard.setup[fromLine][fromRow], _iBoard.setup[toLine][toRow], sMove);
 
                         if (!prom) {
-                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, moveNotation, EvaluateBoard.eval(hypo_iBoard, updatedState)));
+                            if (doEval) eval = EvaluateBoard.eval(hypo_iBoard, updatedState);
+                            list.add(new IBoardState(hypo_iBoard, updatedState, moveNotation, moveNotation, eval));
                             break; //stop here if it is not a promotion case
                         }
 
                         hypo_iBoard.setup[toLine][toRow] = (byte) (_state.turnOf * i); //2=queen, 3=rook, 4=bishop, 5=knight
                         String adaptedMoveNotation = moveNotation.replaceAll("Q$", ChessBoard.lpieces[i] + " ");
+                        if (doEval) eval = EvaluateBoard.eval(hypo_iBoard, updatedState);
                         list.add(new IBoardState(hypo_iBoard, updatedState, adaptedMoveNotation, adaptedMoveNotation,
-                                EvaluateBoard.eval(hypo_iBoard, updatedState) ));
+                                eval));
                     }
                 }
             }
