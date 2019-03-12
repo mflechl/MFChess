@@ -8,14 +8,18 @@ import java.util.concurrent.Future;
 
 public final class Move {
     Move() {
-        //no instance
+        if (ncores > 1) nthreads = ncores - 1;
+        executorService = Executors.newFixedThreadPool(nthreads);
     }
 
     //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
     //public final static int NTHREADS = 1;
 
-    ExecutorService executorService = Executors.newFixedThreadPool(3);
+    private static int ncores = Runtime.getRuntime().availableProcessors();
+    private static int nthreads = 1;
+
+    ExecutorService executorService;
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
