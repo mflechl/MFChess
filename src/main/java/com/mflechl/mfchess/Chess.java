@@ -288,7 +288,7 @@ public class Chess extends JFrame {
     //TEST CLASS: only works if branching<10
     void printTree(ArrayList<Integer> friendTree) {
         ArrayList<Double> tree=new ArrayList<>();
-        for (int i=0; i<friendTree.size(); i++) tree.add( (double)( friendTree.get(i) ) );
+        for (Integer intValue : friendTree) tree.add((double) intValue);
         printTree( tree, friendTree);
     }
 
@@ -307,28 +307,28 @@ public class Chess extends JFrame {
         int swidth = width + padding_left + padding_right; //make space for longer numbers, to avoid negative indices
         for (int i = 0; i < swidth; i++) spaces += " ";
 
-        int ibr = 0;
-        int ins = 0;
-        float space0 = width / 2;
+        int ibr=0;
+        int ins;
+        double space0 = width *0.5;
         int nbranch = 0;
         for (Integer node : friendTree) if (node > 0 && node < 10) nbranch++;
         nbranch++; //TODO: check if branches at other depth can be larger
 
         System.out.println(tree);
-        System.out.println(spaces.substring(0, padding_left + Math.round(space0) - 1) + tree.get(0));
+        System.out.println(spaces.substring(0, padding_left + (int)Math.round(space0) - 1) + tree.get(0));
         for (int id = 0; id < 10; id++) {
             StringBuilder layer = new StringBuilder(spaces);
 //            for (Integer node: friendTree){
             for (int inode = 0; inode < friendTree.size(); inode++) {
                 Integer node = friendTree.get(inode);
-                Double val = (double) Math.round( tree.get(inode) );
+                double val = (double) Math.round( tree.get(inode) );
                 if (node >= Math.pow(10, id) && node <= Math.pow(10, id + 1)) {
                     if (layer.toString().equals(spaces)) {
                         ibr = 0;
 //                        space0/=nbranch;
 //                        space0/=2;
                         space0 = (float) (width * 1.0 / ((Math.pow(nbranch, id + 1)) + 1));
-                        ins = Math.round(space0) - (id + 1);
+                        ins = (int)Math.round(space0) - (id + 1);
                         //layer += spaces.substring(0, Math.round(space0)-(id+1));
                     } else {
                         ibr++;
@@ -339,7 +339,7 @@ public class Chess extends JFrame {
                             if (digit > 0) ireal += (digit - 1) * (Math.pow(nbranch, id + 1 - i));
                         }
                         //System.out.println("      X "+ node+" "+ibr+" "+ireal+"     "+nDigit(node,1) + "   "+nDigit(node,2));
-                        ins = Math.round(space0 - (id + 1) + ireal * space0);
+                        ins = (int)Math.round(space0 - (id + 1) + ireal * space0);
 //                        ins=Math.round(space0-(id+1) + ibr*space0 );
                         //layer += spaces.substring(0, Math.round(2*space0)-(id+1));
                     }
@@ -355,9 +355,11 @@ public class Chess extends JFrame {
 
     }
 
+    /*
     int firstDigit(int number) {
         return Integer.parseInt(Integer.toString(number).substring(0, 1));
     }
+    */
 
     int nDigit(int number, int idigit) {
         if (number >= Math.pow(10, idigit - 1) || (idigit == 1 && number >= 0)) {
