@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * MFChess: A ...
@@ -220,11 +221,17 @@ public class Chess extends JFrame {
         setVisible(true); // show it
         requestFocus();   // set the focus to JFrame to receive KeyEvent
 
-        if (!initialNotation.equals("")) {
+        if (!initialNotation.equals("") && !Move.MINMAXTEST) {
             chessBoard.setStateFromNotation(initialNotation);
         }
 
-        if (COMPUTER_PLAY) {
+        if (Move.MINMAXTEST) {
+            Move move = new Move();
+            move.doMinMaxTest();
+            printTree(Move.tree, Move.tree);
+            printTree(Move.vals, Move.tree);
+            close();
+        } else if (COMPUTER_PLAY) {
             long startTime = System.currentTimeMillis();
             while (ChessBoard.computerMove() == 0) {
                 paint(getGraphics());
@@ -251,6 +258,83 @@ public class Chess extends JFrame {
             //fix=3: 730, bkg
             //no alphabeta: nALMCalls = 21223692
         }
+    }
+
+    //TEST CLASS: only works if branching<10
+    void printTree(ArrayList<Integer> tree, ArrayList<Integer> friendTree) {
+        String spaces = "";
+
+        //System.out.println("LLLL "+tree.toString().length());
+        int width = (int) (friendTree.toString().length() * 2.5);
+        width = Math.max(240, width);
+
+        if (!(friendTree == tree)) width = 150;
+
+        int padding = 5;
+        int swidth = width + padding; //make space for longer numbers, to avoid negative indices
+        for (int i = 0; i < swidth; i++) spaces += " ";
+
+        int ibr = 0;
+        int ins = 0;
+        float space0 = width / 2;
+        int nbranch = 0;
+        for (Integer node : friendTree) if (node > 0 && node < 10) nbranch++;
+
+        System.out.println(tree);
+        System.out.println(spaces.substring(0, padding + Math.round(space0) - 1) + 0);
+        for (int id = 0; id < 10; id++) {
+            StringBuilder layer = new StringBuilder(spaces);
+//            for (Integer node: friendTree){
+            for (int inode = 0; inode < friendTree.size(); inode++) {
+                Integer node = friendTree.get(inode);
+                Integer val = tree.get(inode);
+                if (node >= Math.pow(10, id) && node <= Math.pow(10, id + 1)) {
+                    if (layer.toString().equals(spaces)) {
+                        ibr = 0;
+//                        space0/=nbranch;
+//                        space0/=2;
+                        space0 = (float) (width * 1.0 / ((Math.pow(nbranch, id + 1)) + 1));
+                        ins = Math.round(space0) - (id + 1);
+                        //layer += spaces.substring(0, Math.round(space0)-(id+1));
+                    } else {
+                        ibr++;
+                        int ireal = 0;
+                        for (int i = 1; i < (id + 2); i++) {
+                            int digit = nDigit(node, i);
+                            //System.out.print(digit+" ");
+                            if (digit > 0) ireal += (digit - 1) * (Math.pow(nbranch, id + 1 - i));
+                        }
+                        //System.out.println("      X "+ node+" "+ibr+" "+ireal+"     "+nDigit(node,1) + "   "+nDigit(node,2));
+                        ins = Math.round(space0 - (id + 1) + ireal * space0);
+//                        ins=Math.round(space0-(id+1) + ibr*space0 );
+                        //layer += spaces.substring(0, Math.round(2*space0)-(id+1));
+                    }
+                    layer.insert(ins + padding, val);
+                }
+            }
+            if (!layer.toString().equals(spaces)) {
+                layer.delete(swidth, layer.length());
+                System.out.println(layer);
+            }
+
+        }
+
+    }
+
+    int firstDigit(int number) {
+        return Integer.parseInt(Integer.toString(number).substring(0, 1));
+    }
+
+    int nDigit(int number, int idigit) {
+        if (number >= Math.pow(10, idigit - 1) || (idigit == 1 && number >= 0)) {
+            return Integer.parseInt(Integer.toString(number).substring(idigit - 1, idigit));
+        }
+        return -1;
+    }
+
+
+    void close() {
+        dispose(); //Chess.dispatchEvent(new WindowEvent(chess, WindowEvent.WINDOW_CLOSING));
     }
 
     /**
