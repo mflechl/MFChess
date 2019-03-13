@@ -16,6 +16,7 @@ public class ChessBoard implements ActionListener {
 
     private static boolean autoComputerMove = false;
     private static boolean onlyComputerMove = false;
+    private static final boolean USE_OPENINGS = false;
 
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
@@ -280,12 +281,12 @@ public class ChessBoard implements ActionListener {
         currentStaticState = new State(boardState.state);
 
         fillTilesFromBoard();
-        setLabelLastMove(gotoState);
+        setLabelLastMove( gotoState, boardState.getEval() );
 
         if (boardState.state.nMoves > 0 && pastMoves.size() >= boardState.state.nMoves)
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
 
-        System.out.println("sAS: " + currentStaticState);
+        System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() );
 //        System.out.println(iBoard);
     }
 
@@ -306,10 +307,12 @@ public class ChessBoard implements ActionListener {
         System.out.println("init: " + notation);
     }
 
-    static void setLabelLastMove(int gotoState) {
-        if (gotoState < 0) Chess.btnLastMove.setText(getLastMoveString().replaceAll("<font color='red'>.*</font>", ""));
-        else if (gotoState == 0) Chess.btnLastMove.setText("");
-        else Chess.btnLastMove.setText(getMoveString(gotoState).replaceAll("<font color='red'>.*</font>", ""));
+    static void setLabelLastMove(int gotoState, float eval) {
+        String text;
+        if (gotoState < 0) text=getLastMoveString().replaceAll("<font color='red'>.*</font>", "");
+        else if (gotoState == 0) text="";
+        else text=getMoveString(gotoState).replaceAll("<font color='red'>.*</font>", "");
+        Chess.btnLastMove.setText(text.replaceAll("</html>","<br>"+eval+"</html>"));
     }
 
     //if some castling options get eliminated, check and set it here
@@ -410,18 +413,21 @@ public class ChessBoard implements ActionListener {
         String notationString = Notation.getNotationString();
         List<String> matchingOpenings = new ArrayList<>();
 
-        for (String line : openings) {
-            if (line.startsWith(notationString)) {
-                //System.out.println("O:|"+line+"|X|"+line.replaceAll(notationString,"")+"|Y|"+nextMove+"|");
-                //replace takes a literal, replaceAll a regex, but both replace *all* occurrences
-                String[] nm = line.replace(notationString, "").replaceAll("^ *", "").split(" ");
-                if (nm.length == 0) continue;
-                String nextMove = nm[0];
-                if (nextMove.matches("\\d+\\.")) {
-                    if (nm.length == 1) continue;
-                    nextMove = nm[1];
+        if ( USE_OPENINGS ) {
+            for (String line : openings) {
+                if (line.startsWith(notationString)) {
+                    //System.out.println("O:|"+line+"|X|"+line.replaceAll(notationString,"")+"|Y|"+nextMove+"|");
+                    //replace takes a literal, replaceAll a regex, but both replace *all* occurrences
+                    String[] nm = line.replace(notationString, "").replaceAll("^ *", "").split(" ");
+                    if (nm.length == 0) continue;
+                    String nextMove = nm[0];
+                    if (nextMove.matches("\\d+\\.")) {
+                        if (nm.length == 1) continue;
+                        nextMove = nm[1];
+                    }
+                    if (nextMove.length() > 1)
+                        matchingOpenings.add(nextMove); //only add if opening has *additional* moves
                 }
-                if (nextMove.length() > 1) matchingOpenings.add(nextMove); //only add if opening has *additional* moves
             }
         }
 //        System.out.println("#Openings: " + matchingOpenings.size());

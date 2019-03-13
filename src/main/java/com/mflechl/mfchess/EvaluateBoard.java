@@ -42,10 +42,10 @@ public final class EvaluateBoard {
     }
 
     static IBoardState getMaxMove(ArrayList<IBoardState> list) {
-        return getMaxMove(list, false);
+        return getMaxMove(list, false, false);
     }
 
-    static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom) {
+    static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom, boolean verbose) {
         //for WHITE: maximize; BLACK: minimize. turnOf holds who will play the *next* turn,hence *-1
         if (list.size() == 0) {
             throw new NullPointerException("getMaxMove: List is empty.");
@@ -57,6 +57,7 @@ public final class EvaluateBoard {
         IBoardState maxBoard = new IBoardState();
 
         float eval;
+        if (verbose) System.out.println("###############");
         for (IBoardState board : list) {
             eval = board.getEval();
 //            System.out.println("### VALUE: " + eval + " " + board.getNotation());
@@ -65,7 +66,9 @@ public final class EvaluateBoard {
                 maxEval = eval;
                 maxBoard = new IBoardState(board);
             }
+            if (verbose) System.out.println("  eval="+eval+"    "+board.getNextMoveNotation() );
         }
+        if (verbose) System.out.println("############### "+maxBoard.getEval() );
 
         //this is done here and not above in the loop so that it does not slow down the search
         //below is only executed for depth 1 and hence not performance-critical

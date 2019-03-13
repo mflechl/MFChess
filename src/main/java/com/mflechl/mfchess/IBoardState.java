@@ -35,8 +35,13 @@ public class IBoardState extends IBoard {
     String nextMoveNotation;
     float eval;
 
-    public float getEval() { return eval; }
-    public void setEval(float eval) { this.eval = eval; }
+    public float getEval() {
+        return eval;
+    }
+
+    public void setEval(float eval) {
+        this.eval = eval;
+    }
 
     public String getNextMoveNotation() {
         return nextMoveNotation;
@@ -49,6 +54,7 @@ public class IBoardState extends IBoard {
     public String getNotation() {
         return notation;
     }
+
     public void setNotation(String notation) {
         this.notation = notation;
     }

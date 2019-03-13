@@ -1,6 +1,7 @@
 package com.mflechl.mfchess;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -14,14 +15,16 @@ public final class Move {
         }
     }
 
+    static final boolean PICK_RANDOM = false;
+
     static boolean USE_ALPHABETA = false;
     static boolean MINMAXTEST = true; //TEST
     static ArrayList<Integer> tree = new ArrayList<>(); //TEST
-    static ArrayList<Integer> vals = new ArrayList<>(); //TEST
-    static int nMaxBranch = 2; //TEST
+    static ArrayList<Double> vals = new ArrayList<>(); //TEST
+    static int nMaxBranch = 20; //TEST
 
-    private final boolean USE_THREADS = false;
-    private final float INF = 100000;
+    private static final boolean USE_THREADS = false;
+    private static final float INF = 100000;
 
     static int nALMCalls = 0;
 
@@ -248,7 +251,7 @@ public final class Move {
         ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _state, stopAfterFirst, depth, isPlyOne, -INF, +INF);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
         System.out.println("nALMCalls = " + nALMCalls);
-        return EvaluateBoard.getMaxMove(allMoves, true);
+        return EvaluateBoard.getMaxMove(allMoves, PICK_RANDOM, true);
         //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
     }
 
@@ -266,6 +269,7 @@ public final class Move {
             for (int il = 0; il < 8; il++) {
                 for (int ir = 0; ir < 8; ir++) {
                     if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
+//                        ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true, true);
                         ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, stopAfterFirst, true, (depth == 0));
                         list.addAll(listPiece);
                         if (stopAfterFirst && !list.isEmpty()) return list;
@@ -279,7 +283,7 @@ public final class Move {
             else if (nLegalMoves > 15) depth = 3;
             else if (nLegalMoves > 10) depth = 4;
             else depth = 4;
-            //depth=3;
+            depth=2;
             System.out.println("nLM=" + nLegalMoves + " DEPTH=" + depth);
         }
 
@@ -326,9 +330,8 @@ public final class Move {
                     //ALPHABETA
 
                     int ind = tree.indexOf(boardState.state.nMoves);
-                    System.out.println("IND " + boardState.state.nMoves + "    " + tree.indexOf(boardState.state.nMoves));
-                    if (ind >= 0) vals.set(ind, (int) boardState.getEval());
-
+                    //System.out.println("IND " + boardState.state.nMoves + "    " + tree.indexOf(boardState.state.nMoves));
+                    if (ind >= 0) vals.set(ind, (double)boardState.getEval());
                 }
 
             } //end loop over list of boardStates
@@ -361,7 +364,7 @@ public final class Move {
             val = boardState.getEval();
         } else {
 //                    val = EvaluateBoard.getMaxMove(subList).getEval();
-            maxMove = EvaluateBoard.getMaxMove(subList);
+            maxMove = EvaluateBoard.getMaxMove(subList, PICK_RANDOM, true);
             //X if ( maxMove.getNextMoveNotation().matches(".*1-0 .*") ) System.out.println( "ABC: "+boardState.state.mate + " "+maxMove.state.mate +" "+maxMove.getNextMoveNotation() + " ! "+maxMove.getNotation() );
             val = maxMove.getEval();
             moveN = maxMove.getNextMoveNotation();
@@ -375,7 +378,7 @@ public final class Move {
 
     ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
         ArrayList<IBoardState> list = new ArrayList<>();
-        float eval = -9999;
+        float eval = -9998 * _state.turnOf;
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
                 SpecialMove sMove = new SpecialMove();
@@ -444,79 +447,99 @@ public final class Move {
     }
 
     ArrayList<IBoardState> getMinMaxList(int depth, int nMoves) {
-        System.out.println("gMML: " + depth + " X " + nMoves);
+        //System.out.println("gMML: " + depth + " X " + nMoves);
         ArrayList<IBoardState> list = new ArrayList<>();
-        int[] ival = new int[5];
+        double[] ival = new double[nMaxBranch];
+        for (int i=0; i<nMaxBranch; i++) ival[i]=+99999999;
 
         int nbranch = nMaxBranch;
 
-        if (depth == 3) nbranch = 3;
-        if (depth == 2) nbranch = 2;
-        if (depth == 1) {
-            if (nMoves == 11) nbranch = 2;
-            if (nMoves == 12) nbranch = 1;
-            if (nMoves == 21) nbranch = 2;
-            if (nMoves == 22) nbranch = 1;
-            if (nMoves == 31) nbranch = 1;
-            if (nMoves == 32) nbranch = 2;
-        }
-        if (depth == 0) {
-            if (nMoves == 111) nbranch = 2;
-            if (nMoves == 112) nbranch = 3;
-            if (nMoves == 121) nbranch = 1;
-            if (nMoves == 211) nbranch = 1;
-            if (nMoves == 212) nbranch = 2;
-            if (nMoves == 221) nbranch = 1;
-            if (nMoves == 311) nbranch = 1;
-            if (nMoves == 321) nbranch = 2;
-            if (nMoves == 322) nbranch = 1;
+        final boolean wikitest = false;
+
+        if ( wikitest ) {
+            if (depth == 3) nbranch = 3;
+            if (depth == 2) nbranch = 2;
+            if (depth == 1) {
+                if (nMoves == 11) nbranch = 2;
+                if (nMoves == 12) nbranch = 1;
+                if (nMoves == 21) nbranch = 2;
+                if (nMoves == 22) nbranch = 1;
+                if (nMoves == 31) nbranch = 1;
+                if (nMoves == 32) nbranch = 2;
+            }
+            if (depth == 0) {
+                if (nMoves == 111) nbranch = 2;
+                if (nMoves == 112) nbranch = 3;
+                if (nMoves == 121) nbranch = 1;
+                if (nMoves == 211) nbranch = 1;
+                if (nMoves == 212) nbranch = 2;
+                if (nMoves == 221) nbranch = 1;
+                if (nMoves == 311) nbranch = 1;
+                if (nMoves == 321) nbranch = 2;
+                if (nMoves == 322) nbranch = 1;
+            }
+
+            if (depth == 0) {
+//            ival[0]=1; ival[1]=2; ival[2]=3;
+                if (nMoves == 111) {
+                    ival[0] = 5;
+                    ival[1] = 6;
+                }
+                if (nMoves == 112) {
+                    ival[0] = 7;
+                    ival[1] = 4;
+                    ival[2] = 5;
+                }
+                if (nMoves == 121) {
+                    ival[0] = 3;
+                }
+                if (nMoves == 211) {
+                    ival[0] = 6;
+                }
+                if (nMoves == 212) {
+                    ival[0] = 6;
+                    ival[1] = 9;
+                }
+                if (nMoves == 221) {
+                    ival[0] = 7;
+                }
+                if (nMoves == 311) {
+                    ival[0] = 5;
+                }
+                if (nMoves == 321) {
+                    ival[0] = 9;
+                    ival[1] = 8;
+                }
+                if (nMoves == 322) {
+                    ival[0] = 6;
+                }
+            }
+        } else { //random tree
+            if (depth==0) {
+                Random rnd = new Random(nMoves);
+                for (int i = 0; i < ival.length; i++) {
+//                    ival[i] = rnd.nextDouble() * 10 - 5;
+                    ival[i] = rnd.nextInt(10) - 5;
+                }
+                //if (rnd.nextInt(10)<3) nbranch-=1;
+            }
+            nbranch = nMaxBranch;
+            Random rnd = new Random(nMoves);
+
+            if (rnd.nextInt(10)<3) nbranch-=1;
+
         }
 
-        if (depth == 0) {
-//            ival[0]=1; ival[1]=2; ival[2]=3;
-            if (nMoves == 111) {
-                ival[0] = 5;
-                ival[1] = 6;
-            }
-            if (nMoves == 112) {
-                ival[0] = 7;
-                ival[1] = 4;
-                ival[2] = 5;
-            }
-            if (nMoves == 121) {
-                ival[0] = 3;
-            }
-            if (nMoves == 211) {
-                ival[0] = 6;
-            }
-            if (nMoves == 212) {
-                ival[0] = 6;
-                ival[1] = 9;
-            }
-            if (nMoves == 221) {
-                ival[0] = 7;
-            }
-            if (nMoves == 311) {
-                ival[0] = 5;
-            }
-            if (nMoves == 321) {
-                ival[0] = 9;
-                ival[1] = 8;
-            }
-            if (nMoves == 322) {
-                ival[0] = 6;
-            }
-        }
 
         for (int i = 1; i <= nbranch; i++) {
             IBoardState _iBS = new IBoardState();
             _iBS.state.moveNumber = i;
             _iBS.state.nMoves = nMoves * 10 + i;
-            _iBS.setEval(ival[i - 1]);
+            _iBS.setEval((float)ival[i-1]);
             _iBS.state.turnOf = ChessBoard.WHITE * (int) Math.pow(-1, depth);
             list.add(_iBS);
             tree.add(_iBS.state.nMoves);
-            vals.add(Math.round(_iBS.getEval()));
+            vals.add( (double) _iBS.getEval() );
         }
         return list;
     }
@@ -526,8 +549,12 @@ public final class Move {
         nMaxBranch = 3;
         ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _iBoard.state, false, 3, true, -INF, +INF);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
+        IBoardState maxMove = EvaluateBoard.getMaxMove(allMoves, false, false);
+        tree.add(0, 0);
+        vals.add(0,  (double)maxMove.getEval() );
+
         System.out.println("nALMCalls = " + nALMCalls);
-        System.out.println("Move chosen: " + "   with path: ");
+        System.out.println("Move chosen: " + maxMove.state.nMoves + "   with path: " + maxMove.getEval() );
         //System.out.println("chosenMove =\n" + chosenMove + "nLegalMoves=" + allMoves.size() + " val=" + chosenMove.getEval() + " M=" + chosenMove.state.turnOf);
     }
 
