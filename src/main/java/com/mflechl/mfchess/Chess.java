@@ -22,7 +22,7 @@ public class Chess extends JFrame {
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
-    private static final boolean COMPUTER_PLAY = false;
+    private static final boolean COMPUTER_PLAY = true;
 
     private DrawCanvas canvas; // The custom drawing canvas (an inner class extends JPanel)
     private ChessBoard chessBoard;     // the 8x8 tiles
@@ -296,9 +296,8 @@ public class Chess extends JFrame {
         String spaces = "";
 
         //System.out.println("LLLL "+tree.toString().length());
-        int width = (int) (friendTree.toString().length() * 1.5);
+        int width = (int) (friendTree.toString().length() * 2.0);
         width = Math.max(240, width);
-        System.out.println(width+"ÜÜ");
 
         //if (!(friendTree == tree)) width = 150;
 
@@ -315,7 +314,7 @@ public class Chess extends JFrame {
         nbranch++; //TODO: check if branches at other depth can be larger
 
         System.out.println(tree);
-        System.out.println(spaces.substring(0, padding_left + (int)Math.round(space0) - 1) + tree.get(0));
+        System.out.println( spaces.substring(0, padding_left + (int)Math.round(space0) - 1) + Math.round(tree.get(0)));
         for (int id = 0; id < 10; id++) {
             StringBuilder layer = new StringBuilder(spaces);
 //            for (Integer node: friendTree){
@@ -340,9 +339,10 @@ public class Chess extends JFrame {
                         }
                         //System.out.println("      X "+ node+" "+ibr+" "+ireal+"     "+nDigit(node,1) + "   "+nDigit(node,2));
                         ins = (int)Math.round(space0 - (id + 1) + ireal * space0);
-//                        ins=Math.round(space0-(id+1) + ibr*space0 );
+                        //ins=(int)Math.round(space0-(id+1) + ibr*space0 );
                         //layer += spaces.substring(0, Math.round(2*space0)-(id+1));
                     }
+                    //while ( !( layer.substring(ins+padding_left-1, ins+padding_left).equals(" ") ) ) ins++;
                     layer.insert(ins + padding_left, Math.round(val) );
                 }
             }

@@ -1,5 +1,7 @@
 package com.mflechl.mfchess;
 
+import com.sun.org.apache.bcel.internal.generic.CHECKCAST;
+
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
@@ -17,11 +19,13 @@ public final class Move {
 
     static final boolean PICK_RANDOM = false;
 
-    static boolean USE_ALPHABETA = false;
-    static boolean MINMAXTEST = true; //TEST
+    static boolean USE_ALPHABETA = true;
+    static boolean MINMAXTEST = false; //TEST
     static ArrayList<Integer> tree = new ArrayList<>(); //TEST
     static ArrayList<Double> vals = new ArrayList<>(); //TEST
     static int nMaxBranch = 20; //TEST
+    final boolean wiki_en = false; //TEST
+    final boolean wiki_de = true; //TEST
 
     private static final boolean USE_THREADS = false;
     private static final float INF = 100000;
@@ -36,6 +40,9 @@ public final class Move {
     private static int nthreads = 1;
 
     ExecutorService executorService;
+
+    private IBoardState _bestMove_;
+    private final int _MAXDEPTH_= 5;
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -242,6 +249,81 @@ public final class Move {
         });
     }
 
+    IBoardState _bestMove_(IBoard _iBoard, State _state) {
+        _bestMove_ = new IBoardState();
+        float _eval_;
+        if (_state.turnOf == ChessBoard.WHITE ) _eval_ = _maxMove_( _MAXDEPTH_, -INF, +INF, _iBoard, _state );
+        else _eval_ = _minMove_( _MAXDEPTH_, -INF, +INF, _iBoard, _state );
+
+        if ( _bestMove_.equals("") ){
+            throw new NullPointerException("bestMove2: No possible moves.");
+        } else{
+            _bestMove_.setEval(_eval_);
+            return _bestMove_;
+//            return NotationToState.noteToBoard(_bestMove_, _iBoard, _state);
+        }
+    }
+
+    float _maxMove_( int depth, float alpha, float beta, IBoard _currBoard_, State _currState_ ){
+        if ( depth==0 ) return EvaluateBoard.eval(_currBoard_, _currState_);
+
+        float _optValue_ = alpha; //maxValue
+        ArrayList<IBoardState> _moveList_ = _allLegalMoves_(_currBoard_, _currState_);
+
+        for ( IBoardState _board_ : _moveList_ ){
+            float _value_ = _minMove_(depth-1, _optValue_, beta, _board_, _board_.state );
+            if ( _value_ > _optValue_ ){
+                _optValue_ = _value_;
+                if ( USE_ALPHABETA && _optValue_ >= beta )
+                    break;
+                if ( depth == _MAXDEPTH_ )
+                    _bestMove_ = new IBoardState( _board_ );
+            }
+        }
+        return _optValue_;
+    }
+
+    float _minMove_( int depth, float alpha, float beta, IBoard _currBoard_, State _currState_ ){
+        if ( depth==0 ) return EvaluateBoard.eval(_currBoard_, _currState_);
+
+        float _optValue_ = beta; //minValue
+        ArrayList<IBoardState> _moveList_ = _allLegalMoves_(_currBoard_, _currState_);
+
+        for ( IBoardState _board_ : _moveList_ ){
+            float _value_ = _maxMove_(depth-1, alpha, _optValue_, _board_, _board_.state );
+            if ( _value_ < _optValue_ ){
+                _optValue_ = _value_;
+                if ( USE_ALPHABETA && _optValue_ <= alpha )
+                    break;
+                if ( depth == _MAXDEPTH_ )
+                    _bestMove_ = new IBoardState( _board_ );
+            }
+        }
+        return _optValue_;
+    }
+
+    ArrayList<IBoardState> _allLegalMoves_(IBoard _iBoard, State _state) {
+
+        ArrayList<IBoardState> list = new ArrayList<>();
+
+        if (MINMAXTEST) {
+            //list = getMinMaxList(depth, _state.nMoves);
+        } else {
+            for (int il = 0; il < 8; il++) {
+                for (int ir = 0; ir < 8; ir++) {
+                    if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
+                        ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, false, true, false );
+                        list.addAll(listPiece);
+                    }
+                }
+            }
+        }
+
+        return list;
+    }
+
+
+
     Boolean noLegalMoves(IBoard _iBoard, State _state) {
         ArrayList<IBoardState> moveList = allLegalMoves(_iBoard, _state, true, 1, false, -INF, +INF);
         return moveList.isEmpty();
@@ -307,15 +389,41 @@ public final class Move {
                     }
                 } else {
                     ArrayList<IBoardState> subList = allLegalMoves(boardState, boardState.state, false, depth - 1, false, alpha, beta);
-                    selectMaxFromList(boardState, subList);
+//                    selectMaxFromList(boardState, subList);
+//                    System.out.println("   getMaxList = "+boardState.getEval()  );
+
 
                     //ALPHABETA
                     if (USE_ALPHABETA) {
+                        selectMaxFromList(boardState, subList);
+
+                        float val;
+                        String moveN;
+                        IBoardState maxMove;
+
+                        if (subList.isEmpty()) {
+                            moveN = "";
+                            val = boardState.getEval();
+                        } else {
+//                    val = EvaluateBoard.getMaxMove(subList).getEval();
+                            maxMove = EvaluateBoard.getMaxMove(subList, PICK_RANDOM, true);
+                            //X if ( maxMove.getNextMoveNotation().matches(".*1-0 .*") ) System.out.println( "ABC: "+boardState.state.mate + " "+maxMove.state.mate +" "+maxMove.getNextMoveNotation() + " ! "+maxMove.getNotation() );
+                            val = maxMove.getEval();
+                            moveN = maxMove.getNextMoveNotation();
+                            //System.out.println(depth+": "+moveN+"  XXXXXX  "+maxMove.getNotation());
+                        }
+                        boardState.setEval(val);
+                        boardState.setNextMoveNotation(boardState.getNotation() + " " + moveN);
+
+
+
+
                         if (_state.turnOf == ChessBoard.WHITE) {
                             value = Math.max(value, boardState.getEval());
                             alpha = Math.max(alpha, value);
                             if (alpha >= beta) {
                                 list = new ArrayList<IBoardState>(list.subList(0, ib)); //or ib+1 ?
+                                System.out.println("WILL BREAK NOW (MAX)");
                                 break;
                             }
                         } else {
@@ -323,11 +431,15 @@ public final class Move {
                             beta = Math.min(beta, value);
                             if (alpha >= beta) {
                                 list = new ArrayList<IBoardState>(list.subList(0, ib)); //or ib+1 ?
+                                System.out.println("WILL BREAK NOW (MIN)");
                                 break;
                             }
                         }
                     }
                     //ALPHABETA
+                    else{
+                        selectMaxFromList(boardState, subList);
+                    }
 
                     int ind = tree.indexOf(boardState.state.nMoves);
                     //System.out.println("IND " + boardState.state.nMoves + "    " + tree.indexOf(boardState.state.nMoves));
@@ -348,7 +460,8 @@ public final class Move {
                 System.out.println("B "+executorService+"   "+list.size()+"    ");
             }
 
-
+//            System.out.println("YYY value = "+value+"   getMaxList = "+EvaluateBoard.getMaxMove(list).getEval()  );
+            System.out.print("YYY value = "+value);
         }
 
         return list;
@@ -454,9 +567,46 @@ public final class Move {
 
         int nbranch = nMaxBranch;
 
-        final boolean wikitest = false;
+        if (wiki_de) {
+            nbranch=3;
+            if (depth==1) nbranch=2;
+            double DEF=-1e6;
 
-        if ( wikitest ) {
+            if (depth == 0) {
+//            ival[0]=1; ival[1]=2; ival[2]=3;
+                if (nMoves == 11) {
+                    ival[0] = 10;
+                    ival[1] = -5;
+                    ival[2] = 3;
+                }
+                if (nMoves == 12) {
+                    ival[0] = -6;
+                    ival[1] = 12;
+                    ival[2] = DEF;
+                }
+                if (nMoves == 21) {
+                    ival[0] = 10;
+                    ival[1] = 12;
+                    ival[2] = 3;
+                }
+                if (nMoves == 22) {
+                    ival[0] = 13;
+                    ival[1] = DEF;
+                    ival[2] = DEF;
+                }
+                if (nMoves == 31) {
+                    ival[0] = 3;
+                    ival[1] = 2;
+                    ival[2] = -4;
+                }
+                if (nMoves == 32) {
+                    ival[0] = DEF;
+                    ival[1] = DEF;
+                    ival[2] = DEF;
+                }
+            }
+        }
+        else if (wiki_en) {
             if (depth == 3) nbranch = 3;
             if (depth == 2) nbranch = 2;
             if (depth == 1) {
@@ -530,13 +680,16 @@ public final class Move {
 
         }
 
-
+        int length = 0; //0 is assigned for first move to work below
+        if ( nMoves != 0 ) length = (int) (Math.log10(nMoves) + 1);
         for (int i = 1; i <= nbranch; i++) {
             IBoardState _iBS = new IBoardState();
             _iBS.state.moveNumber = i;
             _iBS.state.nMoves = nMoves * 10 + i;
             _iBS.setEval((float)ival[i-1]);
-            _iBS.state.turnOf = ChessBoard.WHITE * (int) Math.pow(-1, depth);
+//            _iBS.state.turnOf = ChessBoard.WHITE * (int) Math.pow(-1, depth);
+            if ( (length % 2) == 0 ) _iBS.state.turnOf = ChessBoard.BLACK;
+            else _iBS.state.turnOf = ChessBoard.WHITE;
             list.add(_iBS);
             tree.add(_iBS.state.nMoves);
             vals.add( (double) _iBS.getEval() );
@@ -547,7 +700,10 @@ public final class Move {
     void doMinMaxTest() {
         IBoardState _iBoard = new IBoardState();
         nMaxBranch = 3;
-        ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _iBoard.state, false, 3, true, -INF, +INF);
+        int depth=3;
+        if (wiki_en) depth = 3;
+        if (wiki_de) depth = 2;
+        ArrayList<IBoardState> allMoves = allLegalMoves(_iBoard, _iBoard.state, false, depth, true, -INF, +INF);
         //for (IBoardState board : allMoves) System.out.println("### VALUE: " + board.getEval() + " " + board.getNotation());
         IBoardState maxMove = EvaluateBoard.getMaxMove(allMoves, false, false);
         tree.add(0, 0);

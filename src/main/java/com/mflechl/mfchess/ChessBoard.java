@@ -449,7 +449,8 @@ public class ChessBoard implements ActionListener {
 
 //            chosenMove = Move.bestMove(iBoard, currentStaticState, false, -1, true);
             Move move = new Move();
-            chosenMove = move.bestMove(iBoard, currentStaticState, false, 3, true);
+//            chosenMove = move.bestMove(iBoard, currentStaticState, false, 2, true);
+            chosenMove = move._bestMove_(iBoard, currentStaticState);
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");

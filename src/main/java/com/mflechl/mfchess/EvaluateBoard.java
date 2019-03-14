@@ -20,11 +20,9 @@ public final class EvaluateBoard {
     static Random random = new Random(131737); //for benchmark
     //static Random random = new Random(); //for benchmark
 
-    /*
     static float eval( IBoardState board ) {
         return eval( board, board.state);
     }
-    */
 
     //@SuppressWarnings("unused")
     static float eval(IBoard board, State state) {
@@ -60,7 +58,7 @@ public final class EvaluateBoard {
         if (verbose) System.out.println("###############");
         for (IBoardState board : list) {
             eval = board.getEval();
-//            System.out.println("### VALUE: " + eval + " " + board.getNotation());
+            System.out.println("### VALUE: " + eval + " " + board.getNotation());
 //            if ((turn == ChessBoard.WHITE && (eval > maxEval) ) || (turn == ChessBoard.BLACK && (eval < maxEval))) {
             if (eval * turn > maxEval * turn) {
                 maxEval = eval;
