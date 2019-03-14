@@ -1,7 +1,6 @@
 package com.mflechl.mfchess;
 
-import java.util.ArrayList;
-import java.util.Random;
+//import java.util.Random;
 
 public final class EvaluateBoard {
     EvaluateBoard() {
@@ -17,12 +16,14 @@ public final class EvaluateBoard {
 
     static final int[] indexToSign = {-1, +1};
 
-    static Random random = new Random(131737); //for benchmark
+    //static Random random = new Random(131737); //for benchmark
     //static Random random = new Random(); //for benchmark
 
+    /*
     static float eval( IBoardState board ) {
         return eval( board, board.state);
     }
+    */
 
     //@SuppressWarnings("unused")
     static float eval(IBoard board, State state) {
@@ -37,53 +38,6 @@ public final class EvaluateBoard {
         if (state.check) val += VALUE_CHECK * state.turnOf * -1;
 
         return val;
-    }
-
-    static IBoardState getMaxMove(ArrayList<IBoardState> list) {
-        return getMaxMove(list, false, false);
-    }
-
-    static IBoardState getMaxMove(ArrayList<IBoardState> list, final boolean pickRandom, boolean verbose) {
-        //for WHITE: maximize; BLACK: minimize. turnOf holds who will play the *next* turn,hence *-1
-        if (list.size() == 0) {
-            throw new NullPointerException("getMaxMove: List is empty.");
-        }
-
-        int turn = list.get(0).state.turnOf * -1;
-
-        float maxEval = -9999 * turn; //- for white, + for black
-        IBoardState maxBoard = new IBoardState();
-
-        float eval;
-        if (verbose) System.out.println("###############");
-        for (IBoardState board : list) {
-            eval = board.getEval();
-            System.out.println("### VALUE: " + eval + " " + board.getNotation());
-//            if ((turn == ChessBoard.WHITE && (eval > maxEval) ) || (turn == ChessBoard.BLACK && (eval < maxEval))) {
-            if (eval * turn > maxEval * turn) {
-                maxEval = eval;
-                maxBoard = new IBoardState(board);
-            }
-            if (verbose) System.out.println("  eval="+eval+"    "+board.getNextMoveNotation() );
-        }
-        if (verbose) System.out.println("############### "+maxBoard.getEval() );
-
-        //this is done here and not above in the loop so that it does not slow down the search
-        //below is only executed for depth 1 and hence not performance-critical
-        if (pickRandom) {
-            ArrayList<IBoardState> maxList = new ArrayList<>();
-            for (IBoardState board : list) {
-                if (Math.abs(board.getEval() - maxEval) < 0.00001) {
-                    maxList.add(board);
-                }
-            }
-            if (maxList.size() > 1) {
-                int rnd = random.nextInt(maxList.size());
-                maxBoard = maxList.get(rnd);
-            }
-        }
-
-        return maxBoard;
     }
 
     //Functions below should be fast, so use mainly plain arrays

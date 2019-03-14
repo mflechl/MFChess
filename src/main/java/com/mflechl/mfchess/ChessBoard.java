@@ -447,7 +447,6 @@ public class ChessBoard implements ActionListener {
             //get list of all possible moves
             long startTime = System.currentTimeMillis();
 
-//            chosenMove = Move.bestMove(iBoard, currentStaticState, false, -1, true);
             Move move = new Move();
 //            chosenMove = move.bestMove(iBoard, currentStaticState, false, 2, true);
             chosenMove = move._bestMove_(iBoard, currentStaticState);
@@ -456,13 +455,6 @@ public class ChessBoard implements ActionListener {
             System.out.println("That took: " + (finishTime - startTime) + " ms");
 
             System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
-
-/*
-            if (chosenMove == null) {
-                System.out.println("CM no more moves: " + currentStaticState);
-                return 1;   //mate or remis
-            }
-*/
 
         }
 

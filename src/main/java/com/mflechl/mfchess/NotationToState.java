@@ -34,10 +34,12 @@ public final class NotationToState {
         rowMap.put("h", 7);
     }
 
+    /*
     static IBoardState noteToBoard(final String move, IBoard prevBoardOnly, State prevStateOnly) {
         IBoardState prevBoard = new IBoardState(prevBoardOnly,prevStateOnly);
         return noteToBoard(move, prevBoard, new StringBuilder());
     }
+    */
 
     static IBoardState noteToBoard(final String move, IBoardState prevBoard) {
         return noteToBoard(move, prevBoard, new StringBuilder());
