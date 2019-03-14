@@ -9,7 +9,7 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    private final int _MAXDEPTH_= 4;
+    private final int MAXDEPTH = 4;
 
     private static final float INF = 100000;
     static int nALMCalls = 0;
@@ -17,7 +17,7 @@ public final class Move {
     //    public static SpecialMove sDummy = new SpecialMove();
     public final static SpecialMove SDUMMY = new SpecialMove();
 
-    private IBoardState _bestMove_;
+    private IBoardState bestMove;
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -204,68 +204,68 @@ public final class Move {
         return false;
     }
 
-    IBoardState _bestMove_(IBoard _iBoard, State _state) {
-        _bestMove_ = null;
-        float _eval_;
-        if (_state.turnOf == ChessBoard.WHITE ) _eval_ = _maxMove_( _MAXDEPTH_, -INF, +INF, _iBoard, _state );
-        else _eval_ = _minMove_( _MAXDEPTH_, -INF, +INF, _iBoard, _state );
+    IBoardState bestMove(IBoard iBoard, State state) {
+        bestMove = null;
+        float eval;
+        if (state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoard, state );
+        else eval = minMove(MAXDEPTH, -INF, +INF, iBoard, state );
 
-        if ( _bestMove_ == null ){
+        if ( bestMove == null ){
             throw new NullPointerException("bestMove2: No possible moves.");
         } else{
-            _bestMove_.setEval(_eval_);
-            return _bestMove_;
-//            return NotationToState.noteToBoard(_bestMove_, _iBoard, _state);
+            bestMove.setEval(eval);
+            return bestMove;
+//            return NotationToState.noteToBoard(bestMove, iBoard, state);
         }
     }
 
-    float _maxMove_( int depth, float alpha, float beta, IBoard _currBoard_, State _currState_ ){
-        if ( depth==0 ) return EvaluateBoard.eval(_currBoard_, _currState_);
+    float maxMove(int depth, float alpha, float beta, IBoard currboard, State currState ){
+        if ( depth==0 ) return EvaluateBoard.eval(currboard, currState);
 
-        float _optValue_ = alpha; //maxValue
-        ArrayList<IBoardState> _moveList_ = _allLegalMoves_(_currBoard_, _currState_);
+        float maxValue = alpha;
+        ArrayList<IBoardState> _moveList_ = allLegalMoves(currboard, currState);
 
         for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = _minMove_(depth-1, _optValue_, beta, _board_, _board_.state );
-            if ( _value_ > _optValue_ ){
-                _optValue_ = _value_;
-                if ( USE_ALPHABETA && _optValue_ >= beta )
+            float _value_ = minMove(depth-1, maxValue, beta, _board_, _board_.state );
+            if ( _value_ > maxValue ){
+                maxValue = _value_;
+                if ( USE_ALPHABETA && maxValue >= beta )
                     break;
-                if ( depth == _MAXDEPTH_ )
-                    _bestMove_ = new IBoardState( _board_ );
+                if ( depth == MAXDEPTH)
+                    bestMove = new IBoardState( _board_ );
             }
         }
-        return _optValue_;
+        return maxValue;
     }
 
-    float _minMove_( int depth, float alpha, float beta, IBoard _currBoard_, State _currState_ ){
-        if ( depth==0 ) return EvaluateBoard.eval(_currBoard_, _currState_);
+    float minMove(int depth, float alpha, float beta, IBoard currBoard, State currState ){
+        if ( depth==0 ) return EvaluateBoard.eval(currBoard, currState);
 
-        float _optValue_ = beta; //minValue
-        ArrayList<IBoardState> _moveList_ = _allLegalMoves_(_currBoard_, _currState_);
+        float minValue = beta; //minValue
+        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoard, currState);
 
         for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = _maxMove_(depth-1, alpha, _optValue_, _board_, _board_.state );
-            if ( _value_ < _optValue_ ){
-                _optValue_ = _value_;
-                if ( USE_ALPHABETA && _optValue_ <= alpha )
+            float _value_ = maxMove(depth-1, alpha, minValue, _board_, _board_.state );
+            if ( _value_ < minValue ){
+                minValue = _value_;
+                if ( USE_ALPHABETA && minValue <= alpha )
                     break;
-                if ( depth == _MAXDEPTH_ )
-                    _bestMove_ = new IBoardState( _board_ );
+                if ( depth == MAXDEPTH)
+                    bestMove = new IBoardState( _board_ );
             }
         }
-        return _optValue_;
+        return minValue;
     }
 
-    ArrayList<IBoardState> _allLegalMoves_(IBoard _iBoard, State _state) {
+    ArrayList<IBoardState> allLegalMoves(IBoard iBoard, State state) {
         nALMCalls++; //TEST
 
         ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
-                if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, false, true, false );
+                if (iBoard.setup[il][ir] * state.turnOf > 0) {
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(iBoard, il, ir, state, false, true, false );
                     list.addAll(listPiece);
                 }
             }
@@ -275,14 +275,14 @@ public final class Move {
     }
 
 
-    Boolean noLegalMoves(IBoard _iBoard, State _state) {
+    Boolean noLegalMoves(IBoard iBoard, State state) {
 
         ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
-                if (_iBoard.setup[il][ir] * _state.turnOf > 0) {
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(_iBoard, il, ir, _state, true, false, false );
+                if (iBoard.setup[il][ir] * state.turnOf > 0) {
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(iBoard, il, ir, state, true, false, false );
                     list.addAll(listPiece);
                     if ( ! list.isEmpty() ) return false;
                 }

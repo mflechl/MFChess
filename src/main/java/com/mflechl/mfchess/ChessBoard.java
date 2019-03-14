@@ -12,7 +12,7 @@ import java.util.Random;
  *
  *
  */
-public class ChessBoard implements ActionListener {
+public class ChessBoard implements ActionListener, ThreadListener  {
 
     private static boolean autoComputerMove = false;
     private static boolean onlyComputerMove = false;
@@ -21,7 +21,7 @@ public class ChessBoard implements ActionListener {
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
 
-    private static IBoard iBoard = new IBoard(); //constructor sets up inital chess board state
+    static IBoard iBoard = new IBoard(); //constructor sets up inital chess board state
     //    static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
 
@@ -32,7 +32,7 @@ public class ChessBoard implements ActionListener {
     static ImageIcon[] bpieces = new ImageIcon[7];
 
     static State currentStaticState = new State();
-    private static ArrayList<IBoardState> pastMoves = new ArrayList<>();
+    static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
     //    ReadOpenings readOpenings = new ReadOpenings();
     static List<String> openings;
@@ -55,6 +55,12 @@ public class ChessBoard implements ActionListener {
 
 //    public static void setOnlyComputerMove(boolean onlyComputerMove) { ChessBoard.onlyComputerMove = onlyComputerMove; }
 //    public static void setAutoComputerMove(boolean autoComputerMove) { ChessBoard.autoComputerMove = autoComputerMove; }
+
+    @Override
+    public void onMoveDone(String msg) {
+        System.out.println("ChessBoard received message "+msg);
+    }
+
 
     public static void toggleAutoComputerMove() {
         autoComputerMove = !autoComputerMove;
@@ -258,7 +264,7 @@ public class ChessBoard implements ActionListener {
         if (gotoState >= 0) setActiveState(pastMoves.get(gotoState), gotoState);
     }
 
-    static void getNextState() {
+    void getNextState() {
         int gotoState = currentStaticState.nMoves + 1;
         if (gotoState < pastMoves.size()) setActiveState(pastMoves.get(gotoState), gotoState);
         else computerMove();
@@ -395,7 +401,7 @@ public class ChessBoard implements ActionListener {
         if (!hypo) tiles[line][row].setPiece(piece);
     }
 
-    static int computerMove() {
+    int computerMove() {
 
         //cannpt move
         if (currentStaticState.mate) return 1;
@@ -447,9 +453,20 @@ public class ChessBoard implements ActionListener {
             //get list of all possible moves
             long startTime = System.currentTimeMillis();
 
+            /////////////////////////////
+            MoveThread moveThread=new MoveThread();
+            moveThread.addListener(this);
+            moveThread.start();
+
+//            Chess.moveThread=new MoveThread();
+//            Chess.moveThread.addListener(this);
+//            Chess.moveThread.start();
+            /////////////////////////////
+
+
             Move move = new Move();
 //            chosenMove = move.bestMove(iBoard, currentStaticState, false, 2, true);
-            chosenMove = move._bestMove_(iBoard, currentStaticState);
+            chosenMove = move.bestMove(iBoard, currentStaticState);
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");

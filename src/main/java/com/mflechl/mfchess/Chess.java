@@ -13,7 +13,7 @@ import java.net.URL;
  */
 
 @SuppressWarnings("serial")
-public class Chess extends JFrame {
+public class Chess extends JFrame  {
     // Define constants for the various dimensions
     private static final int CANVAS_WIDTH = 640;
     private static final int CANVAS_HEIGHT = 640;
@@ -21,7 +21,7 @@ public class Chess extends JFrame {
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
-    private static final boolean COMPUTER_PLAY = true;
+    private static final boolean COMPUTER_PLAY = false;
 
     private DrawCanvas canvas; // The custom drawing canvas (an inner class extends JPanel)
     private ChessBoard chessBoard;     // the 8x8 tiles
@@ -32,11 +32,6 @@ public class Chess extends JFrame {
     static JButton btnLastMove;
 
     // Constructor to set up the GUI components and event handlers
-/*
-    private Chess(){
-        this("");
-    }
-*/
     private Chess(String initialNotation) {
         // Construct a sprite given x, y, width, height, color
         Color ColorLight = new Color(255, 206, 158);
@@ -84,7 +79,7 @@ public class Chess extends JFrame {
         btnPanel.add(btnLastMove);
         btnLastMove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                ChessBoard.computerMove();
+                chessBoard.computerMove();
                 //canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
@@ -94,7 +89,7 @@ public class Chess extends JFrame {
         btnPanel.add(btnNext);
         btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                ChessBoard.getNextState();
+                chessBoard.getNextState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
@@ -172,11 +167,11 @@ public class Chess extends JFrame {
                         repaint();
                         break;
                     case KeyEvent.VK_RIGHT:
-                        ChessBoard.getNextState();
+                        chessBoard.getNextState();
                         repaint();
                         break;
                     case KeyEvent.VK_UP:
-                        ChessBoard.computerMove();
+                        chessBoard.computerMove();
                         repaint();
                         break;
                     case KeyEvent.VK_SPACE:
@@ -184,9 +179,9 @@ public class Chess extends JFrame {
                         break;
                     case KeyEvent.VK_C:
                         ChessBoard.toggleOnlyComputerMove();
-                        ChessBoard.computerMove();
+                        chessBoard.computerMove();
 //                        while (ChessBoard.computerMove() == 0){ repaint(); }
-                        while (ChessBoard.computerMove() == 0) {
+                        while (chessBoard.computerMove() == 0) {
                             paint(getGraphics());
                         }
                         break;
@@ -226,11 +221,11 @@ public class Chess extends JFrame {
 
         if (COMPUTER_PLAY) {
             long startTime = System.currentTimeMillis();
-            while (ChessBoard.computerMove() == 0) {
+            while (chessBoard.computerMove() == 0) {
                 paint(getGraphics());
             }
             long finishTime = System.currentTimeMillis();
-            System.out.println("The game took: " + (finishTime - startTime) + " ms, nALMCalls =" + Move.nALMCalls + "number of moves = " + ChessBoard.currentStaticState.nMoves);
+            System.out.println("The game took: " + (finishTime - startTime) + " ms   nALMCalls =" + Move.nALMCalls + "  number of moves = " + ChessBoard.currentStaticState.nMoves);
         }
     }
 
