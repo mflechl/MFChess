@@ -24,7 +24,7 @@ public final class Move {
         return isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, ChessBoard.currentStaticState);
     }
 
-    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, State _state) {
+    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, BState _state) {
         if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7)
             throw new ArrayIndexOutOfBoundsException("fromLine: " + fromLine + " fromRow: " + fromRow);
         if (toLine < 0 || toLine > 7 || toRow < 0 || toRow > 7)
@@ -75,7 +75,7 @@ public final class Move {
     }
 
 
-    private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, State _state) {
+    private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, BState _state) {
         //System.out.println("legalMovePawn "+fromLine+" "+fromRow+" "+toLine+"-"+toRow+" state="+_state+" sMove="+sMove+"\n"+_iBoard);
         if (fromRow == toRow) {
             //normal move
@@ -120,7 +120,7 @@ public final class Move {
         return false;
     }
 
-    private static boolean legalMoveKing(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, State _state) {
+    private static boolean legalMoveKing(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, BState _state) {
         //normal move
         if (Math.abs(fromRow - toRow) <= 1 && Math.abs(fromLine - toLine) <= 1) return true;
 
@@ -143,7 +143,7 @@ public final class Move {
         return emptyBetween(_iBoard, fromLine, fromRow, toLine, toRow, checkCheck, ChessBoard.currentStaticState);
     }
 
-    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck, State _state) {
+    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck, BState _state) {
 
         if (toRow == fromRow) { //rook-type move
             int direction = Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
@@ -204,7 +204,7 @@ public final class Move {
         return false;
     }
 
-    IBoardState bestMove(IBoard iBoard, State state) {
+    IBoardState bestMove(IBoard iBoard, BState state) {
         bestMove = null;
         float eval;
         if (state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoard, state );
@@ -219,7 +219,7 @@ public final class Move {
         }
     }
 
-    float maxMove(int depth, float alpha, float beta, IBoard currboard, State currState ){
+    float maxMove(int depth, float alpha, float beta, IBoard currboard, BState currState ){
         if ( depth==0 ) return EvaluateBoard.eval(currboard, currState);
 
         float maxValue = alpha;
@@ -238,7 +238,7 @@ public final class Move {
         return maxValue;
     }
 
-    float minMove(int depth, float alpha, float beta, IBoard currBoard, State currState ){
+    float minMove(int depth, float alpha, float beta, IBoard currBoard, BState currState ){
         if ( depth==0 ) return EvaluateBoard.eval(currBoard, currState);
 
         float minValue = beta; //minValue
@@ -257,7 +257,7 @@ public final class Move {
         return minValue;
     }
 
-    ArrayList<IBoardState> allLegalMoves(IBoard iBoard, State state) {
+    ArrayList<IBoardState> allLegalMoves(IBoard iBoard, BState state) {
         nALMCalls++; //TEST
 
         ArrayList<IBoardState> list = new ArrayList<>();
@@ -275,7 +275,7 @@ public final class Move {
     }
 
 
-    Boolean noLegalMoves(IBoard iBoard, State state) {
+    Boolean noLegalMoves(IBoard iBoard, BState state) {
 
         ArrayList<IBoardState> list = new ArrayList<>();
 
@@ -292,7 +292,7 @@ public final class Move {
         return true;
     }
 
-    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
+    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, BState _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
         ArrayList<IBoardState> list = new ArrayList<>();
         float eval = -1* -9998 * _state.turnOf;
         for (int toLine = 0; toLine < 8; toLine++) {
@@ -309,7 +309,7 @@ public final class Move {
                         return list;
                     }
 
-                    State updatedState = new State(_state);
+                    BState updatedState = new BState(_state);
                     updatedState.update(_iBoard.setup[fromLine][fromRow], fromLine, toLine, fromRow);
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
                     updateCheckState(updatedState, hypo_iBoard);
@@ -339,7 +339,7 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, State _state, boolean stopAfterFirst) {
+    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, BState _state, boolean stopAfterFirst) {
         ArrayList<int[]> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
@@ -354,7 +354,7 @@ public final class Move {
         return list;
     }
 
-    void updateCheckState(State state, IBoard iBoard) {
+    void updateCheckState(BState state, IBoard iBoard) {
         state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?
         if (noLegalMoves(iBoard, state)) {
             if (state.check) state.mate = true;

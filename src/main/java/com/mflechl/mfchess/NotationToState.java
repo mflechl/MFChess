@@ -35,7 +35,7 @@ public final class NotationToState {
     }
 
     /*
-    static IBoardState noteToBoard(final String move, IBoard prevBoardOnly, State prevStateOnly) {
+    static IBoardState noteToBoard(final String move, IBoard prevBoardOnly, BState prevStateOnly) {
         IBoardState prevBoard = new IBoardState(prevBoardOnly,prevStateOnly);
         return noteToBoard(move, prevBoard, new StringBuilder());
     }

@@ -17,6 +17,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     private static boolean autoComputerMove = false;
     private static boolean onlyComputerMove = false;
     private static final boolean USE_OPENINGS = false;
+    private static final boolean USE_THREAD = true;
 
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
@@ -24,6 +25,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     static IBoard iBoard = new IBoard(); //constructor sets up inital chess board state
     //    static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
+    static MoveThread moveThread = new MoveThread();
 
     static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
     static final String[] lpieces = {"", "K", "Q", "R", "B", "N", "P"};
@@ -31,7 +33,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     static ImageIcon[] wpieces = new ImageIcon[7];
     static ImageIcon[] bpieces = new ImageIcon[7];
 
-    static State currentStaticState = new State();
+    static BState currentStaticState = new BState();
     static ArrayList<IBoardState> pastMoves = new ArrayList<>();
 
     //    ReadOpenings readOpenings = new ReadOpenings();
@@ -47,18 +49,19 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         ReadOpenings readOpenings = new ReadOpenings();
         openings = new ArrayList<String>(readOpenings.openings);
 
-        //    System.out.println("XX \u265C XX \u0332 b \u0332b \u0332{b}"); //U+0332
-//        System.out.println("\033[1mInsert your String here\033[0m");
-//        System.out.println("\033[4mInsert your String here\033[0m");
-
     }
 
-//    public static void setOnlyComputerMove(boolean onlyComputerMove) { ChessBoard.onlyComputerMove = onlyComputerMove; }
-//    public static void setAutoComputerMove(boolean autoComputerMove) { ChessBoard.autoComputerMove = autoComputerMove; }
 
     @Override
-    public void onMoveDone(String msg) {
-        System.out.println("ChessBoard received message "+msg);
+    public void onMoveDone(IBoardState chosenMove) {
+//        System.out.println("ChessBoard received message "+msg);
+        //append to notation
+        Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
+
+        //update currentStaticState
+        pastMoves.add(chosenMove.state.nMoves, chosenMove);
+        setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
+
     }
 
 
@@ -200,7 +203,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
                 removeFutureMoves(currentStaticState);
 
-                State updatedState = new State(currentStaticState);
+                BState updatedState = new BState(currentStaticState);
                 updatedState.update(movingPiece, aLine, _l, aRow);
                 updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
                 Move move = new Move();
@@ -284,7 +287,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         setAllBordersInactive();
 
         iBoard = new IBoard(boardState);
-        currentStaticState = new State(boardState.state);
+        currentStaticState = new BState(boardState.state);
 
         fillTilesFromBoard();
         setLabelLastMove( gotoState, boardState.getEval() );
@@ -296,7 +299,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 //        System.out.println(iBoard);
     }
 
-    static void removeFutureMoves(State state) {
+    static void removeFutureMoves(BState state) {
         if (pastMoves.size() != (state.nMoves + 1)) {     //have moved back in history and adding moves...
             pastMoves.subList(state.nMoves + 1, pastMoves.size()).clear();
             Notation.notationStrings.subList(state.nMoves + 1, Notation.notationStrings.size()).clear();
@@ -322,7 +325,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     }
 
     //if some castling options get eliminated, check and set it here
-    public static void updateCastlingState(State _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
+    public static void updateCastlingState(BState _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
         int colIndex = 0, colIndexOther = 1; //black/white
         if (piece > 0) {
             colIndex = 1;
@@ -453,25 +456,24 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             //get list of all possible moves
             long startTime = System.currentTimeMillis();
 
-            /////////////////////////////
-            MoveThread moveThread=new MoveThread();
-            moveThread.addListener(this);
-            moveThread.start();
+            if (USE_THREAD) {
+                System.out.println("!!! "+moveThread.getState()+" "+moveThread.isAlive());
+//                if ( !(moveThread.getState() == Thread.State.NEW || moveThread.getState() == Thread.State.TERMINATED) ) return 0;
+                if ( moveThread.isAlive() ) return 0; //do nothing if already running
 
-//            Chess.moveThread=new MoveThread();
-//            Chess.moveThread.addListener(this);
-//            Chess.moveThread.start();
-            /////////////////////////////
-
-
-            Move move = new Move();
-//            chosenMove = move.bestMove(iBoard, currentStaticState, false, 2, true);
-            chosenMove = move.bestMove(iBoard, currentStaticState);
+                moveThread = new MoveThread(iBoard, currentStaticState);
+                moveThread.addListener(this);
+                moveThread.start();
+                return 0;
+            } else {
+                Move move = new Move();
+                chosenMove = move.bestMove(iBoard, currentStaticState);
+            }
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");
 
-            System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
+            //System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
 
         }
 

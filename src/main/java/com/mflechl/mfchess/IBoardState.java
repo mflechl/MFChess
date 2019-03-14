@@ -3,14 +3,14 @@ package com.mflechl.mfchess;
 public class IBoardState extends IBoard {
 
     IBoardState() {
-        this(new IBoard(), new State(), "", "");
+        this(new IBoard(), new BState(), "", "");
     }
 
     IBoardState(IBoard in) {
-        this(in, new State(), "", "");
+        this(in, new BState(), "", "");
     }
 
-    IBoardState(IBoard in, State state) {
+    IBoardState(IBoard in, BState state) {
         this(in, state, "", "");
     }
 
@@ -18,19 +18,19 @@ public class IBoardState extends IBoard {
         this(in_state, in_state.state, in_state.getNotation(), in_state.getNextMoveNotation(), in_state.getEval());
     }
 
-    IBoardState(IBoard in, State state, String notation, String nextMoveNotation) {
+    IBoardState(IBoard in, BState state, String notation, String nextMoveNotation) {
         this(in, state, notation, nextMoveNotation, -99);
     }
 
-    IBoardState(IBoard in, State state, String notation, String nextMoveNotation, float eval) {
+    IBoardState(IBoard in, BState state, String notation, String nextMoveNotation, float eval) {
         super(in);
-        this.state = new State(state); //makes a deep copy
+        this.state = new BState(state); //makes a deep copy
         setEval(eval);
         setNotation(notation);
         setNextMoveNotation(nextMoveNotation);
     }
 
-    State state;
+    BState state;
     String notation;
     String nextMoveNotation;
     float eval;
