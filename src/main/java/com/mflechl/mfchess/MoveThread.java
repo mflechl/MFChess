@@ -4,14 +4,17 @@ public class MoveThread extends Thread {
 
     IBoard board;
     BState state;
+    boolean executeNow;
+    Move move;
 
     MoveThread() {
-        this(ChessBoard.iBoard, ChessBoard.currentStaticState);
+        this(ChessBoard.iBoard, ChessBoard.currentStaticState, false);
     }
 
-        MoveThread(IBoard board, BState state){
+    MoveThread(IBoard board, BState state, boolean executeNow){
         this.board = board;
         this.state = state;
+        this.executeNow = executeNow;
     }
 
     private ThreadListener listener = null;
@@ -22,7 +25,7 @@ public class MoveThread extends Thread {
     private void informListener(IBoardState chosenMove) {
         if (listener != null) {
 //            listener.onMoveDone("############ Hello from " + this.getName()+" ###################");
-            listener.onMoveDone( chosenMove );
+            listener.onMoveDone( chosenMove, executeNow );
         }
     }
 
@@ -32,9 +35,10 @@ public class MoveThread extends Thread {
 
         IBoardState chosenMove=new IBoardState();
         try {
-            Move move=new Move();
+            move=new Move();
             long startTime = System.currentTimeMillis();
             chosenMove = move.bestMove(board, state);
+
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");
 

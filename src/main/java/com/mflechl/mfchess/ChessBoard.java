@@ -35,6 +35,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
     static BState currentStaticState = new BState();
     static ArrayList<IBoardState> pastMoves = new ArrayList<>();
+    static IBoardState currentBestMove;
 
     //    ReadOpenings readOpenings = new ReadOpenings();
     static List<String> openings;
@@ -50,20 +51,6 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         openings = new ArrayList<String>(readOpenings.openings);
 
     }
-
-
-    @Override
-    public void onMoveDone(IBoardState chosenMove) {
-//        System.out.println("ChessBoard received message "+msg);
-        //append to notation
-        Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
-
-        //update currentStaticState
-        pastMoves.add(chosenMove.state.nMoves, chosenMove);
-        setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
-
-    }
-
 
     public static void toggleAutoComputerMove() {
         autoComputerMove = !autoComputerMove;
@@ -263,22 +250,26 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     }
 
     static void getPreviousState() {
+        moveThread.move.stopBestMove = true;
         int gotoState = currentStaticState.nMoves - 1;
         if (gotoState >= 0) setActiveState(pastMoves.get(gotoState), gotoState);
     }
 
     void getNextState() {
+        moveThread.move.stopBestMove = true;
         int gotoState = currentStaticState.nMoves + 1;
         if (gotoState < pastMoves.size()) setActiveState(pastMoves.get(gotoState), gotoState);
         else computerMove();
     }
 
     static void getBeginState() {
+        moveThread.move.stopBestMove = true;
         int gotoState = 0;
         setActiveState(pastMoves.get(gotoState), gotoState);
     }
 
     static void getLastState() {
+        moveThread.move.stopBestMove = true;
         int gotoState = pastMoves.size() - 1;
         setActiveState(pastMoves.get(gotoState), gotoState);
     }
@@ -404,11 +395,11 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         if (!hypo) tiles[line][row].setPiece(piece);
     }
 
-    int computerMove() {
+    void computerMove() {
 
         //cannpt move
-        if (currentStaticState.mate) return 1;
-        else if (currentStaticState.remis) return 2;
+        if (currentStaticState.mate) return;
+        else if (currentStaticState.remis) return;
 
         //reset tile borders
         if (Tile.promActive) {
@@ -457,14 +448,13 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             long startTime = System.currentTimeMillis();
 
             if (USE_THREAD) {
-                System.out.println("!!! "+moveThread.getState()+" "+moveThread.isAlive());
 //                if ( !(moveThread.getState() == Thread.State.NEW || moveThread.getState() == Thread.State.TERMINATED) ) return 0;
-                if ( moveThread.isAlive() ) return 0; //do nothing if already running
+                if ( moveThread.isAlive() ) return; //-1;  //do nothing if already running
 
-                moveThread = new MoveThread(iBoard, currentStaticState);
+                moveThread = new MoveThread(iBoard, currentStaticState, true);
                 moveThread.addListener(this);
                 moveThread.start();
-                return 0;
+                return;
             } else {
                 Move move = new Move();
                 chosenMove = move.bestMove(iBoard, currentStaticState);
@@ -476,19 +466,23 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             //System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
 
         }
+        if (chosenMove != null) updateMove(chosenMove);
 
+    }
+
+    static void updateMove() {
+        if ( currentBestMove == null ) System.out.println("ERROR: ChessBoard.updateMove - No valid move");
+        updateMove(currentBestMove);
+    }
+
+    static void updateMove(IBoardState chosenMove){
         //append to notation
         Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
 
         //update currentStaticState
         pastMoves.add(chosenMove.state.nMoves, chosenMove);
         setActiveState(pastMoves.get(chosenMove.state.nMoves), chosenMove.state.nMoves);
-
-        if (chosenMove.state.mate) return 1;
-        else if (chosenMove.state.remis) return 2;
-        else if (chosenMove.state.nMoves > 80) return 3;
-        else return 0;
-
+        currentBestMove = null;
     }
 
     static void findAndSetLastMoveBorder(IBoard bCurr, IBoard bPrev) {
@@ -508,12 +502,21 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         }
     }
 
+    //move thread done
+    @Override
+    public void onMoveDone( IBoardState chosenMove, boolean executeNow ) {
+        if ( chosenMove == null ) return;
+        if (executeNow) updateMove(chosenMove);
+        else currentBestMove = new IBoardState(chosenMove);
+        //updateMove(chosenMove);
+    }
 
     //click on a tile
     @Override
     public void actionPerformed(ActionEvent e) {
         //	System.out.println(iBoard.setup[0][0]);
         //Tile tmp=(Tile)e.getSource();
+        moveThread.move.stopBestMove = true;
         changeBoardState(Tile.statLine, Tile.statRow); //line and row clicked as argument
     }
 

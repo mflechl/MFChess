@@ -179,11 +179,14 @@ public class Chess extends JFrame  {
                         break;
                     case KeyEvent.VK_C:
                         ChessBoard.toggleOnlyComputerMove();
+                        computerPlay();
+                        /*
                         chessBoard.computerMove();
 //                        while (ChessBoard.computerMove() == 0){ repaint(); }
                         while (chessBoard.computerMove() == 0) {
                             paint(getGraphics());
                         }
+                        */
                         break;
                 }
             }
@@ -219,17 +222,32 @@ public class Chess extends JFrame  {
             chessBoard.setStateFromNotation(initialNotation);
         }
 
-        if (COMPUTER_PLAY) {
-            long startTime = System.currentTimeMillis();
-            while (chessBoard.computerMove() == 0) {
-                paint(getGraphics());
-            }
-            long finishTime = System.currentTimeMillis();
-            System.out.println("The game took: " + (finishTime - startTime) + " ms   nALMCalls =" + Move.nALMCalls + "  number of moves = " + ChessBoard.currentStaticState.nMoves);
-        }
+        if (COMPUTER_PLAY) computerPlay();
     }
 
-    //void close() { dispose(); //Chess.dispatchEvent(new WindowEvent(chess, WindowEvent.WINDOW_CLOSING)); }
+    void computerPlay(){
+        long startTime = System.currentTimeMillis();
+//            while (chessBoard.computerMove() >= 0) {c
+        boolean moveReturn = true;
+        while (moveReturn) {
+            chessBoard.computerMove();
+
+            try { ChessBoard.moveThread.join(); }
+            catch (InterruptedException e) { e.printStackTrace(); }
+
+            if ( ChessBoard.currentBestMove != null ) ChessBoard.updateMove();
+            paint(getGraphics());
+
+            if (ChessBoard.currentStaticState.mate) moveReturn = false;
+            else if (ChessBoard.currentStaticState.remis) moveReturn = false;
+            else if (ChessBoard.currentStaticState.nMoves > 80) moveReturn = false;
+        }
+        long finishTime = System.currentTimeMillis();
+        System.out.println("The game took: " + (finishTime - startTime) + " ms   nALMCalls =" + Move.nALMCalls + "  number of moves = " + ChessBoard.currentStaticState.nMoves);
+
+    }
+
+    //void close() { dicspose(); //Chess.dispatchEvent(new WindowEvent(chess, WindowEvent.WINDOW_CLOSING)); }
 
     /**
      * Define inner class DrawCanvas, which is a JPanel used for custom drawing.
@@ -250,6 +268,10 @@ public class Chess extends JFrame  {
 
     //TODO: weights: give some weight also to board after next move to break ties (promote now, not later!)
     //TODO: check for three-times repetition ( Arrays.hashCode(myArray); )
+    //TODO: only execute move if there has been no interruption
+    //TODO: Quiescence Searching
+    //TODO: improve evaluation
+    //TODO: sorting for alphabeta
 
     // The entry main() method
     public static void main(String[] args) {

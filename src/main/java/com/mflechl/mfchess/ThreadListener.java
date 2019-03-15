@@ -1,5 +1,5 @@
 package com.mflechl.mfchess;
 
 public interface ThreadListener {
-    void onMoveDone(IBoardState chosenMove);
+    void onMoveDone( IBoardState chosenMove, boolean executeNow );
 }

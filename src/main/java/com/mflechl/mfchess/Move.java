@@ -9,7 +9,7 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    private final int MAXDEPTH = 4;
+    private final int MAXDEPTH = 8;
 
     private static final float INF = 100000;
     static int nALMCalls = 0;
@@ -18,6 +18,8 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     private IBoardState bestMove;
+
+    volatile boolean stopBestMove = false;
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -210,6 +212,8 @@ public final class Move {
         if (state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoard, state );
         else eval = minMove(MAXDEPTH, -INF, +INF, iBoard, state );
 
+        if (ChessBoard.moveThread.move.stopBestMove) return null;
+
         if ( bestMove == null ){
             throw new NullPointerException("bestMove2: No possible moves.");
         } else{
@@ -220,6 +224,9 @@ public final class Move {
     }
 
     float maxMove(int depth, float alpha, float beta, IBoard currboard, BState currState ){
+        //System.out.println("!!!");
+        if (ChessBoard.moveThread.move.stopBestMove) return -9997;
+
         if ( depth==0 ) return EvaluateBoard.eval(currboard, currState);
 
         float maxValue = alpha;
@@ -239,6 +246,8 @@ public final class Move {
     }
 
     float minMove(int depth, float alpha, float beta, IBoard currBoard, BState currState ){
+        if (ChessBoard.moveThread.move.stopBestMove) return +9997;
+
         if ( depth==0 ) return EvaluateBoard.eval(currBoard, currState);
 
         float minValue = beta; //minValue
