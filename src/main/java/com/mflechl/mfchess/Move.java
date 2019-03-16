@@ -9,7 +9,9 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    private final int MAXDEPTH = 4;
+    static final int MAX_DEPTH = 4;
+
+    private int maxDepth = MAX_DEPTH;
 
     private static final float INF = 100000;
     static int nALMCalls = 0;
@@ -20,6 +22,10 @@ public final class Move {
     private IBoardState bestMove;
 
     volatile boolean stopBestMove = false;
+
+    public void setMaxDepth(int maxDepth) {
+        this.maxDepth = maxDepth;
+    }
 
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
@@ -209,13 +215,13 @@ public final class Move {
     IBoardState bestMove(IBoardState iBoardState) {
         bestMove = null;
         float eval;
-        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoardState);
-        else eval = minMove(MAXDEPTH, -INF, +INF, iBoardState);
+        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(maxDepth, -INF, +INF, iBoardState);
+        else eval = minMove(maxDepth, -INF, +INF, iBoardState);
 
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
         if ( bestMove == null ){
-            throw new NullPointerException("bestMove2: No possible moves.");
+            throw new NullPointerException("bestMove: No possible moves.");
         } else{
             bestMove.setEval(eval);
             System.out.println("MMMM: "+bestMove.getNextMovesNotation()+ " !!! "+bestMove.getNotation());
@@ -241,7 +247,7 @@ public final class Move {
                 thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && maxValue >= beta )
                     break;
-                if ( depth == MAXDEPTH)
+                if ( depth == maxDepth)
                     bestMove = new IBoardState( _board_ );
             }
         }
@@ -265,7 +271,7 @@ public final class Move {
                 thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && minValue <= alpha )
                     break;
-                if ( depth == MAXDEPTH)
+                if ( depth == maxDepth)
                     bestMove = new IBoardState( _board_ );
             }
         }

@@ -196,31 +196,16 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 Move move = new Move();
                 move.updateCheckState(updatedState, iBoard);
 
-                //fastest remis:
-                //1. e3 a5 2. Qh5 Ra6 3. Qxa5 h5 4. h4 Rah6 5. Qxc7 f6 6. Qxd7+ Kf7 7. Qxb7 Qd3 8. Qxb8 Qh7 9. Qxc8 Kg6 10. Qe6
+                IBoardState chosenMove=new IBoardState(iBoard, updatedState);
+                String notation=Notation.getMoveNotation(chosenMove, chosenMove.state, currentStaticState, aLine, aRow, _l, _r, movingPiece, eliminatedPiece, sMove);
+                chosenMove.setNotation(notation);
 
-                Chess.notation.addMove(pastMoves.get(pastMoves.size() - 1), updatedState, currentStaticState, aLine, aRow, _l, _r,
-                        movingPiece, eliminatedPiece, sMove);
+                updateMove(chosenMove);
 
-                //save to history
-//                IBoardState currentMove = new IBoardState(iBoard, updatedState);
-//                pastMoves.add(updatedState.nMoves, currentMove);
-                pastMoves.add(updatedState.nMoves, new IBoardState(iBoard, updatedState));
-
-                //update currentStaticState
-                currentStaticState = updatedState;
-                System.out.println("hu: " + currentStaticState + " promActive=" + Tile.promActive);
-
-                setAllBordersInactive();
-                tiles[aLine][aRow].setLastMoveBorder();
-                tiles[_l][_r].setLastMoveBorder();
                 if (Tile.promActive) tiles[Tile.promLine][Tile.promRow].setPromBorder();
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
-                setLabelLastMove(1,-99110, "");
-                //Chess.btnLastMove.setText(getLastMoveString());
-                //Chess.btnNextMoves.setText("-");
 
                 if (autoComputerMove && !Tile.promActive)
                     computerMove(); //by default, always answer a human move with a computer move
@@ -286,9 +271,6 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 //        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("(\\d+\\.)* \\w\\S","...");
         String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("^\\d+\\. ","");
         nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
-        System.out.println("!!!!!"+nextMovesLabel+"!!!");
-        System.out.println("XX "+"abc".matches("^\\w"));
-        System.out.println("YY "+" bc".matches("^\\w"));
         if ( !nextMovesLabel.matches("^\\d+\\..*") ) nextMovesLabel = "... "+nextMovesLabel;
         setLabelLastMove( gotoState, boardState.getEval(), nextMovesLabel );
 
@@ -412,7 +394,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
     void computerMove() {
 
-        //cannpt move
+        //cannot move
         if (currentStaticState.mate) return;
         else if (currentStaticState.remis) return;
 
@@ -468,6 +450,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
                 moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), true );
                 moveThread.addListener(this);
+                if (pastMoves.size()<5) moveThread.setDepth(5);
                 moveThread.start();
                 return;
             } else {
@@ -519,7 +502,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
     //move thread done
     @Override
-    public void onMoveDone( IBoardState chosenMove, boolean executeNow ) {
+    public void onBestMoveAvailable(IBoardState chosenMove, boolean executeNow ) {
         if ( chosenMove == null ) return;
         if (executeNow) updateMove(chosenMove);
         else currentBestMove = new IBoardState(chosenMove);
