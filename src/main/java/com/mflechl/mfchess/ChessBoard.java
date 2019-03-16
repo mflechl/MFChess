@@ -17,7 +17,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     private static boolean autoComputerMove = false;
     private static boolean onlyComputerMove = false;
     private static final boolean USE_OPENINGS = false;
-    private static final boolean USE_THREAD = true;
+    static final boolean USE_THREAD = true;
 
     private Color color1; // Color of square 1
     private Color color2; // Color of square 2
@@ -218,7 +218,9 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 aLine = -1;
                 aRow = -1;
                 tileActive = false;
-                Chess.btnLastMove.setText(getLastMoveString());
+                setLabelLastMove(1,-99110, "");
+                //Chess.btnLastMove.setText(getLastMoveString());
+                //Chess.btnNextMoves.setText("-");
 
                 if (autoComputerMove && !Tile.promActive)
                     computerMove(); //by default, always answer a human move with a computer move
@@ -281,7 +283,14 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         currentStaticState = new BState(boardState.state);
 
         fillTilesFromBoard();
-        setLabelLastMove( gotoState, boardState.getEval() );
+//        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("(\\d+\\.)* \\w\\S","...");
+        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("^\\d+\\. ","");
+        nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
+        System.out.println("!!!!!"+nextMovesLabel+"!!!");
+        System.out.println("XX "+"abc".matches("^\\w"));
+        System.out.println("YY "+" bc".matches("^\\w"));
+        if ( !nextMovesLabel.matches("^\\d+\\..*") ) nextMovesLabel = "... "+nextMovesLabel;
+        setLabelLastMove( gotoState, boardState.getEval(), nextMovesLabel );
 
         if (boardState.state.nMoves > 0 && pastMoves.size() >= boardState.state.nMoves)
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
@@ -307,12 +316,18 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         System.out.println("init: " + notation);
     }
 
-    static void setLabelLastMove(int gotoState, float eval) {
+    static void setLabelLastMove(int gotoState, float eval, String nextMoves) {
         String text;
         if (gotoState < 0) text=getLastMoveString().replaceAll("<font color='red'>.*</font>", "");
         else if (gotoState == 0) text="";
         else text=getMoveString(gotoState).replaceAll("<font color='red'>.*</font>", "");
-        Chess.btnLastMove.setText(text.replaceAll("</html>","<br>"+eval+"</html>"));
+        Chess.btnLastMove.setText(text);
+//        Chess.btnNextMoves.setText(text.replaceAll("</html>","<br>"+eval+"</html>"));
+        if (eval<-1000)
+            Chess.btnNextMoves.setText("-");
+        else
+            Chess.btnNextMoves.setText(eval+"      "+nextMoves);
+
     }
 
     //if some castling options get eliminated, check and set it here
@@ -451,13 +466,13 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 //                if ( !(moveThread.getState() == Thread.State.NEW || moveThread.getState() == Thread.State.TERMINATED) ) return 0;
                 if ( moveThread.isAlive() ) return; //-1;  //do nothing if already running
 
-                moveThread = new MoveThread(iBoard, currentStaticState, true);
+                moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), true );
                 moveThread.addListener(this);
                 moveThread.start();
                 return;
             } else {
                 Move move = new Move();
-                chosenMove = move.bestMove(iBoard, currentStaticState);
+                chosenMove = move.bestMove( new IBoardState(iBoard, currentStaticState) );
             }
 
             long finishTime = System.currentTimeMillis();

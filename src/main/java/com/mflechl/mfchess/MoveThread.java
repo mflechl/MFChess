@@ -2,18 +2,17 @@ package com.mflechl.mfchess;
 
 public class MoveThread extends Thread {
 
-    IBoard board;
-    BState state;
+    IBoardState boardState;
     boolean executeNow;
-    Move move;
+    Move move = new Move();
 
     MoveThread() {
-        this(ChessBoard.iBoard, ChessBoard.currentStaticState, false);
+//        this( new IBoardState(ChessBoard.iBoard, ChessBoard.currentStaticState), false);
+        this( new IBoardState(), false);
     }
 
-    MoveThread(IBoard board, BState state, boolean executeNow){
-        this.board = board;
-        this.state = state;
+    MoveThread(IBoardState boardState, boolean executeNow){
+        this.boardState = boardState;
         this.executeNow = executeNow;
     }
 
@@ -37,7 +36,7 @@ public class MoveThread extends Thread {
         try {
             move=new Move();
             long startTime = System.currentTimeMillis();
-            chosenMove = move.bestMove(board, state);
+            chosenMove = move.bestMove(boardState);
 
             long finishTime = System.currentTimeMillis();
             System.out.println("That took: " + (finishTime - startTime) + " ms");

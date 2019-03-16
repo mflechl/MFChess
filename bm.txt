@@ -16,3 +16,8 @@
             //futures threads (10): 87 / 87 / 85
             //futures concurrent threads (30): 85 / 86 / 85
 
+            //depth 4, use threads: 34.3s, 34.6, 34.0 (174040 ALM)
+            //         no           34.0, 34.2
+            //         threads, no interrupt possible: 34.6, 34.2
+            //depth 4, threads, no notation: 31.4, 31.1
+

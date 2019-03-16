@@ -9,7 +9,7 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    private final int MAXDEPTH = 8;
+    private final int MAXDEPTH = 4;
 
     private static final float INF = 100000;
     static int nALMCalls = 0;
@@ -206,75 +206,83 @@ public final class Move {
         return false;
     }
 
-    IBoardState bestMove(IBoard iBoard, BState state) {
+    IBoardState bestMove(IBoardState iBoardState) {
         bestMove = null;
         float eval;
-        if (state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoard, state );
-        else eval = minMove(MAXDEPTH, -INF, +INF, iBoard, state );
+        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(MAXDEPTH, -INF, +INF, iBoardState);
+        else eval = minMove(MAXDEPTH, -INF, +INF, iBoardState);
 
-        if (ChessBoard.moveThread.move.stopBestMove) return null;
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
         if ( bestMove == null ){
             throw new NullPointerException("bestMove2: No possible moves.");
         } else{
             bestMove.setEval(eval);
+            System.out.println("MMMM: "+bestMove.getNextMovesNotation()+ " !!! "+bestMove.getNotation());
             return bestMove;
 //            return NotationToState.noteToBoard(bestMove, iBoard, state);
         }
     }
 
-    float maxMove(int depth, float alpha, float beta, IBoard currboard, BState currState ){
+    float maxMove(int depth, float alpha, float beta, IBoardState currBoardState){
         //System.out.println("!!!");
-        if (ChessBoard.moveThread.move.stopBestMove) return -9997;
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
 
-        if ( depth==0 ) return EvaluateBoard.eval(currboard, currState);
+        if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state);
 
         float maxValue = alpha;
-        ArrayList<IBoardState> _moveList_ = allLegalMoves(currboard, currState);
+        String thisNotation="";
+        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoardState);
 
         for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = minMove(depth-1, maxValue, beta, _board_, _board_.state );
+            float _value_ = minMove(depth-1, maxValue, beta, _board_);
             if ( _value_ > maxValue ){
                 maxValue = _value_;
+                thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && maxValue >= beta )
                     break;
                 if ( depth == MAXDEPTH)
                     bestMove = new IBoardState( _board_ );
             }
         }
+        currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation);
         return maxValue;
     }
 
-    float minMove(int depth, float alpha, float beta, IBoard currBoard, BState currState ){
-        if (ChessBoard.moveThread.move.stopBestMove) return +9997;
+    float minMove(int depth, float alpha, float beta, IBoardState currBoardState){
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return +9997;
 
-        if ( depth==0 ) return EvaluateBoard.eval(currBoard, currState);
+        if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state);
 
         float minValue = beta; //minValue
-        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoard, currState);
+        String thisNotation="";
+        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoardState);
 
         for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = maxMove(depth-1, alpha, minValue, _board_, _board_.state );
+            float _value_ = maxMove(depth-1, alpha, minValue, _board_);
             if ( _value_ < minValue ){
                 minValue = _value_;
+                thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && minValue <= alpha )
                     break;
                 if ( depth == MAXDEPTH)
                     bestMove = new IBoardState( _board_ );
             }
         }
+        currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation);
         return minValue;
     }
 
-    ArrayList<IBoardState> allLegalMoves(IBoard iBoard, BState state) {
+    ArrayList<IBoardState> allLegalMoves(IBoardState iBoardState) {
         nALMCalls++; //TEST
 
         ArrayList<IBoardState> list = new ArrayList<>();
 
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
-                if (iBoard.setup[il][ir] * state.turnOf > 0) {
-                    ArrayList<IBoardState> listPiece = pieceLegalMove(iBoard, il, ir, state, false, true, false );
+                if (iBoardState.setup[il][ir] * iBoardState.state.turnOf > 0) {
+                    ArrayList<IBoardState> listPiece = pieceLegalMove(iBoardState, il, ir, iBoardState.state, false, true, false );
+//                    ArrayList<IBoardState> listPiece = pieceLegalMove(iBoard, il, ir, state, false, true, false );
                     list.addAll(listPiece);
                 }
             }

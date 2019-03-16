@@ -17,7 +17,7 @@ public class Chess extends JFrame  {
     // Define constants for the various dimensions
     private static final int CANVAS_WIDTH = 640;
     private static final int CANVAS_HEIGHT = 640;
-    private static final int BUTTON_HEIGHT = 40;
+    private static final int BUTTON_HEIGHT = 100;
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
@@ -30,6 +30,7 @@ public class Chess extends JFrame  {
     static Notation notation;
     private static JScrollPane scrollPane;
     static JButton btnLastMove;
+    static JButton btnNextMoves;
 
     // Constructor to set up the GUI components and event handlers
     private Chess(String initialNotation) {
@@ -48,15 +49,20 @@ public class Chess extends JFrame  {
         JPanel emptyPanel2 = new JPanel();
         emptyPanel2.setPreferredSize(new Dimension(CANVAS_WIDTH / 15, BUTTON_HEIGHT));
 
-        JPanel btnPanel = new JPanel(new GridLayout(1, 0, 0, 0));
-        //JPanel btnPanel = new JPanel();
+        //X JPanel btnPanel = new JPanel(new GridLayout(1, 0, 0, 0));
+        JPanel btnPanel = new JPanel(new GridBagLayout());
         btnPanel.setPreferredSize(new Dimension(CANVAS_WIDTH, BUTTON_HEIGHT));
 
-        //btnPanel.setLayout(new BoxLayout(btnPanel, BoxLayout.PAGE_AXIS));
-//X        btnPanel.add(new JLabel()); //empty cell
+        GridBagConstraints c = new GridBagConstraints();
+//        c.fill = GridBagConstraints.HORIZONTAL;
+        c.fill = GridBagConstraints.BOTH;
+        c.weightx = 0.5;
+        c.gridx = 0;
+        c.gridy = 0;
+        c.ipady = 10;
 
         JButton btnBegin = new JButton("<<");
-        btnPanel.add(btnBegin);
+        btnPanel.add(btnBegin,c);
         btnBegin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ChessBoard.getBeginState();
@@ -65,8 +71,9 @@ public class Chess extends JFrame  {
             }
         });
 
+        c.gridx = 1;
         JButton btnPrev = new JButton("<");
-        btnPanel.add(btnPrev);
+        btnPanel.add(btnPrev,c);
         btnPrev.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ChessBoard.getPreviousState();
@@ -75,8 +82,9 @@ public class Chess extends JFrame  {
             }
         });
 
-        btnLastMove = new JButton("");
-        btnPanel.add(btnLastMove);
+        c.gridx = 2;
+        btnLastMove = new JButton("1.");
+        btnPanel.add(btnLastMove,c);
         btnLastMove.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 chessBoard.computerMove();
@@ -85,8 +93,9 @@ public class Chess extends JFrame  {
             }
         });
 
+        c.gridx = 3;
         JButton btnNext = new JButton(">");
-        btnPanel.add(btnNext);
+        btnPanel.add(btnNext,c);
         btnNext.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 chessBoard.getNextState();
@@ -94,8 +103,9 @@ public class Chess extends JFrame  {
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
         });
+        c.gridx = 4;
         JButton btnLast = new JButton(">>");
-        btnPanel.add(btnLast);
+        btnPanel.add(btnLast,c);
         btnLast.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 ChessBoard.getLastState();
@@ -104,6 +114,19 @@ public class Chess extends JFrame  {
             }
         });
 //X        btnPanel.add(new JLabel()); //empty cell
+
+        c.gridx = 0;
+        c.gridy = 1;
+        c.gridwidth = 5;
+        btnNextMoves = new JButton("-");
+        btnPanel.add(btnNextMoves,c);
+        btnNextMoves.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                //chessBoard.computerMove();
+                //canvas.repaint();
+                requestFocus(); // change the focus to JFrame to receive KeyEvent
+            }
+        });
 
         // Set up the tiles plus coordinates at the edges
         canvas = new DrawCanvas();
@@ -272,6 +295,7 @@ public class Chess extends JFrame  {
     //TODO: Quiescence Searching
     //TODO: improve evaluation
     //TODO: sorting for alphabeta
+    //TODO: computerPlay: update notation; and update rest of board properly
 
     // The entry main() method
     public static void main(String[] args) {

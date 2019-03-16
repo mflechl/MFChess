@@ -15,15 +15,16 @@ public class IBoardState extends IBoard {
     }
 
     IBoardState(IBoardState in_state) {
-        this(in_state, in_state.state, in_state.getNotation(), in_state.getNextMoveNotation(), in_state.getEval());
+        this(in_state, in_state.state, in_state.getNotation(), in_state.getNextMovesNotation(), in_state.getEval());
     }
 
     IBoardState(IBoard in, BState state, String notation, String nextMoveNotation) {
-        this(in, state, notation, nextMoveNotation, -99);
+        this(in, state, notation, nextMoveNotation, -99111);
     }
 
     IBoardState(IBoard in, BState state, String notation, String nextMoveNotation, float eval) {
         super(in);
+        if (state == null) state=new BState();
         this.state = new BState(state); //makes a deep copy
         setEval(eval);
         setNotation(notation);
@@ -43,7 +44,7 @@ public class IBoardState extends IBoard {
         this.eval = eval;
     }
 
-    public String getNextMoveNotation() {
+    public String getNextMovesNotation() {
         return nextMoveNotation;
     }
 
