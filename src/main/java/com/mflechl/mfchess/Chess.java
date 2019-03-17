@@ -246,6 +246,8 @@ public class Chess extends JFrame  {
         }
 
         if (COMPUTER_PLAY) computerPlay();
+        chessBoard.findDeeperMove( Move.DEFAULT_START_DEPTH, false );
+
     }
 
     void computerPlay(){

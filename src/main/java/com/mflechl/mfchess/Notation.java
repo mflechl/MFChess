@@ -75,15 +75,18 @@ class Notation extends JLabel {
         //lbl += " ";
         return lbl;
     }
-    //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
+
+    /*
     void addMove(IBoard board, BState state, BState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
         addMove(board, state.nMoves, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
     }
 
+    //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
     void addMove(IBoard board, int pos, int imove, boolean check, int fromLine, int fromRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, BState state, boolean mate, boolean remis) {
         String lbl = getMoveNotation(board, imove, check, fromLine, fromRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
         if (pos >= 0) updateText(lbl, pos);
     }
+    */
 
     void updateText(String newText, int pos) {
         notationStrings.add(pos, newText);

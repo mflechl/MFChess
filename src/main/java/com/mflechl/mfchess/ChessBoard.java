@@ -210,7 +210,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 if (autoComputerMove && !Tile.promActive)
                     computerMove(); //answer human move with computer move
                 else if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
-                    findDeeperMove( Move.MAX_DEPTH );
+                    findDeeperMove( Move.DEFAULT_START_DEPTH, false );
                     //return;
                 }
 
@@ -219,7 +219,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
     }
 
-    void findDeeperMove(int newDepth){
+    void findDeeperMove(int newDepth, boolean executeNow){
         System.out.println("fDM: "+newDepth+" "+moveThread.isAlive() +" " + moveThread.getState() );
         //if calling itself to add one depth, thread is still alive - ignore it...
         moveThread.move.stopBestMove = true;
@@ -235,7 +235,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         int currentDepth = newDepth;
         if (currentDepth<0) currentDepth=moveThread.getDepth();
         if (currentDepth<2) return;
-        moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), false );
+        moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), executeNow );
         moveThread.addListener(this);
         moveThread.setGoDeeper(true); //try next-higher deepness next
         moveThread.start();
@@ -430,8 +430,8 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
             updateMove(currentBestMove);
 
-            if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
-                findDeeperMove(Move.MAX_DEPTH);
+            if (USE_THREAD){     //calculate a computer move, but only execute it if user wants it
+                findDeeperMove(Move.DEFAULT_START_DEPTH, false);
             }
             return;
         }
@@ -483,13 +483,18 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             long startTime = System.currentTimeMillis();
 
             if (USE_THREAD) {
+                findDeeperMove(Move.DEFAULT_START_DEPTH, true);
+                /*
+                System.out.println("A");
 //                if ( !(moveThread.getState() == Thread.State.NEW || moveThread.getState() == Thread.State.TERMINATED) ) return 0;
                 if ( moveThread.isAlive() ) return; //-1;  //do nothing if already running
+                System.out.println("B");
 
                 moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), true );
                 moveThread.addListener(this);
-                if (pastMoves.size()<5) moveThread.setDepth(Move.MAX_DEPTH);
+                moveThread.setDepth(Move.DEFAULT_START_DEPTH);
                 moveThread.start();
+                */
                 return;
             } else {
                 Move move = new Move();
@@ -504,9 +509,9 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         }
         if (chosenMove != null){
             updateMove(chosenMove);
-            if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
-                findDeeperMove(Move.MAX_DEPTH); //problem for computer-only? //TODO: does not work yet
-            }
+            // if (USE_THREAD){     //calculate a computer move, but only execute it if user wants it
+            //    findDeeperMove(Move.DEFAULT_START_DEPTH); //problem for computer-only? //TODO: does not work yet
+            //}
         }
     }
 
@@ -546,9 +551,10 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     @Override
     public void onBestMoveAvailable(IBoardState chosenMove, boolean executeNow ) {
         if ( chosenMove == null ) return;
-        if (executeNow) updateMove(chosenMove);
-        else{
-            currentBestMove = new IBoardState(chosenMove);
+        currentBestMove = new IBoardState(chosenMove);
+        if (executeNow){
+//            computerMove();
+            updateMove(chosenMove);
         }
     }
 

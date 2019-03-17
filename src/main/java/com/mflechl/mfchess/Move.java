@@ -9,9 +9,10 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    static final int MAX_DEPTH = 3;
+    static final int DEFAULT_START_DEPTH = 3;
+    static final int MAX_DEPTH=6;
 
-    private int maxDepth = MAX_DEPTH;
+    private int startDepth = DEFAULT_START_DEPTH;
 
     private static final float INF = 100000;
     static int nALMCalls = 0;
@@ -23,8 +24,8 @@ public final class Move {
 
     volatile boolean stopBestMove = false;
 
-    public void setMaxDepth(int maxDepth) {
-        this.maxDepth = maxDepth;
+    public void setStartDepth(int startDepth) {
+        this.startDepth = startDepth;
     }
 
     //move from fromLine, fromRow to toLine,toRow legal?
@@ -215,8 +216,8 @@ public final class Move {
     IBoardState bestMove(IBoardState iBoardState) {
         bestMove = null;
         float eval;
-        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(maxDepth, -INF, +INF, iBoardState);
-        else eval = minMove(maxDepth, -INF, +INF, iBoardState);
+        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(startDepth, -INF, +INF, iBoardState);
+        else eval = minMove(startDepth, -INF, +INF, iBoardState);
 
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
@@ -244,7 +245,7 @@ public final class Move {
                 thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && maxValue >= beta )
                     break;
-                if ( depth == maxDepth)
+                if ( depth == startDepth)
                     bestMove = new IBoardState( _board_ );
             }
         }
@@ -268,7 +269,7 @@ public final class Move {
                 thisNotation = _board_.getNextMovesNotation();
                 if ( USE_ALPHABETA && minValue <= alpha )
                     break;
-                if ( depth == maxDepth)
+                if ( depth == startDepth)
                     bestMove = new IBoardState( _board_ );
             }
         }

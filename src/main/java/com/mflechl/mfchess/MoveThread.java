@@ -6,7 +6,7 @@ public class MoveThread extends Thread {
     boolean executeNow;
     Move move = new Move();
 
-    int depth = Move.MAX_DEPTH;
+    int depth = Move.DEFAULT_START_DEPTH;
     boolean goDeeper = false;
 
     public void setDepth(int depth) {
@@ -50,19 +50,21 @@ public class MoveThread extends Thread {
     public void run() {
         super.run();
 
-        IBoardState chosenMove=new IBoardState();
+        IBoardState chosenMove;
         try {
             while (true) {
                 move = new Move();
-                move.setMaxDepth(depth);
+                move.setStartDepth(depth);
                 long startTime = System.currentTimeMillis();
                 chosenMove = move.bestMove(boardState);
 
                 long finishTime = System.currentTimeMillis();
                 if ( move.stopBestMove ) break;
                 informListener(chosenMove);
-                System.out.println("MOVETHREAD "+getDepth()+"    "+ chosenMove.getNextMovesNotation() + "    That took: " + (finishTime - startTime) + " ms");
-                if ( !isGoDeeper() ) break;
+                String gNMN="Could not find next move";
+                if (chosenMove != null) gNMN=chosenMove.getNextMovesNotation();
+                System.out.println("MOVETHREAD "+getDepth()+"    "+ gNMN + "    That took: " + (finishTime - startTime) + " ms");
+                if ( !isGoDeeper() || executeNow || getDepth()>=Move.MAX_DEPTH ) break;
                 setDepth( getDepth() + 1 );
             }
             //Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
