@@ -5,10 +5,22 @@ public class MoveThread extends Thread {
     IBoardState boardState;
     boolean executeNow;
     Move move = new Move();
+
     int depth = Move.MAX_DEPTH;
+    boolean goDeeper = false;
 
     public void setDepth(int depth) {
         this.depth = depth;
+    }
+    public int getDepth() {
+        return depth;
+    }
+
+    public boolean isGoDeeper() {
+        return goDeeper;
+    }
+    public void setGoDeeper(boolean goDeeper) {
+        this.goDeeper = goDeeper;
     }
 
 
@@ -40,14 +52,19 @@ public class MoveThread extends Thread {
 
         IBoardState chosenMove=new IBoardState();
         try {
-            move=new Move();
-            move.setMaxDepth(depth);
-            long startTime = System.currentTimeMillis();
-            chosenMove = move.bestMove(boardState);
+            while (true) {
+                move = new Move();
+                move.setMaxDepth(depth);
+                long startTime = System.currentTimeMillis();
+                chosenMove = move.bestMove(boardState);
 
-            long finishTime = System.currentTimeMillis();
-            System.out.println("That took: " + (finishTime - startTime) + " ms");
-
+                long finishTime = System.currentTimeMillis();
+                if ( move.stopBestMove ) break;
+                informListener(chosenMove);
+                System.out.println("MOVETHREAD "+getDepth()+"    "+ chosenMove.getNextMovesNotation() + "    That took: " + (finishTime - startTime) + " ms");
+                if ( !isGoDeeper() ) break;
+                setDepth( getDepth() + 1 );
+            }
             //Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);
             //ChessBoard.pastMoves.add(chosenMove.state.nMoves, chosenMove);
             //ChessBoard.setActiveState(chosenMove, chosenMove.state.nMoves);
@@ -55,6 +72,5 @@ public class MoveThread extends Thread {
             e.printStackTrace();
         }
 
-        informListener(chosenMove);
     }
 }

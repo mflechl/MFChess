@@ -208,11 +208,37 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 tileActive = false;
 
                 if (autoComputerMove && !Tile.promActive)
-                    computerMove(); //by default, always answer a human move with a computer move
+                    computerMove(); //answer human move with computer move
+                else if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
+                    findDeeperMove( Move.MAX_DEPTH );
+                    //return;
+                }
 
             }
         }
 
+    }
+
+    void findDeeperMove(int newDepth){
+        System.out.println("fDM: "+newDepth+" "+moveThread.isAlive() +" " + moveThread.getState() );
+        //if calling itself to add one depth, thread is still alive - ignore it...
+        moveThread.move.stopBestMove = true;
+
+        while (moveThread.isAlive()) { //TODO: use join?
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        }
+        //if ( checkAlive && moveThread.isAlive() ) return; //do nothing if already running
+        int currentDepth = newDepth;
+        if (currentDepth<0) currentDepth=moveThread.getDepth();
+        if (currentDepth<2) return;
+        moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), false );
+        moveThread.addListener(this);
+        moveThread.setGoDeeper(true); //try next-higher deepness next
+        moveThread.start();
     }
 
     static String getLastMoveString() {
@@ -392,11 +418,23 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         if (!hypo) tiles[line][row].setPiece(piece);
     }
 
+    //TODO: iterate to deeper moves
+    //TODO: write move on button
     void computerMove() {
 
         //cannot move
         if (currentStaticState.mate) return;
         else if (currentStaticState.remis) return;
+
+        if ( currentBestMove != null ){
+
+            updateMove(currentBestMove);
+
+            if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
+                findDeeperMove(Move.MAX_DEPTH);
+            }
+            return;
+        }
 
         //reset tile borders
         if (Tile.promActive) {
@@ -450,7 +488,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
                 moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), true );
                 moveThread.addListener(this);
-                if (pastMoves.size()<5) moveThread.setDepth(5);
+                if (pastMoves.size()<5) moveThread.setDepth(Move.MAX_DEPTH);
                 moveThread.start();
                 return;
             } else {
@@ -464,8 +502,12 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             //System.out.println("Next Moves: " + chosenMove.nextMoveNotation);
 
         }
-        if (chosenMove != null) updateMove(chosenMove);
-
+        if (chosenMove != null){
+            updateMove(chosenMove);
+            if (USE_THREAD){     //calculate a computer move, but only exectute it if user wants it
+                findDeeperMove(Move.MAX_DEPTH); //problem for computer-only? //TODO: does not work yet
+            }
+        }
     }
 
     static void updateMove() {
@@ -505,8 +547,9 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     public void onBestMoveAvailable(IBoardState chosenMove, boolean executeNow ) {
         if ( chosenMove == null ) return;
         if (executeNow) updateMove(chosenMove);
-        else currentBestMove = new IBoardState(chosenMove);
-        //updateMove(chosenMove);
+        else{
+            currentBestMove = new IBoardState(chosenMove);
+        }
     }
 
     //click on a tile
@@ -515,6 +558,13 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         //	System.out.println(iBoard.setup[0][0]);
         //Tile tmp=(Tile)e.getSource();
         moveThread.move.stopBestMove = true;
+        while (moveThread.isAlive()) {
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e1) {
+                e1.printStackTrace();
+            }
+        }
         changeBoardState(Tile.statLine, Tile.statRow); //line and row clicked as argument
     }
 

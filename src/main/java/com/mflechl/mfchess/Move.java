@@ -9,7 +9,7 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static boolean USE_ALPHABETA = true;
-    static final int MAX_DEPTH = 4;
+    static final int MAX_DEPTH = 3;
 
     private int maxDepth = MAX_DEPTH;
 
@@ -224,14 +224,11 @@ public final class Move {
             throw new NullPointerException("bestMove: No possible moves.");
         } else{
             bestMove.setEval(eval);
-            System.out.println("MMMM: "+bestMove.getNextMovesNotation()+ " !!! "+bestMove.getNotation());
             return bestMove;
-//            return NotationToState.noteToBoard(bestMove, iBoard, state);
         }
     }
 
     float maxMove(int depth, float alpha, float beta, IBoardState currBoardState){
-        //System.out.println("!!!");
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
 
         if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state);
