@@ -21,3 +21,5 @@
             //         threads, no interrupt possible: 34.6, 34.2
             //depth 4, threads, no notation: 31.4, 31.1
 
+            //depth 6, ab, no ordering: 1195s
+

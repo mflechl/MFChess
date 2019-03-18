@@ -10,7 +10,7 @@ public final class Move {
 
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_ORDERING = false;
-    static final int DEFAULT_START_DEPTH = 3;
+    static final int DEFAULT_START_DEPTH = 5;
     static final int MAX_DEPTH=6;
 
     private int startDepth = DEFAULT_START_DEPTH;
@@ -215,6 +215,9 @@ public final class Move {
     }
 
     IBoardState bestMove(IBoardState iBoardState) {
+
+        System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
+
         bestMove = null;
         float eval;
         if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(startDepth, -INF, +INF, iBoardState);

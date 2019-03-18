@@ -61,14 +61,15 @@ public class MoveThread extends Thread {
 
                 long finishTime = System.currentTimeMillis();
                 if ( move.stopBestMove ) break;
-                informListener(chosenMove);
                 String gNMN="Could not find next move";
                 if (chosenMove != null){
                     gNMN=chosenMove.getNextMovesNotation();
                     ChessBoard.setLabelNextMoves( chosenMove.getEval(), gNMN );
                 }
                 System.out.println("MOVETHREAD "+getDepth()+"    "+ gNMN + "    That took: " + (finishTime - startTime) + " ms");
+                informListener(chosenMove);
                 if ( !isGoDeeper() || executeNow || getDepth()>=Move.MAX_DEPTH ) break;
+                if ( chosenMove != null ) ChessBoard.nextBestMove = chosenMove.getNotation().replaceFirst("^\\d+\\. ","");
                 setDepth( getDepth() + 1 );
             }
             //Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);

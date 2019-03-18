@@ -21,7 +21,7 @@ public class Chess extends JFrame  {
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
-    static final boolean COMPUTER_PLAY = true;
+    static final boolean COMPUTER_PLAY = false;
 
     private DrawCanvas canvas; // The custom drawing canvas (an inner class extends JPanel)
     private ChessBoard chessBoard;     // the 8x8 tiles
