@@ -298,7 +298,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("^\\d+\\. ","");
         nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
         if ( !nextMovesLabel.matches("^\\d+\\..*") ) nextMovesLabel = "... "+nextMovesLabel;
-        setLabelLastMove( gotoState, boardState.getEval(), nextMovesLabel );
+        setLabelLastandNextMove( gotoState, boardState.getEval(), nextMovesLabel );
 
         if (boardState.state.nMoves > 0 && pastMoves.size() >= boardState.state.nMoves)
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
@@ -324,19 +324,33 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         System.out.println("init: " + notation);
     }
 
-    static void setLabelLastMove(int gotoState, float eval, String nextMoves) {
+    static void setLabelLastandNextMove(int gotoState, float eval, String nextMoves) {
         String text;
         if (gotoState < 0) text=getLastMoveString().replaceAll("<font color='red'>.*</font>", "");
         else if (gotoState == 0) text="";
         else text=getMoveString(gotoState).replaceAll("<font color='red'>.*</font>", "");
         Chess.btnLastMove.setText(text);
-//        Chess.btnNextMoves.setText(text.replaceAll("</html>","<br>"+eval+"</html>"));
-        if (eval<-1000)
-            Chess.btnNextMoves.setText("-");
-        else
-            Chess.btnNextMoves.setText(eval+"      "+nextMoves);
 
+        setLabelNextMoves(eval, nextMoves);
     }
+
+    static void setLabelNextMoves( float eval, String nextMoves ){
+        nextMoves = nextMoves.replaceAll("\\.\\.\\.\\s*","");
+        System.out.println("|"+nextMoves+"|");
+        //System.out.println("HHHHH "+"1.".matches("^\\d+\\..*"));
+        if (!nextMoves.matches("^\\d+\\..*")) nextMoves = "... " + nextMoves;
+        nextMoves=nextMoves.replaceFirst("(\\w+[#+\\s])","<font color='red'>$1</font>");
+
+        nextMoves = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + nextMoves;
+        if (eval<-1000) nextMoves="- "+nextMoves;
+        else nextMoves=eval+nextMoves;
+
+        nextMoves = "<html> " + nextMoves + "</html>";
+        //System.out.println("XXX "+nextMoves);
+
+        Chess.btnNextMoves.setText(nextMoves);
+    }
+
 
     //if some castling options get eliminated, check and set it here
     public static void updateCastlingState(BState _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
