@@ -21,7 +21,7 @@ public class Chess extends JFrame  {
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
-    private static final boolean COMPUTER_PLAY = false;
+    static final boolean COMPUTER_PLAY = true;
 
     private DrawCanvas canvas; // The custom drawing canvas (an inner class extends JPanel)
     private ChessBoard chessBoard;     // the 8x8 tiles
@@ -246,7 +246,7 @@ public class Chess extends JFrame  {
         }
 
         if (COMPUTER_PLAY) computerPlay();
-        chessBoard.findDeeperMove( Move.DEFAULT_START_DEPTH, false );
+        else chessBoard.findDeeperMove( Move.DEFAULT_START_DEPTH, false );
 
     }
 
@@ -267,6 +267,13 @@ public class Chess extends JFrame  {
             else if (ChessBoard.currentStaticState.remis) moveReturn = false;
             else if (ChessBoard.currentStaticState.nMoves > 80) moveReturn = false;
         }
+        ChessBoard.moveThread.move.stopBestMove = true;
+
+        try { ChessBoard.moveThread.join(); }
+        catch (InterruptedException e) { e.printStackTrace(); }
+
+        System.out.println("VVV "+ChessBoard.moveThread.getState());
+
         long finishTime = System.currentTimeMillis();
         System.out.println("The game took: " + (finishTime - startTime) + " ms   nALMCalls =" + Move.nALMCalls + "  number of moves = " + ChessBoard.currentStaticState.nMoves);
 
@@ -293,7 +300,6 @@ public class Chess extends JFrame  {
 
     //TODO: weights: give some weight also to board after next move to break ties (promote now, not later!)
     //TODO: check for three-times repetition ( Arrays.hashCode(myArray); )
-    //TODO: only execute move if there has been no interruption
     //TODO: Quiescence Searching
     //TODO: improve evaluation
     //TODO: sorting for alphabeta

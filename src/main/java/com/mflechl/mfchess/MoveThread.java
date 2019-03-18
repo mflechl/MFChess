@@ -48,6 +48,7 @@ public class MoveThread extends Thread {
 
     @Override
     public void run() {
+        //System.out.println("STARTING "+this);
         super.run();
 
         IBoardState chosenMove;
@@ -76,6 +77,8 @@ public class MoveThread extends Thread {
         } catch (Exception e) {
             e.printStackTrace();
         }
+//        System.out.println("DONE");
 
+        //System.out.println("DONE "+this);
     }
 }

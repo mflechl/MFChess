@@ -8,7 +8,8 @@ public final class Move {
 
     //static final boolean PICK_RANDOM = false;
 
-    static boolean USE_ALPHABETA = true;
+    static final boolean USE_ALPHABETA = true;
+    static final boolean USE_ORDERING = false;
     static final int DEFAULT_START_DEPTH = 3;
     static final int MAX_DEPTH=6;
 
