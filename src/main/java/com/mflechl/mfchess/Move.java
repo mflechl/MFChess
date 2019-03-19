@@ -1,6 +1,7 @@
 package com.mflechl.mfchess;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public final class Move {
     Move() {
@@ -9,8 +10,8 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static final boolean USE_ALPHABETA = true;
-    static final boolean USE_ORDERING = false;
-    static final int DEFAULT_START_DEPTH = 5;
+    static final boolean USE_ORDERING = true;
+    static final int DEFAULT_START_DEPTH = 6;
     static final int MAX_DEPTH=6;
 
     private int startDepth = DEFAULT_START_DEPTH;
@@ -240,17 +241,22 @@ public final class Move {
 
         float maxValue = alpha;
         String thisNotation="";
-        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoardState);
+        ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
+        if ( depth == startDepth && USE_ORDERING ){
+            //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+            sortList(moveList);
+            //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+        }
 
-        for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = minMove(depth-1, maxValue, beta, _board_);
+        for ( IBoardState board : moveList ){
+            float _value_ = minMove(depth-1, maxValue, beta, board);
             if ( _value_ > maxValue ){
                 maxValue = _value_;
-                thisNotation = _board_.getNextMovesNotation();
+                thisNotation = board.getNextMovesNotation();
                 if ( USE_ALPHABETA && maxValue >= beta )
                     break;
                 if ( depth == startDepth)
-                    bestMove = new IBoardState( _board_ );
+                    bestMove = new IBoardState( board );
             }
         }
         currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation);
@@ -264,21 +270,40 @@ public final class Move {
 
         float minValue = beta; //minValue
         String thisNotation="";
-        ArrayList<IBoardState> _moveList_ = allLegalMoves(currBoardState);
+        ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
+        if ( depth == startDepth && USE_ORDERING){
+            //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+            sortList(moveList);
+            //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+        }
 
-        for ( IBoardState _board_ : _moveList_ ){
-            float _value_ = maxMove(depth-1, alpha, minValue, _board_);
+        for ( IBoardState board : moveList ){
+            float _value_ = maxMove(depth-1, alpha, minValue, board);
             if ( _value_ < minValue ){
                 minValue = _value_;
-                thisNotation = _board_.getNextMovesNotation();
+                thisNotation = board.getNextMovesNotation();
                 if ( USE_ALPHABETA && minValue <= alpha )
                     break;
                 if ( depth == startDepth)
-                    bestMove = new IBoardState( _board_ );
+                    bestMove = new IBoardState( board );
             }
         }
         currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation);
         return minValue;
+    }
+
+    void sortList(ArrayList<IBoardState> list){
+        int indBestMove = -1;
+        for ( int i=0; i<list.size(); i++ ){
+            //System.out.println("sortList: |" + board.getNotation().replaceAll("^\\d+\\. ","") + "|   |" + ChessBoard.nextBestMove + "| " +
+            //        board.getNotation().replaceAll("^\\d+\\. ","").equals(ChessBoard.nextBestMove));
+            if ( list.get(i).getNotation().replaceAll("^\\d+\\. ","").equals(ChessBoard.nextBestMove)){
+                indBestMove = i;
+                break;
+            }
+        }
+        if ( list.size() < 2 || indBestMove<0 ) return;
+        Collections.swap(list, 0, indBestMove);
     }
 
     ArrayList<IBoardState> allLegalMoves(IBoardState iBoardState) {

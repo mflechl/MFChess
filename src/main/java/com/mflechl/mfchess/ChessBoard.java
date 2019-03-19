@@ -37,7 +37,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     static ArrayList<IBoardState> pastMoves = new ArrayList<>();
     static IBoardState currentBestMove;
 //    static IBoardState nextBestMove;
-    static String nextBestMove;
+    static String nextBestMove="";
 
     //    ReadOpenings readOpenings = new ReadOpenings();
     static List<String> openings;
@@ -310,7 +310,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
         System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() );
 //        System.out.println(iBoard);
-        nextBestMove = "NM "+boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")
+        nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")
                 .replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","").replaceAll(" .*","");
     }
 

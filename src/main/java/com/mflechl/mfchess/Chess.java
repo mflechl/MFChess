@@ -21,7 +21,7 @@ public class Chess extends JFrame  {
     //    public static final Color CANVAS_BACKGROUND = Color.CYAN;
     private static final Color CANVAS_BACKGROUND = Color.WHITE;
 
-    static final boolean COMPUTER_PLAY = false;
+    static final boolean COMPUTER_PLAY = true;
 
     private DrawCanvas canvas; // The custom drawing canvas (an inner class extends JPanel)
     private ChessBoard chessBoard;     // the 8x8 tiles
@@ -265,7 +265,7 @@ public class Chess extends JFrame  {
 
             if (ChessBoard.currentStaticState.mate) moveReturn = false;
             else if (ChessBoard.currentStaticState.remis) moveReturn = false;
-            else if (ChessBoard.currentStaticState.nMoves > 80) moveReturn = false;
+            else if (ChessBoard.currentStaticState.nMoves > 10) moveReturn = false;
         }
         ChessBoard.moveThread.move.stopBestMove = true;
 

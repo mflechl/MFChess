@@ -1,7 +1,5 @@
 package com.mflechl.mfchess;
 
-//import java.util.Random;
-
 public final class EvaluateBoard {
     EvaluateBoard() {
         //no instance
@@ -16,7 +14,7 @@ public final class EvaluateBoard {
 
     static final int[] indexToSign = {-1, +1};
 
-    //static Random random = new Random(131737); //for benchmark
+    //    static Random random = new Random(131737); //for benchmark
     //static Random random = new Random(); //for benchmark
 
     /*
