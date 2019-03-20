@@ -10,9 +10,11 @@ public final class Move {
     //static final boolean PICK_RANDOM = false;
 
     static final boolean USE_ALPHABETA = true;
+    static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
+    static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = true;
     static final int DEFAULT_START_DEPTH = 5;
-    static final int MAX_DEPTH=6;
+    static final int MAX_DEPTH=5;
 
     private int startDepth = DEFAULT_START_DEPTH;
 
@@ -221,17 +223,91 @@ public final class Move {
 
         bestMove = null;
         int eval;
-        if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(startDepth, -INF, +INF, iBoardState);
-        else eval = minMove(startDepth, -INF, +INF, iBoardState);
+
+        if (USE_NEGAMAX) eval = negaMax(iBoardState.state.turnOf, startDepth, -INF, +INF, iBoardState);
+        else if (USE_PVS) eval = pvs(iBoardState.state.turnOf, startDepth, -INF, +INF, iBoardState);
+        else if (USE_ALPHABETA) {
+            if (iBoardState.state.turnOf == ChessBoard.WHITE) eval = maxMove(startDepth, -INF, +INF, iBoardState);
+            else eval = minMove(startDepth, -INF, +INF, iBoardState);
+        }
 
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
         if ( bestMove == null ){
-            throw new NullPointerException("bestMove: No possible moves.");
+            throw new NullPointerException("bestMove: No possible moves. " + eval );
         } else{
             bestMove.setEval(eval);
             return bestMove;
         }
+    }
+
+    int pvs(int color, int depth, int alpha, int beta, IBoardState currBoardState){
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
+
+        if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state)*color;
+
+        int maxValue = alpha;
+        String thisNotation="";
+        boolean isFirstMove = true;
+        ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
+        if ( depth == startDepth && USE_ORDERING ){
+            //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+            sortList(moveList);
+            //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+        }
+
+        for ( IBoardState board : moveList ){
+            int value;
+            if ( isFirstMove ) value = -pvs(-color, depth-1, -beta, -maxValue, board);
+            else{
+                value = -pvs(-color, depth-1, -maxValue - 1, -maxValue, board);
+//                if ( maxValue < value && value < beta ) value = -pvs(-color, depth-1, -beta, -value, board);
+                if ( maxValue < value && value < beta ){
+                    value = -pvs(-color, depth-1, -beta, -maxValue, board);
+                    //board.setNextMoveNotation(board.getNextMovesNotation().replaceAll(" $",""));
+                }
+            }
+            isFirstMove = false;
+            if ( value > maxValue ){
+                maxValue = value;
+                thisNotation = board.getNextMovesNotation();
+                if ( USE_ALPHABETA && maxValue >= beta )
+                    break;
+                if ( depth == startDepth)
+                    bestMove = new IBoardState( board );
+            }
+        }
+        if ( !thisNotation.equals("") ) currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation );
+        return maxValue;
+    }
+
+    int negaMax(int color, int depth, int alpha, int beta, IBoardState currBoardState){
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
+
+        if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state)*color;
+
+        int maxValue = alpha;
+        String thisNotation="";
+        ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
+        if ( depth == startDepth && USE_ORDERING ){
+            //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+            sortList(moveList);
+            //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+        }
+
+        for ( IBoardState board : moveList ){
+            int value = -negaMax(-color, depth-1, -beta, -maxValue, board);
+            if ( value > maxValue ){
+                maxValue = value;
+                thisNotation = board.getNextMovesNotation();
+                if ( USE_ALPHABETA && maxValue >= beta )
+                    break;
+                if ( depth == startDepth)
+                    bestMove = new IBoardState( board );
+            }
+        }
+        currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation);
+        return maxValue;
     }
 
     int maxMove(int depth, int alpha, int beta, IBoardState currBoardState){

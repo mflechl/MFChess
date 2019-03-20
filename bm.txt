@@ -26,7 +26,7 @@
 
             //depth 6, 11 moves, no ordering: 711s
 1. Na3 a6 2. Rb1 a5 3. Ra1 e6 4. c3 a4 5. d4 .........
-            //depth 6, 11 moves,    ordering: 185s
+            //depth 6, 11 moves,    ordering: 185s; INTs: 179/178/183s
 1. Na3 a6 2. Rb1 b5 3. b4 d5 4. Rb3 d4 5. c4 bxc4 6. Nxc4
 
 

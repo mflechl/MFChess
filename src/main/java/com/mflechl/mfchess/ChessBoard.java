@@ -309,6 +309,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
 
         System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() );
+        System.out.println("sA2: " + boardState.getNextMovesNotation());
 //        System.out.println(iBoard);
         nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")
                 .replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","").replaceAll(" .*","");
@@ -331,7 +332,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         System.out.println("init: " + notation);
     }
 
-    static void setLabelLastandNextMove(int gotoState, float eval, String nextMoves) {
+    static void setLabelLastandNextMove(int gotoState, int eval, String nextMoves) {
         String text;
         if (gotoState < 0) text=getLastMoveString().replaceAll("<font color='red'>.*</font>", "");
         else if (gotoState == 0) text="";
@@ -341,14 +342,14 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         setLabelNextMoves(eval, nextMoves);
     }
 
-    static void setLabelNextMoves( float eval, String nextMoves ){
+    static void setLabelNextMoves( int eval, String nextMoves ){
         nextMoves = nextMoves.replaceAll("\\.\\.\\.\\s*","");
         if (!nextMoves.matches("^\\d+\\..*")) nextMoves = "... " + nextMoves;
         nextMoves=nextMoves.replaceFirst("(\\w+[#+\\s])","<font color='red'>$1</font>");
 
         nextMoves = "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + nextMoves;
-        if (eval<-1000) nextMoves="- "+nextMoves;
-        else nextMoves=eval+nextMoves;
+        if (eval<-10000) nextMoves="- "+nextMoves;
+        else nextMoves=eval/100.0 + nextMoves;
 
         nextMoves = "<html> " + nextMoves + "</html>";
 
