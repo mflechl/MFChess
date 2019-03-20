@@ -11,12 +11,12 @@ public final class Move {
 
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_ORDERING = true;
-    static final int DEFAULT_START_DEPTH = 6;
+    static final int DEFAULT_START_DEPTH = 5;
     static final int MAX_DEPTH=6;
 
     private int startDepth = DEFAULT_START_DEPTH;
 
-    private static final float INF = 100000;
+    private static final int INF = 1000000;
     static int nALMCalls = 0;
 
     //    public static SpecialMove sDummy = new SpecialMove();
@@ -220,7 +220,7 @@ public final class Move {
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
 
         bestMove = null;
-        float eval;
+        int eval;
         if (iBoardState.state.turnOf == ChessBoard.WHITE ) eval = maxMove(startDepth, -INF, +INF, iBoardState);
         else eval = minMove(startDepth, -INF, +INF, iBoardState);
 
@@ -234,12 +234,12 @@ public final class Move {
         }
     }
 
-    float maxMove(int depth, float alpha, float beta, IBoardState currBoardState){
+    int maxMove(int depth, int alpha, int beta, IBoardState currBoardState){
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
 
         if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state);
 
-        float maxValue = alpha;
+        int maxValue = alpha;
         String thisNotation="";
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING ){
@@ -249,9 +249,9 @@ public final class Move {
         }
 
         for ( IBoardState board : moveList ){
-            float _value_ = minMove(depth-1, maxValue, beta, board);
-            if ( _value_ > maxValue ){
-                maxValue = _value_;
+            int value = minMove(depth-1, maxValue, beta, board);
+            if ( value > maxValue ){
+                maxValue = value;
                 thisNotation = board.getNextMovesNotation();
                 if ( USE_ALPHABETA && maxValue >= beta )
                     break;
@@ -263,12 +263,12 @@ public final class Move {
         return maxValue;
     }
 
-    float minMove(int depth, float alpha, float beta, IBoardState currBoardState){
+    int minMove(int depth, int alpha, int beta, IBoardState currBoardState){
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return +9997;
 
         if ( depth==0 ) return EvaluateBoard.eval(currBoardState, currBoardState.state);
 
-        float minValue = beta; //minValue
+        int minValue = beta; //minValue
         String thisNotation="";
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING){
@@ -278,9 +278,9 @@ public final class Move {
         }
 
         for ( IBoardState board : moveList ){
-            float _value_ = maxMove(depth-1, alpha, minValue, board);
-            if ( _value_ < minValue ){
-                minValue = _value_;
+            int value = maxMove(depth-1, alpha, minValue, board);
+            if ( value < minValue ){
+                minValue = value;
                 thisNotation = board.getNextMovesNotation();
                 if ( USE_ALPHABETA && minValue <= alpha )
                     break;
@@ -344,7 +344,7 @@ public final class Move {
 
     ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, BState _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
         ArrayList<IBoardState> list = new ArrayList<>();
-        float eval = -1* -9998 * _state.turnOf;
+        int eval = -1* -99998 * _state.turnOf;
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
                 SpecialMove sMove = new SpecialMove();

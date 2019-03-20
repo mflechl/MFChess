@@ -19,10 +19,10 @@ public class IBoardState extends IBoard {
     }
 
     IBoardState(IBoard in, BState state, String notation, String nextMoveNotation) {
-        this(in, state, notation, nextMoveNotation, -99111);
+        this(in, state, notation, nextMoveNotation, -999111);
     }
 
-    IBoardState(IBoard in, BState state, String notation, String nextMoveNotation, float eval) {
+    IBoardState(IBoard in, BState state, String notation, String nextMoveNotation, int eval) {
         super(in);
         if (state == null) state=new BState();
         this.state = new BState(state); //makes a deep copy
@@ -34,13 +34,13 @@ public class IBoardState extends IBoard {
     BState state;
     String notation;
     String nextMoveNotation;
-    float eval;
+    int eval;
 
-    public float getEval() {
+    public int getEval() {
         return eval;
     }
 
-    public void setEval(float eval) {
+    public void setEval(int eval) {
         this.eval = eval;
     }
 

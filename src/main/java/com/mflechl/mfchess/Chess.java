@@ -265,7 +265,7 @@ public class Chess extends JFrame  {
 
             if (ChessBoard.currentStaticState.mate) moveReturn = false;
             else if (ChessBoard.currentStaticState.remis) moveReturn = false;
-            else if (ChessBoard.currentStaticState.nMoves > 10) moveReturn = false;
+            else if (ChessBoard.currentStaticState.nMoves > 40) moveReturn = false;
         }
         ChessBoard.moveThread.move.stopBestMove = true;
 
