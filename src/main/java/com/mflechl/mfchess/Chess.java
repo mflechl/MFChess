@@ -241,6 +241,11 @@ public class Chess extends JFrame  {
         setVisible(true); // show it
         requestFocus();   // set the focus to JFrame to receive KeyEvent
 
+        System.out.println("KNIGHT 1 0 = "+EvaluateBoard.PST[ChessBoard.KNIGHT-1][1][0] + " " + EvaluateBoard.PST[0][0].length + " " + EvaluateBoard.PST.length );
+        System.out.println("KING   6 7 = "+EvaluateBoard.PST[ChessBoard.KING-1][6][7]);
+
+        System.out.println("eval init = " + EvaluateBoard.eval(ChessBoard.iBoard,ChessBoard.currentStaticState) );
+
         if (!initialNotation.equals("")) {
             chessBoard.setStateFromNotation(initialNotation);
         }
@@ -265,7 +270,7 @@ public class Chess extends JFrame  {
 
             if (ChessBoard.currentStaticState.mate) moveReturn = false;
             else if (ChessBoard.currentStaticState.remis) moveReturn = false;
-            else if (ChessBoard.currentStaticState.nMoves > 40) moveReturn = false;
+            else if (ChessBoard.currentStaticState.nMoves > 80) moveReturn = false;
         }
         ChessBoard.moveThread.move.stopBestMove = true;
 

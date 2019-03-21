@@ -308,7 +308,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         if (boardState.state.nMoves > 0 && pastMoves.size() >= boardState.state.nMoves)
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
 
-        System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() );
+        System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() + "   EVAL curr = " + EvaluateBoard.eval(iBoard,currentStaticState) );
         System.out.println("sA2: " + boardState.getNextMovesNotation());
 //        System.out.println(iBoard);
         nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")

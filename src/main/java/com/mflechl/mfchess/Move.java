@@ -13,8 +13,8 @@ public final class Move {
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = true;
-    static final int DEFAULT_START_DEPTH = 5;
-    static final int MAX_DEPTH=5;
+    static final int DEFAULT_START_DEPTH = 4;
+    static final int MAX_DEPTH=4;
 
     private int startDepth = DEFAULT_START_DEPTH;
 
