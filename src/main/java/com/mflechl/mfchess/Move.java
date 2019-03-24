@@ -90,8 +90,24 @@ public final class Move {
         return (!isCheck);
     }
 
+    //this duplicates some code, but would otherwise need to get entire lists of moves => too slow
+    static boolean underAttack(int col, int line, int row){  //is square line/row under attack by player col
+        //knight
+        int fromLine, fromRow, toPiece;
+        for (int[] knightMove : knightMoves) {
+            fromLine = line + knightMove[0];
+            fromRow = row + knightMove[1];
+            if (fromLine >= 0 && fromLine <= 7 && fromRow >= 0 && fromRow <= 7) {
+                toPiece = ChessBoard.iBoard.setup[fromLine][fromRow];
+                if (toPiece * col <= 0) return false; //true;
+            }
+        }
+
+        return false;
+    }
+
     static ArrayList<Ply> listAllMovesSquare(int fromLine, int fromRow) {
-        ArrayList<Ply> plies = new ArrayList<>();
+        ArrayList<Ply> plies = new ArrayList<>(); //TODO: check if it is faster to allocate a size here
         int piece = ChessBoard.iBoard.setup[fromLine][fromRow];
         int col = Integer.signum(piece);
         piece = Math.abs(piece);
@@ -104,24 +120,24 @@ public final class Move {
             case ChessBoard.PAWN:
                 //move one square
                 if (ChessBoard.iBoard.setup[fromLine + col][fromRow] * col <= 0) {
-                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                 }
                 //move two squaes
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
                         (ChessBoard.iBoard.setup[fromLine + 2 * col][fromRow] * col <= 0)) {
                     if (ChessBoard.iBoard.setup[fromLine + col][fromRow] == 0) //no piece in between
-                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                 }
                 //eliminate or en-passant
                 for (int i = -1; i <= 1; i += 2) {
                     if (fromRow + i >= 0 && fromRow + i <= 7) {
                         toPiece = ChessBoard.iBoard.setup[fromLine + col][fromRow + i];
                         if (toPiece * col < 0) {
-                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                         } else if (ChessBoard.currentStaticState.enPassantPossible == fromRow + i) { //en passant?
                             if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
                                 //sMove.enPassant = true; //SETTING ENPASSANT
-                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                             }
                         }
                     }
@@ -135,7 +151,7 @@ public final class Move {
                     if (toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7) {
                         toPiece = ChessBoard.iBoard.setup[toLine][toRow];
                         if (toPiece * col <= 0)
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                     }
                 }
                 break;
@@ -150,7 +166,7 @@ public final class Move {
                             if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                             toPiece = ChessBoard.iBoard.setup[toLine][toRow];
                             if (toPiece * col > 0) break; //own piece, give up that direction
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                             if (toPiece * col != 0) break; //enemy piece, cannot go farther
                         }
                     }
@@ -158,7 +174,7 @@ public final class Move {
                 }
                 if (piece == ChessBoard.BISHOP) break; //continue with rook-moves if it is a queen!
 
-            case ChessBoard.ROOK:
+            case ChessBoard.ROOK: //TODO: update castling state
                 for (int[] rookMove : rookMoves) {
                     for (int d = 1; d <= 8; d++) {
                         toLine = fromLine + rookMove[0];
@@ -166,7 +182,7 @@ public final class Move {
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                         toPiece = ChessBoard.iBoard.setup[toLine][toRow];
                         if (toPiece * col > 0) break; //own piece, give up that direction
-                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
                         if (toPiece * col != 0) break; //enemy piece, cannot go farther
                     }
 
@@ -174,6 +190,7 @@ public final class Move {
                 break;
 
             case ChessBoard.KING:
+                int colIndex = (col + 1) / 2; //black=0, white=1
                 for (int il = -1; il <= 1; il++) {
                     for (int ir = -1; ir <= 1; ir++) {
                         if (il == 0 && ir == 0) continue; //no move
@@ -182,19 +199,32 @@ public final class Move {
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                         toPiece = ChessBoard.iBoard.setup[toLine][toRow];
                         if (toPiece * col > 0) continue; //own piece
-                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                        p.setCastlingColIndex(colIndex, false);
+
+                        plies.add(p);
                     }
                 }
-                //TODO: castling
                 if (ChessBoard.currentStaticState.check) break;
-                //if ( fromRow != 4 ) break;
-                //if ( col==ChessBoard.WHITE && fromLine != 1 ) break;
-                //if ( col==ChessBoard.BLACK && fromLine != 6 ) break;
-                if (ChessBoard.currentStaticState.castlingPossibleK[ChessBoard.WHITE]) {
-                    if (ChessBoard.iBoard.setup[1][5] == 0 && ChessBoard.iBoard.setup[1][6] == 0)
-                        plies.add(new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, new boolean[]{false, true}, new boolean[]{false, true}, col));
+
+                if (ChessBoard.currentStaticState.castlingPossibleK[colIndex]) {
+                    if (ChessBoard.iBoard.setup[colIndex*7][5] == 0 && ChessBoard.iBoard.setup[colIndex*7][6] == 0){
+                        if( !underAttack(-1*col, colIndex*7, 5) && !underAttack(-1*col, colIndex*7, 6)  ) {
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                            p.setCastlingColIndex(colIndex, false);
+                            plies.add(p);
+                        }
+                    }
                 }
-                int colIndex = (col + 1) / 2; //black=0, white=1
+                if (ChessBoard.currentStaticState.castlingPossibleQ[colIndex]) {
+                    if (ChessBoard.iBoard.setup[colIndex*7][1] == 0 && ChessBoard.iBoard.setup[colIndex*7][2] == 0 && ChessBoard.iBoard.setup[colIndex*7][3] == 0 ){
+                        if( !underAttack(-1*col, colIndex*7, 1) && !underAttack(-1*col, colIndex*7, 2) && !underAttack(-1*col, colIndex*7, 3)  ) {
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                            p.setCastlingColIndex(colIndex, false);
+                            plies.add(p);
+                        }
+                    }
+                }
 
                 break;
 
@@ -314,10 +344,6 @@ public final class Move {
                 }
             }
             if (lineKing > -1) break;
-        }
-
-        if (lineKing < 0) {
-            System.out.println("No king found:" + _iBoard);
         }
 
         //check opponent pieces: can eliminate king=is in check

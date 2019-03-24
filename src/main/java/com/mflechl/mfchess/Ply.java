@@ -5,14 +5,18 @@ public class Ply {
     public Ply() {
     }
 
+    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean castlingPossKW, boolean castlingPossQW, boolean castlingPossKB, boolean castlingPossQB, int moverColor) {
+        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{castlingPossKW, castlingPossKB}, new boolean[]{castlingPossQW, castlingPossQB},moverColor);
+    }
+
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] castlingPossK, boolean[] castlingPossQ, int moverColor) {
         this.fromLine = fromLine;
         this.fromRow = fromRow;
         this.toLine = toLine;
         this.toRow = toRow;
         this.toPiece = toPiece;
-        this.castlingPossK = castlingPossK;
-        this.castlingPossQ = castlingPossQ;
+        this.castlingPossK = new boolean[]{castlingPossK[0],castlingPossK[1]};
+        this.castlingPossQ = new boolean[]{castlingPossQ[0],castlingPossQ[1]};
         this.moverColor = moverColor;
         this.enPassant = enPassant;
     }
@@ -24,8 +28,8 @@ public class Ply {
         this.toRow = p.toRow;
         this.toPiece = p.toPiece;
         this.enPassant = p.enPassant;
-        this.castlingPossK = p.castlingPossK;
-        this.castlingPossQ = p.castlingPossQ;
+        this.castlingPossK = new boolean[]{p.castlingPossK[0],p.castlingPossK[1]};
+        this.castlingPossQ = new boolean[]{p.castlingPossQ[0],p.castlingPossQ[1]};
         this.moverColor = p.moverColor;
     }
 
@@ -93,6 +97,11 @@ public class Ply {
 
     public void setMoverColor(int moverColor) {
         this.moverColor = moverColor;
+    }
+
+    public void setCastlingColIndex(int colIndex, boolean castlingPossible){
+        castlingPossK[colIndex]=castlingPossible;
+        castlingPossQ[colIndex]=castlingPossible;
     }
 
 }
