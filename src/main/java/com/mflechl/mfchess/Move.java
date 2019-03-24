@@ -16,6 +16,9 @@ public final class Move {
     static final int DEFAULT_START_DEPTH = 4;
     static final int MAX_DEPTH=4;
 
+    static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
+    static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
+
     private int startDepth = DEFAULT_START_DEPTH;
 
     private static final int INF = 1000000;
@@ -37,7 +40,7 @@ public final class Move {
         return isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, ChessBoard.currentStaticState);
     }
 
-    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, BState _state) {
+    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, IState _state) {
         if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7)
             throw new ArrayIndexOutOfBoundsException("fromLine: " + fromLine + " fromRow: " + fromRow);
         if (toLine < 0 || toLine > 7 || toRow < 0 || toRow > 7)
@@ -87,8 +90,120 @@ public final class Move {
         return (!isCheck);
     }
 
+    static ArrayList<Ply> listAllMovesSquare(int fromLine, int fromRow) {
+        ArrayList<Ply> plies = new ArrayList<>();
+        int piece = ChessBoard.iBoard.setup[fromLine][fromRow];
+        int col = Integer.signum(piece);
+        piece = Math.abs(piece);
 
-    private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, BState _state) {
+        int toPiece;
+        int toLine, toRow;
+
+        switch (piece) {
+
+            case ChessBoard.PAWN:
+                //move one square
+                if (ChessBoard.iBoard.setup[fromLine + col][fromRow] * col <= 0) {
+                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                }
+                //move two squaes
+                if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
+                        (ChessBoard.iBoard.setup[fromLine + 2 * col][fromRow] * col <= 0)) {
+                    if (ChessBoard.iBoard.setup[fromLine + col][fromRow] == 0) //no piece in between
+                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                }
+                //eliminate or en-passant
+                for (int i = -1; i <= 1; i += 2) {
+                    if (fromRow + i >= 0 && fromRow + i <= 7) {
+                        toPiece = ChessBoard.iBoard.setup[fromLine + col][fromRow + i];
+                        if (toPiece * col < 0) {
+                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                        } else if (ChessBoard.currentStaticState.enPassantPossible == fromRow + i) { //en passant?
+                            if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
+                                //sMove.enPassant = true; //SETTING ENPASSANT
+                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                            }
+                        }
+                    }
+                }
+                break;
+
+            case ChessBoard.KNIGHT:
+                for (int[] knightMove : knightMoves) {
+                    toLine = fromLine + knightMove[0];
+                    toRow = fromRow + knightMove[1];
+                    if (toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7) {
+                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        if (toPiece * col <= 0)
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                    }
+                }
+                break;
+
+            case ChessBoard.BISHOP:
+            case ChessBoard.QUEEN:
+                for (int il = -1; il <= 1; il += 2) {
+                    for (int ir = -1; ir <= 1; ir += 2) {
+                        for (int d = 1; d <= 8; d++) {
+                            toLine = fromLine + d * il;
+                            toRow = fromRow + d * ir;
+                            if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
+                            toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                            if (toPiece * col > 0) break; //own piece, give up that direction
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                            if (toPiece * col != 0) break; //enemy piece, cannot go farther
+                        }
+                    }
+
+                }
+                if (piece == ChessBoard.BISHOP) break; //continue with rook-moves if it is a queen!
+
+            case ChessBoard.ROOK:
+                for (int[] rookMove : rookMoves) {
+                    for (int d = 1; d <= 8; d++) {
+                        toLine = fromLine + rookMove[0];
+                        toRow = fromRow + rookMove[1];
+                        if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
+                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        if (toPiece * col > 0) break; //own piece, give up that direction
+                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                        if (toPiece * col != 0) break; //enemy piece, cannot go farther
+                    }
+
+                }
+                break;
+
+            case ChessBoard.KING:
+                for (int il = -1; il <= 1; il++) {
+                    for (int ir = -1; ir <= 1; ir++) {
+                        if (il == 0 && ir == 0) continue; //no move
+                        toLine = fromLine + il;
+                        toRow = fromRow + ir;
+                        if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
+                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        if (toPiece * col > 0) continue; //own piece
+                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, new boolean[]{true, true}, new boolean[]{true, true}, col));
+                    }
+                }
+                //TODO: castling
+                if (ChessBoard.currentStaticState.check) break;
+                //if ( fromRow != 4 ) break;
+                //if ( col==ChessBoard.WHITE && fromLine != 1 ) break;
+                //if ( col==ChessBoard.BLACK && fromLine != 6 ) break;
+                if (ChessBoard.currentStaticState.castlingPossibleK[ChessBoard.WHITE]) {
+                    if (ChessBoard.iBoard.setup[1][5] == 0 && ChessBoard.iBoard.setup[1][6] == 0)
+                        plies.add(new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, new boolean[]{false, true}, new boolean[]{false, true}, col));
+                }
+                int colIndex = (col + 1) / 2; //black=0, white=1
+
+                break;
+
+        }
+
+        return plies;
+    }
+
+    private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, IState _state) {
         //System.out.println("legalMovePawn "+fromLine+" "+fromRow+" "+toLine+"-"+toRow+" state="+_state+" sMove="+sMove+"\n"+_iBoard);
         if (fromRow == toRow) {
             //normal move
@@ -133,7 +248,7 @@ public final class Move {
         return false;
     }
 
-    private static boolean legalMoveKing(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, BState _state) {
+    private static boolean legalMoveKing(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, IState _state) {
         //normal move
         if (Math.abs(fromRow - toRow) <= 1 && Math.abs(fromLine - toLine) <= 1) return true;
 
@@ -156,7 +271,7 @@ public final class Move {
         return emptyBetween(_iBoard, fromLine, fromRow, toLine, toRow, checkCheck, ChessBoard.currentStaticState);
     }
 
-    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck, BState _state) {
+    private static boolean emptyBetween(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, boolean checkCheck, IState _state) {
 
         if (toRow == fromRow) { //rook-type move
             int direction = Integer.signum(toLine - fromLine);  //+1 if toLine is larger, -1 if fromLine
@@ -401,7 +516,7 @@ public final class Move {
     }
 
 
-    Boolean noLegalMoves(IBoard iBoard, BState state) {
+    Boolean noLegalMoves(IBoard iBoard, IState state) {
 
         ArrayList<IBoardState> list = new ArrayList<>();
 
@@ -418,7 +533,7 @@ public final class Move {
         return true;
     }
 
-    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, BState _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
+    ArrayList<IBoardState> pieceLegalMove(IBoard _iBoard, int fromLine, int fromRow, IState _state, boolean stopAfterFirst, boolean updateNotation, boolean doEval) {
         ArrayList<IBoardState> list = new ArrayList<>();
         int eval = -1* -99998 * _state.turnOf;
         for (int toLine = 0; toLine < 8; toLine++) {
@@ -435,7 +550,7 @@ public final class Move {
                         return list;
                     }
 
-                    BState updatedState = new BState(_state);
+                    IState updatedState = new IState(_state);
                     updatedState.update(_iBoard.setup[fromLine][fromRow], fromLine, toLine, fromRow);
                     ChessBoard.updateCastlingState(updatedState, _iBoard.setup[fromLine][fromRow], fromLine, fromRow, toLine, toRow, sMove.castling);
                     updateCheckState(updatedState, hypo_iBoard);
@@ -465,7 +580,7 @@ public final class Move {
         return list;
     }
 
-    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, BState _state, boolean stopAfterFirst) {
+    static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, IState _state, boolean stopAfterFirst) {
         ArrayList<int[]> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
             for (int toRow = 0; toRow < 8; toRow++) {
@@ -480,7 +595,7 @@ public final class Move {
         return list;
     }
 
-    void updateCheckState(BState state, IBoard iBoard) {
+    void updateCheckState(IState state, IBoard iBoard) {
         state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?
         if (noLegalMoves(iBoard, state)) {
             if (state.check) state.mate = true;

@@ -27,13 +27,15 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     static Tile[][] tiles = new Tile[8][8];
     static MoveThread moveThread = new MoveThread();
 
+    static IBoard testBoard = new IBoard();
+
     static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
     static final String[] lpieces = {"", "K", "Q", "R", "B", "N", "P"};
     static final int WHITE = +1, BLACK = -1;
     static ImageIcon[] wpieces = new ImageIcon[7];
     static ImageIcon[] bpieces = new ImageIcon[7];
 
-    static BState currentStaticState = new BState();
+    static IState currentStaticState = new IState();
     static ArrayList<IBoardState> pastMoves = new ArrayList<>();
     static IBoardState currentBestMove;
 //    static IBoardState nextBestMove;
@@ -167,8 +169,16 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             aRow = _r;
             tileActive = true;
             ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
+
+            ArrayList<Ply> plies = Move.listAllMovesSquare(aLine, aRow);
+            for (Ply p : plies) {
+                tiles[p.getToLine()][p.getToRow()].setDestinationBorder();
+                System.out.println("XXXXX l= " + p.getToLine() + "  r= " + p.getToLine());
+            }
+
+
             for (int[] pos : list) {
-                tiles[pos[0]][pos[1]].setDestinationBorder();
+                //tiles[pos[0]][pos[1]].setDestinationBorder();
             }
         }
         //there is an setActiveBorder tile
@@ -192,7 +202,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
                 removeFutureMoves(currentStaticState);
 
-                BState updatedState = new BState(currentStaticState);
+                IState updatedState = new IState(currentStaticState);
                 updatedState.update(movingPiece, aLine, _l, aRow);
                 updateCastlingState(updatedState, movingPiece, aLine, aRow, _l, _r, sMove.castling);
                 Move move = new Move();
@@ -296,7 +306,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         setAllBordersInactive();
 
         iBoard = new IBoard(boardState);
-        currentStaticState = new BState(boardState.state);
+        currentStaticState = new IState(boardState.state);
 
         fillTilesFromBoard();
 //        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("(\\d+\\.)* \\w\\S","...");
@@ -315,7 +325,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 .replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","").replaceAll(" .*","");
     }
 
-    static void removeFutureMoves(BState state) {
+    static void removeFutureMoves(IState state) {
         if (pastMoves.size() != (state.nMoves + 1)) {     //have moved back in history and adding moves...
             pastMoves.subList(state.nMoves + 1, pastMoves.size()).clear();
             Notation.notationStrings.subList(state.nMoves + 1, Notation.notationStrings.size()).clear();
@@ -358,7 +368,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
 
     //if some castling options get eliminated, check and set it here
-    public static void updateCastlingState(BState _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
+    public static void updateCastlingState(IState _state, int piece, int fromLine, int fromRow, int toLine, int toRow, boolean castlingDone) {
         int colIndex = 0, colIndexOther = 1; //black/white
         if (piece > 0) {
             colIndex = 1;

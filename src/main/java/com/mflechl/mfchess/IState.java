@@ -1,10 +1,10 @@
 package com.mflechl.mfchess;
 
-class BState {
-    BState() {
+class IState {
+    IState() {
     }
 
-    public BState(BState st) {
+    public IState(IState st) {
         this.turnOf = st.turnOf;
         this.moveNumber = st.moveNumber;
         this.nMoves = st.nMoves; //number of completed moves so far, black and white

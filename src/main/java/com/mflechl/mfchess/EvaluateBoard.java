@@ -23,7 +23,7 @@ public final class EvaluateBoard {
     }
     */
 
-    static int eval(IBoard board, BState state) {
+    static int eval(IBoard board, IState state) {
         int val = 0;
 
         if (state.mate) return -99999 * state.turnOf; //no moves - check mate or remis!

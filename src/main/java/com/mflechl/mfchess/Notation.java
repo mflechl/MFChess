@@ -21,11 +21,11 @@ class Notation extends JLabel {
         notationStrings.add(""); //entry for currentStaticState of new board
     }
 
-    static String getMoveNotation(IBoard board, BState state, BState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
+    static String getMoveNotation(IBoard board, IState state, IState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
         return getMoveNotation(board, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
     }
 
-    static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, BState state, boolean mate, boolean remis) {
+    static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, IState state, boolean mate, boolean remis) {
         String lbl = "";
         int apiece = Math.abs(piece);
 
@@ -77,12 +77,12 @@ class Notation extends JLabel {
     }
 
     /*
-    void addMove(IBoard board, BState state, BState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
+    void addMove(IBoard board, IState state, IState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
         addMove(board, state.nMoves, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
     }
 
     //lines=normal notation minus 1; rows=a->1, b->2, ...; ep=en passant done
-    void addMove(IBoard board, int pos, int imove, boolean check, int fromLine, int fromRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, BState state, boolean mate, boolean remis) {
+    void addMove(IBoard board, int pos, int imove, boolean check, int fromLine, int fromRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, IState state, boolean mate, boolean remis) {
         String lbl = getMoveNotation(board, imove, check, fromLine, fromRow, toLine, toRow, piece, eliminatedPiece, enpassant, castling, state, mate, remis);
         if (pos >= 0) updateText(lbl, pos);
     }
@@ -119,7 +119,7 @@ class Notation extends JLabel {
 
     //check if the notation is ambiguous, i.e. if row and/or line need also be given
     //board is the board *before* the last move has happened
-    static String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, BState state) {
+    static String ambiguity(IBoard board, int piece, int fromLine, int fromRow, int toLine, int toRow, IState state) {
         String amb = "";
         int namb = 0;
         for (int iLine = 0; iLine < 8; iLine++) {
