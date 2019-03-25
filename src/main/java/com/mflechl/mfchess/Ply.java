@@ -42,6 +42,24 @@ public class Ply {
     int moverColor;           //b or w
 
     boolean enPassant = false;
+
+    /*public boolean getCastlingPossK(int colIndex) {
+        return castlingPossK[colIndex];
+    }*/
+
+    public void setCastlingPossK(int colIndex, boolean castlingPossK) {
+        this.castlingPossK[colIndex] = castlingPossK;
+    }
+
+    /*
+    public boolean getCastlingPossQ(int colIndex) {
+        return castlingPossQ[colIndex];
+    }*/
+
+    public void setCastlingPossQ(int colIndex, boolean castlingPossQ) {
+        this.castlingPossQ[colIndex] = castlingPossQ;
+    }
+
     boolean[] castlingPossK = {true, true};
     boolean[] castlingPossQ = {true, true};
     ;  //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
@@ -87,6 +105,7 @@ public class Ply {
         return toPiece;
     }
 
+    /*
     public void setToPiece(int toPiece) {
         this.toPiece = toPiece;
     }
@@ -98,10 +117,22 @@ public class Ply {
     public void setMoverColor(int moverColor) {
         this.moverColor = moverColor;
     }
+    */
 
     public void setCastlingColIndex(int colIndex, boolean castlingPossible){
         castlingPossK[colIndex]=castlingPossible;
         castlingPossQ[colIndex]=castlingPossible;
+    }
+
+    public String toString() {
+        return  " moverColor=" + moverColor +
+                " enPassant=" + enPassant +
+//                " check=" + check + " mate=" + mate + " remis=" + remis +
+                " castlingPossibleQ b/w=" + castlingPossQ[0] + "/" + castlingPossQ[1] +
+                " castlingPossibleK b/w=" + castlingPossK[0] + "/" + castlingPossK[1] +
+                " fromLine=" + fromLine + " fromRow=" + fromRow +
+                " toLine=" + toLine + " toRow=" + toRow +
+                " toPiece=" + toPiece;
     }
 
 }

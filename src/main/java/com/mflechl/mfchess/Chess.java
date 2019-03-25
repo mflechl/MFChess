@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.net.URL;
-import java.util.ArrayList;
 
 /**
  * MFChess: A ...
@@ -241,14 +240,6 @@ public class Chess extends JFrame  {
         pack();           // pack all the components in the JFrame - this triggers the drawing!
         setVisible(true); // show it
         requestFocus();   // set the focus to JFrame to receive KeyEvent
-
-        ArrayList<Ply> plies = Move.listAllMovesSquare(1, 4);
-        for (Ply p : plies) {
-            System.out.println("AAAAA " + p.getToLine());
-        }
-
-        System.out.println("KNIGHT 1 0 = "+EvaluateBoard.PST[ChessBoard.KNIGHT-1][1][0] + " " + EvaluateBoard.PST[0][0].length + " " + EvaluateBoard.PST.length );
-        System.out.println("KING   6 7 = "+EvaluateBoard.PST[ChessBoard.KING-1][6][7]);
 
         System.out.println("eval init = " + EvaluateBoard.eval(ChessBoard.iBoard,ChessBoard.currentStaticState) );
 

@@ -98,19 +98,20 @@ public final class Move {
             fromLine = line + knightMove[0];
             fromRow = row + knightMove[1];
             if (fromLine >= 0 && fromLine <= 7 && fromRow >= 0 && fromRow <= 7) {
-                toPiece = ChessBoard.iBoard.setup[fromLine][fromRow];
-                if (toPiece * col <= 0) return false; //true;
+                if ( ChessBoard.iBoard.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT ) return true;
             }
         }
 
         return false;
     }
 
-    static ArrayList<Ply> listAllMovesSquare(int fromLine, int fromRow) {
+    static ArrayList<Ply> listAllMovesSquare(final IBoard board, final IState state, int fromLine, int fromRow) {
         ArrayList<Ply> plies = new ArrayList<>(); //TODO: check if it is faster to allocate a size here
-        int piece = ChessBoard.iBoard.setup[fromLine][fromRow];
+        int piece = board.setup[fromLine][fromRow];
         int col = Integer.signum(piece);
+        int colIndex = (col == ChessBoard.WHITE) ? 1 : 0; //black=0, white=1
         piece = Math.abs(piece);
+        int kLine = (col == ChessBoard.WHITE) ? 0 : 7;
 
         int toPiece;
         int toLine, toRow;
@@ -119,25 +120,25 @@ public final class Move {
 
             case ChessBoard.PAWN:
                 //move one square
-                if (ChessBoard.iBoard.setup[fromLine + col][fromRow] * col <= 0) {
-                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                if (board.setup[fromLine + col][fromRow] * col <= 0) {
+                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                 }
                 //move two squaes
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
-                        (ChessBoard.iBoard.setup[fromLine + 2 * col][fromRow] * col <= 0)) {
-                    if (ChessBoard.iBoard.setup[fromLine + col][fromRow] == 0) //no piece in between
-                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                        (board.setup[fromLine + 2 * col][fromRow] * col <= 0)) {
+                    if (board.setup[fromLine + col][fromRow] == 0) //no piece in between
+                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                 }
                 //eliminate or en-passant
                 for (int i = -1; i <= 1; i += 2) {
                     if (fromRow + i >= 0 && fromRow + i <= 7) {
-                        toPiece = ChessBoard.iBoard.setup[fromLine + col][fromRow + i];
+                        toPiece = board.setup[fromLine + col][fromRow + i];
                         if (toPiece * col < 0) {
-                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
-                        } else if (ChessBoard.currentStaticState.enPassantPossible == fromRow + i) { //en passant?
+                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, state.castlingPossibleK, state.castlingPossibleQ, col));
+                        } else if (state.enPassantPossible == fromRow + i) { //en passant?
                             if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
                                 //sMove.enPassant = true; //SETTING ENPASSANT
-                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, state.castlingPossibleK, state.castlingPossibleQ, col));
                             }
                         }
                     }
@@ -149,9 +150,9 @@ public final class Move {
                     toLine = fromLine + knightMove[0];
                     toRow = fromRow + knightMove[1];
                     if (toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7) {
-                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        toPiece = board.setup[toLine][toRow];
                         if (toPiece * col <= 0)
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                     }
                 }
                 break;
@@ -164,9 +165,9 @@ public final class Move {
                             toLine = fromLine + d * il;
                             toRow = fromRow + d * ir;
                             if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
-                            toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                            toPiece = board.setup[toLine][toRow];
                             if (toPiece * col > 0) break; //own piece, give up that direction
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                             if (toPiece * col != 0) break; //enemy piece, cannot go farther
                         }
                     }
@@ -177,12 +178,12 @@ public final class Move {
             case ChessBoard.ROOK: //TODO: update castling state
                 for (int[] rookMove : rookMoves) {
                     for (int d = 1; d <= 8; d++) {
-                        toLine = fromLine + rookMove[0];
-                        toRow = fromRow + rookMove[1];
+                        toLine = fromLine + d*rookMove[0];
+                        toRow = fromRow + d*rookMove[1];
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
-                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) break; //own piece, give up that direction
-                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col));
+                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                         if (toPiece * col != 0) break; //enemy piece, cannot go farther
                     }
 
@@ -190,43 +191,56 @@ public final class Move {
                 break;
 
             case ChessBoard.KING:
-                int colIndex = (col + 1) / 2; //black=0, white=1
+//                int colIndex = (col + 1) / 2; //black=0, white=1
                 for (int il = -1; il <= 1; il++) {
                     for (int ir = -1; ir <= 1; ir++) {
                         if (il == 0 && ir == 0) continue; //no move
                         toLine = fromLine + il;
                         toRow = fromRow + ir;
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
-                        toPiece = ChessBoard.iBoard.setup[toLine][toRow];
+                        toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) continue; //own piece
-                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, state.castlingPossibleK, state.castlingPossibleQ, col);
                         p.setCastlingColIndex(colIndex, false);
 
                         plies.add(p);
                     }
                 }
-                if (ChessBoard.currentStaticState.check) break;
 
-                if (ChessBoard.currentStaticState.castlingPossibleK[colIndex]) {
-                    if (ChessBoard.iBoard.setup[colIndex*7][5] == 0 && ChessBoard.iBoard.setup[colIndex*7][6] == 0){
-                        if( !underAttack(-1*col, colIndex*7, 5) && !underAttack(-1*col, colIndex*7, 6)  ) {
-                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                //castling
+                if (state.check) break;
+
+                if (state.castlingPossibleK[colIndex]) {
+                    if (board.setup[kLine][5] == 0 && board.setup[kLine][6] == 0) {
+                        if (!underAttack(-1 * col, kLine, 5) && !underAttack(-1 * col, kLine, 6)) {
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col);
                             p.setCastlingColIndex(colIndex, false);
                             plies.add(p);
                         }
                     }
                 }
-                if (ChessBoard.currentStaticState.castlingPossibleQ[colIndex]) {
-                    if (ChessBoard.iBoard.setup[colIndex*7][1] == 0 && ChessBoard.iBoard.setup[colIndex*7][2] == 0 && ChessBoard.iBoard.setup[colIndex*7][3] == 0 ){
-                        if( !underAttack(-1*col, colIndex*7, 1) && !underAttack(-1*col, colIndex*7, 2) && !underAttack(-1*col, colIndex*7, 3)  ) {
-                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, ChessBoard.currentStaticState.castlingPossibleK, ChessBoard.currentStaticState.castlingPossibleQ, col);
+                if (state.castlingPossibleQ[colIndex]) {
+                    if (board.setup[kLine][1] == 0 && board.setup[kLine][2] == 0 && board.setup[kLine][3] == 0) {
+                        if (!underAttack(-1 * col, kLine, 1) && !underAttack(-1 * col, kLine, 2) && !underAttack(-1 * col, kLine, 3)) {
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col);
                             p.setCastlingColIndex(colIndex, false);
                             plies.add(p);
                         }
                     }
                 }
-
                 break;
+
+        }//end swith
+
+        for (Ply ply: plies){
+            //castling: rook eliminated
+            if ( ply.getToPiece() == ChessBoard.ROOK && ply.getToLine()==(7-kLine) ){  //"other" king line!
+                if ( ply.getToRow()==0 ) ply.setCastlingPossQ(1-colIndex, false);
+                if ( ply.getToRow()==7 ) ply.setCastlingPossK(1-colIndex, false);
+            }
+
+            //check
+            //if ( underAttack() )
 
         }
 

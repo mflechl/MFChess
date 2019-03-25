@@ -23,11 +23,8 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     private Color color2; // Color of square 2
 
     static IBoard iBoard = new IBoard(); //constructor sets up inital chess board state
-    //    static IBoard hypo_iBoard = new IBoard();
     static Tile[][] tiles = new Tile[8][8];
     static MoveThread moveThread = new MoveThread();
-
-    static IBoard testBoard = new IBoard();
 
     static final int KING = 1, QUEEN = 2, ROOK = 3, BISHOP = 4, KNIGHT = 5, PAWN = 6; //better than enum (to be reevaluated)
     static final String[] lpieces = {"", "K", "Q", "R", "B", "N", "P"};
@@ -170,10 +167,10 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             tileActive = true;
             ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
 
-            ArrayList<Ply> plies = Move.listAllMovesSquare(aLine, aRow);
+            ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow);
             for (Ply p : plies) {
                 tiles[p.getToLine()][p.getToRow()].setDestinationBorder();
-                System.out.println("XXXXX l= " + p.getToLine() + "  r= " + p.getToLine());
+                System.out.println("XXXXX ply " + p);
             }
 
 
