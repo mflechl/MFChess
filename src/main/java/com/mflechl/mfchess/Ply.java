@@ -39,6 +39,11 @@ public class Ply {
     int toRow;
 
     int toPiece;
+
+    public int getMoverColor() {
+        return moverColor;
+    }
+
     int moverColor;           //b or w
 
     boolean enPassant = false;

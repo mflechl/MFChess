@@ -2,6 +2,7 @@ package com.mflechl.mfchess;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 
 public final class Move {
     Move() {
@@ -91,14 +92,41 @@ public final class Move {
     }
 
     //this duplicates some code, but would otherwise need to get entire lists of moves => too slow
-    static boolean underAttack(int col, int line, int row){  //is square line/row under attack by player col
+    static boolean underAttack(IBoard board, int col, int line, int row){  //is square line/row under attack by player col
+
         //knight
         int fromLine, fromRow, toPiece;
+        for (int[] rookMove : rookMoves) {
+            for (int d = 1; d <= 8; d++) {
+                fromLine = line + d * rookMove[0];
+                fromRow = row + d * rookMove[1];
+                if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
+
+                int toPieceCol = board.setup[fromLine][fromRow] * col;
+                if ( toPieceCol == ChessBoard.ROOK || toPieceCol == ChessBoard.QUEEN ) return true;
+                else if ( toPieceCol != 0 ) break;
+
+            }
+        }
+        for (int il = -1; il <= 1; il += 2) {
+            for (int ir = -1; ir <= 1; ir += 2) {
+                for (int d = 1; d <= 8; d++) {
+                    fromLine = line + d * il;
+                    fromRow = row + d * ir;
+                    if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
+
+                    int toPieceCol = board.setup[fromLine][fromRow] * col;
+                    if ( toPieceCol == ChessBoard.BISHOP || toPieceCol == ChessBoard.QUEEN ) return true;
+                    else if ( toPieceCol != 0 ) break;
+
+                }
+            }
+        }
         for (int[] knightMove : knightMoves) {
             fromLine = line + knightMove[0];
             fromRow = row + knightMove[1];
             if (fromLine >= 0 && fromLine <= 7 && fromRow >= 0 && fromRow <= 7) {
-                if ( ChessBoard.iBoard.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT ) return true;
+                if ( board.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT ) return true;
             }
         }
 
@@ -212,7 +240,7 @@ public final class Move {
 
                 if (state.castlingPossibleK[colIndex]) {
                     if (board.setup[kLine][5] == 0 && board.setup[kLine][6] == 0) {
-                        if (!underAttack(-1 * col, kLine, 5) && !underAttack(-1 * col, kLine, 6)) {
+                        if (!underAttack( board,-1 * col, kLine, 5) && !underAttack( board,-1 * col, kLine, 6)) {
                             Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col);
                             p.setCastlingColIndex(colIndex, false);
                             plies.add(p);
@@ -221,7 +249,7 @@ public final class Move {
                 }
                 if (state.castlingPossibleQ[colIndex]) {
                     if (board.setup[kLine][1] == 0 && board.setup[kLine][2] == 0 && board.setup[kLine][3] == 0) {
-                        if (!underAttack(-1 * col, kLine, 1) && !underAttack(-1 * col, kLine, 2) && !underAttack(-1 * col, kLine, 3)) {
+                        if (!underAttack( board, -1 * col, kLine, 1) && !underAttack( board,-1 * col, kLine, 2) && !underAttack( board,-1 * col, kLine, 3)) {
                             Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col);
                             p.setCastlingColIndex(colIndex, false);
                             plies.add(p);
@@ -232,7 +260,25 @@ public final class Move {
 
         }//end swith
 
-        for (Ply ply: plies){
+        //find king
+        int lineKing = -1, rowKing = -1;
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
+                if (board.setup[il][ir] == col * ChessBoard.KING) {
+                    lineKing = il;
+                    rowKing = ir;
+                    break;
+                }
+            }
+            if (lineKing > -1) break;
+        }
+
+        //for (Ply ply: plies){
+        Iterator itr = plies.iterator();
+        Ply ply;
+        while (itr.hasNext())
+        {
+            ply=(Ply)itr.next();
             //castling: rook eliminated
             if ( ply.getToPiece() == ChessBoard.ROOK && ply.getToLine()==(7-kLine) ){  //"other" king line!
                 if ( ply.getToRow()==0 ) ply.setCastlingPossQ(1-colIndex, false);
@@ -240,11 +286,86 @@ public final class Move {
             }
 
             //check
-            //if ( underAttack() )
+            //apply ply to board
+            doPly( board, ply );
 
+            //check for check
+            if ( underAttack(board,-col,lineKing,rowKing) ) itr.remove();
+
+            //take back ply
+            undoPly( board, ply );
         }
 
         return plies;
+    }
+
+    private static void doPly( IBoard board, Ply ply ) {
+        //normal move
+        board.setup[ply.getToLine()][ply.getToRow()] = board.setup[ply.getFromLine()][ply.getFromRow()];
+        board.setup[ply.getFromLine()][ply.getFromRow()] = 0;
+
+        //castling
+        if ( board.setup[ply.getFromLine()][ply.getFromRow()] == ChessBoard.KING && Math.abs(ply.getFromRow()-ply.getToRow())>=2 ){
+            System.out.println("CASTLING");
+            int rookToRow = -1, rookFromRow = -1;
+            if (ply.getToRow() == 2) {
+                rookToRow = 3;
+                rookFromRow = 0;
+            }
+            if (ply.getToRow() == 6) {
+                rookToRow = 5;
+                rookFromRow = 7;
+            }
+            board.setup[ply.getToLine()][rookToRow]=board.setup[ply.getToLine()][rookFromRow];
+            board.setup[ply.getToLine()][rookFromRow]=0;
+        }
+
+        //en-passant
+        else if ( ply.enPassant ){
+            System.out.println("ENPASSANT");
+            board.setup[ply.getToLine()][ply.getToRow()-ply.getMoverColor()]=0;
+        }
+
+        //promotion
+        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && board.setup[ply.getFromLine()][ply.getFromRow()] == ChessBoard.PAWN) {
+            System.out.println("PROMOTION");
+            board.setup[ply.getToLine()][ply.getToRow()] = (byte) ( ChessBoard.QUEEN*ply.getMoverColor() );;
+        }
+    }
+
+    private static void undoPly( IBoard board, Ply ply ){
+        //normal move
+        board.setup[ply.getFromLine()][ply.getFromRow()] = board.setup[ply.getToLine()][ply.getToRow()];
+        board.setup[ply.getToLine()][ply.getToRow()] = (byte)ply.getToPiece();
+
+        //castling
+        if ( board.setup[ply.getToLine()][ply.getToRow()] == ChessBoard.KING && Math.abs(ply.getFromRow()-ply.getToRow())>=2 ){
+            System.out.println("uCASTLING");
+            int rookToRow = -1, rookFromRow = -1;
+            if (ply.getToRow() == 2) {
+                rookToRow = 3;
+                rookFromRow = 0;
+            }
+            if (ply.getToRow() == 6) {
+                rookToRow = 5;
+                rookFromRow = 7;
+            }
+            board.setup[ply.getToLine()][rookFromRow]=board.setup[ply.getToLine()][rookToRow];
+            board.setup[ply.getToLine()][rookToRow]=0;
+        }
+
+        //en-passant
+        else if ( ply.enPassant ){
+            System.out.println("uENPASSANT");
+            board.setup[ply.getToLine()][ply.getToRow()-ply.getMoverColor()]=(byte) (- ChessBoard.PAWN*ply.getMoverColor() );
+        }
+
+        //promotion
+        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && board.setup[ply.getToLine()][ply.getToRow()] == ChessBoard.PAWN) {
+            System.out.println("uPROMOTION");
+            board.setup[ply.getFromLine()][ply.getFromRow()] = (byte) ( ChessBoard.PAWN*ply.getMoverColor() );
+        }
+
     }
 
     private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, IState _state) {
