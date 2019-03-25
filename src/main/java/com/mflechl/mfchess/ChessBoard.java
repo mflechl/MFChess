@@ -165,7 +165,6 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             aLine = _l;
             aRow = _r;
             tileActive = true;
-            ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
 
             ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow);
             for (Ply p : plies) {
@@ -173,10 +172,10 @@ public class ChessBoard implements ActionListener, ThreadListener  {
                 System.out.println("XXXXX ply " + p);
             }
 
-
-            for (int[] pos : list) {
+            //ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
+            //for (int[] pos : list) {
                 //tiles[pos[0]][pos[1]].setDestinationBorder();
-            }
+            //}
         }
         //there is an setActiveBorder tile
         else if (tileActive) {
@@ -560,6 +559,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     //move thread done
     @Override
     public void onBestMoveAvailable(IBoardState chosenMove, boolean executeNow ) {
+        //System.out.println("BESTMOVE "+chosenMove);
         if ( chosenMove == null ) return;
         currentBestMove = new IBoardState(chosenMove);
         if (executeNow){

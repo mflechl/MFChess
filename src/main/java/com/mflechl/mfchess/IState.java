@@ -24,6 +24,16 @@ class IState {
         else enPassantPossible = -1;
     }
 
+    void undoUpdate(int fromLine, int toLine, int fromRow) {
+        turnOf *= -1;
+        if (turnOf == ChessBoard.BLACK) moveNumber--;
+        nMoves--;
+        //TODO: enPassant
+        //if (Math.abs(movingPiece) == ChessBoard.PAWN && Math.abs(fromLine - toLine) == 2) enPassantPossible = fromRow;
+        //else enPassantPossible = -1;
+    }
+
+
     public String toString() {
         return "turnOf=" + turnOf + " nMoves=" + nMoves + " moveNumber=" + moveNumber + " enPassantPossible=" + enPassantPossible +
                 " check=" + check + " mate=" + mate + " remis=" + remis +

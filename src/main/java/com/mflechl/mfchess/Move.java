@@ -10,12 +10,12 @@ public final class Move {
 
     //static final boolean PICK_RANDOM = false;
 
-    static final boolean USE_ALPHABETA = true;
+    static final boolean USE_ALPHABETA = false;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = true;
-    static final int DEFAULT_START_DEPTH = 4;
-    static final int MAX_DEPTH=4;
+    static final int DEFAULT_START_DEPTH = 3;
+    static final int MAX_DEPTH = 3;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -29,6 +29,9 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     private IBoardState bestMove;
+
+    private IBoard mBoard;
+    private IState mState;
 
     volatile boolean stopBestMove = false;
 
@@ -92,10 +95,12 @@ public final class Move {
     }
 
     //this duplicates some code, but would otherwise need to get entire lists of moves => too slow
-    static boolean underAttack(IBoard board, int col, int line, int row){  //is square line/row under attack by player col
+    static boolean underAttack(IBoard board, int col, int line, int row) {  //is square line/row under attack by player col
 
-        //knight
-        int fromLine, fromRow, toPiece;
+        //System.out.println("uA "+line+" "+row+" "+col+board);
+
+        //rook moves
+        int fromLine, fromRow;
         for (int[] rookMove : rookMoves) {
             for (int d = 1; d <= 8; d++) {
                 fromLine = line + d * rookMove[0];
@@ -103,11 +108,12 @@ public final class Move {
                 if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
 
                 int toPieceCol = board.setup[fromLine][fromRow] * col;
-                if ( toPieceCol == ChessBoard.ROOK || toPieceCol == ChessBoard.QUEEN ) return true;
-                else if ( toPieceCol != 0 ) break;
+                if (toPieceCol == ChessBoard.ROOK || toPieceCol == ChessBoard.QUEEN) return true;
+                else if (toPieceCol != 0) break;
 
             }
         }
+        //bishop moves
         for (int il = -1; il <= 1; il += 2) {
             for (int ir = -1; ir <= 1; ir += 2) {
                 for (int d = 1; d <= 8; d++) {
@@ -116,21 +122,37 @@ public final class Move {
                     if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
 
                     int toPieceCol = board.setup[fromLine][fromRow] * col;
-                    if ( toPieceCol == ChessBoard.BISHOP || toPieceCol == ChessBoard.QUEEN ) return true;
-                    else if ( toPieceCol != 0 ) break;
+                    if (toPieceCol == ChessBoard.BISHOP || toPieceCol == ChessBoard.QUEEN) return true;
+                    else if (toPieceCol != 0) break;
 
                 }
             }
         }
+        //knight moves
         for (int[] knightMove : knightMoves) {
             fromLine = line + knightMove[0];
             fromRow = row + knightMove[1];
             if (fromLine >= 0 && fromLine <= 7 && fromRow >= 0 && fromRow <= 7) {
-                if ( board.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT ) return true;
+                if (board.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT) return true;
             }
         }
 
         return false;
+    }
+
+    static ArrayList<Ply> listAllMoves(final IBoard board, final IState state) {
+        ArrayList<Ply> plies = new ArrayList<>();
+
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
+                if (board.setup[il][ir] * state.turnOf > 0) {
+                    plies.addAll(listAllMovesSquare(board, state, il, ir));
+                }
+            }
+        }
+
+        return plies;
+
     }
 
     static ArrayList<Ply> listAllMovesSquare(final IBoard board, final IState state, int fromLine, int fromRow) {
@@ -148,12 +170,12 @@ public final class Move {
 
             case ChessBoard.PAWN:
                 //move one square
-                if (board.setup[fromLine + col][fromRow] * col <= 0) {
+                if (board.setup[fromLine + col][fromRow] == 0) {
                     plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                 }
                 //move two squaes
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
-                        (board.setup[fromLine + 2 * col][fromRow] * col <= 0)) {
+                        (board.setup[fromLine + 2 * col][fromRow] == 0)) {
                     if (board.setup[fromLine + col][fromRow] == 0) //no piece in between
                         plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, state.castlingPossibleK, state.castlingPossibleQ, col));
                 }
@@ -260,19 +282,6 @@ public final class Move {
 
         }//end swith
 
-        //find king
-        int lineKing = -1, rowKing = -1;
-        for (int il = 0; il < 8; il++) {
-            for (int ir = 0; ir < 8; ir++) {
-                if (board.setup[il][ir] == col * ChessBoard.KING) {
-                    lineKing = il;
-                    rowKing = ir;
-                    break;
-                }
-            }
-            if (lineKing > -1) break;
-        }
-
         //for (Ply ply: plies){
         Iterator itr = plies.iterator();
         Ply ply;
@@ -287,19 +296,40 @@ public final class Move {
 
             //check
             //apply ply to board
-            doPly( board, ply );
+            doPly( board, state, ply );
+            int[] lrKing=findKing(board,col);
 
             //check for check
-            if ( underAttack(board,-col,lineKing,rowKing) ) itr.remove();
+            if ( underAttack(board,-col,lrKing[0],lrKing[1]) ) itr.remove();
 
             //take back ply
-            undoPly( board, ply );
+            undoPly( board, state, ply );
         }
 
         return plies;
     }
 
-    private static void doPly( IBoard board, Ply ply ) {
+    static int[] findKing(IBoard board, int col){
+
+        int[] lrKing={-1,-1};
+        for (int il = 0; il < 8; il++) {
+            for (int ir = 0; ir < 8; ir++) {
+                if (board.setup[il][ir] == col * ChessBoard.KING) {
+                    lrKing[0] = il;
+                    lrKing[1] = ir;
+                    return lrKing;
+                }
+            }
+        }
+
+        return lrKing;
+    }
+
+    private static void doPly( IBoard board, IState state, Ply ply ) {
+        //System.out.println("D ply= "+ply);
+
+        state.update(0,0,0, 0);
+
         //normal move
         board.setup[ply.getToLine()][ply.getToRow()] = board.setup[ply.getFromLine()][ply.getFromRow()];
         board.setup[ply.getFromLine()][ply.getFromRow()] = 0;
@@ -329,11 +359,15 @@ public final class Move {
         //promotion
         else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && board.setup[ply.getFromLine()][ply.getFromRow()] == ChessBoard.PAWN) {
             System.out.println("PROMOTION");
-            board.setup[ply.getToLine()][ply.getToRow()] = (byte) ( ChessBoard.QUEEN*ply.getMoverColor() );;
+            board.setup[ply.getToLine()][ply.getToRow()] = (byte) ( ChessBoard.QUEEN*ply.getMoverColor() );
         }
     }
 
-    private static void undoPly( IBoard board, Ply ply ){
+    private static void undoPly( IBoard board, IState state, Ply ply ){
+        //System.out.println("U ply= "+ply);
+
+        state.undoUpdate(0,0,0);
+
         //normal move
         board.setup[ply.getFromLine()][ply.getFromRow()] = board.setup[ply.getToLine()][ply.getToRow()];
         board.setup[ply.getToLine()][ply.getToRow()] = (byte)ply.getToPiece();
@@ -500,6 +534,30 @@ public final class Move {
         bestMove = null;
         int eval;
 
+        mBoard = new IBoard(iBoardState);
+        mState = new IState(iBoardState.state);
+
+        eval = pvs2(iBoardState.state.turnOf, startDepth, -INF, +INF);
+
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
+
+        if ( bestMove == null ){
+            throw new NullPointerException("bestMove: No possible moves. " + eval );
+        } else{
+            bestMove.setEval(eval);
+            System.out.println("BEST MOVE eval="+eval+bestMove);
+            return bestMove;
+        }
+    }
+
+
+    IBoardState bestMove2(IBoardState iBoardState) {
+
+        System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
+
+        bestMove = null;
+        int eval;
+
         if (USE_NEGAMAX) eval = negaMax(iBoardState.state.turnOf, startDepth, -INF, +INF, iBoardState);
         else if (USE_PVS) eval = pvs(iBoardState.state.turnOf, startDepth, -INF, +INF, iBoardState);
         else if (USE_ALPHABETA) {
@@ -515,6 +573,58 @@ public final class Move {
             bestMove.setEval(eval);
             return bestMove;
         }
+    }
+
+    int pvs2(int color, int depth, int alpha, int beta){
+        if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
+
+        if ( depth==0 ) return EvaluateBoard.eval(mBoard, mState)*color;
+
+        int maxValue = alpha;
+        String thisNotation="";
+        boolean isFirstMove = true;
+        //ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
+        ArrayList<Ply> moveList = listAllMoves(mBoard, mState);
+        if ( depth == startDepth && USE_ORDERING ){
+            //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+            //TsortList(moveList); //TODO
+            //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
+        }
+
+//        for ( IBoardState board : moveList ){
+        for ( Ply ply : moveList ){
+            int value;
+            doPly(mBoard, mState, ply);
+            System.out.println("D  d="+depth+" "+mBoard);
+            if ( isFirstMove ) value = -pvs2(-color, depth-1, -beta, -maxValue);
+            else{
+                value = -pvs2(-color, depth-1, -maxValue - 1, -maxValue);
+//                if ( maxValue < value && value < beta ) value = -pvs(-color, depth-1, -beta, -value, board);
+                if ( maxValue < value && value < beta ){
+                    value = -pvs2(-color, depth-1, -beta, -maxValue);
+                    //board.setNextMoveNotation(board.getNextMovesNotation().replaceAll(" $",""));
+                }
+            }
+            //undoPly(mBoard, mState, ply);
+            isFirstMove = false;
+            if ( value > maxValue ){
+                maxValue = value;
+                //thisNotation = ""; //TODO board.getNextMovesNotation();
+                if ( USE_ALPHABETA && maxValue >= beta ) {
+                    undoPly(mBoard, mState, ply);
+                    System.out.println("U d="+depth+" "+mBoard);
+                    break;
+                }
+                if ( depth == startDepth)
+                    bestMove = new IBoardState( mBoard, mState );
+            }
+            undoPly(mBoard, mState, ply);
+            System.out.println("U d="+depth+" "+mBoard);
+
+
+        }
+        //if ( !thisNotation.equals("") ) currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation );
+        return maxValue;
     }
 
     int pvs(int color, int depth, int alpha, int beta, IBoardState currBoardState){
