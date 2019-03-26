@@ -9,6 +9,10 @@ public class Ply {
         this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{castlingPossKW, castlingPossKB}, new boolean[]{castlingPossQW, castlingPossQB},moverColor);
     }
 
+    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, int moverColor) {
+        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{false, false}, new boolean[]{false, false},moverColor);
+    }
+
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] toggleCastlingPossK, boolean[] toggleCastlingPossQ, int moverColor) {
         this.fromLine = fromLine;
         this.fromRow = fromRow;
