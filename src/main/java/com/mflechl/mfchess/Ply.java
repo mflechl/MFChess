@@ -9,14 +9,14 @@ public class Ply {
         this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{castlingPossKW, castlingPossKB}, new boolean[]{castlingPossQW, castlingPossQB},moverColor);
     }
 
-    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] castlingPossK, boolean[] castlingPossQ, int moverColor) {
+    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] toggleCastlingPossK, boolean[] toggleCastlingPossQ, int moverColor) {
         this.fromLine = fromLine;
         this.fromRow = fromRow;
         this.toLine = toLine;
         this.toRow = toRow;
         this.toPiece = toPiece;
-        this.castlingPossK = new boolean[]{castlingPossK[0],castlingPossK[1]};
-        this.castlingPossQ = new boolean[]{castlingPossQ[0],castlingPossQ[1]};
+        this.toggleCastlingPossK = new boolean[]{toggleCastlingPossK[0], toggleCastlingPossK[1]};
+        this.toggleCastlingPossQ = new boolean[]{toggleCastlingPossQ[0], toggleCastlingPossQ[1]};
         this.moverColor = moverColor;
         this.enPassant = enPassant;
     }
@@ -28,8 +28,8 @@ public class Ply {
         this.toRow = p.toRow;
         this.toPiece = p.toPiece;
         this.enPassant = p.enPassant;
-        this.castlingPossK = new boolean[]{p.castlingPossK[0],p.castlingPossK[1]};
-        this.castlingPossQ = new boolean[]{p.castlingPossQ[0],p.castlingPossQ[1]};
+        this.toggleCastlingPossK = new boolean[]{p.toggleCastlingPossK[0],p.toggleCastlingPossK[1]};
+        this.toggleCastlingPossQ = new boolean[]{p.toggleCastlingPossQ[0],p.toggleCastlingPossQ[1]};
         this.moverColor = p.moverColor;
     }
 
@@ -39,35 +39,30 @@ public class Ply {
     int toRow;
 
     int toPiece;
+    int moverColor;           //b or w
+
+    boolean enPassant = false;
+
+    boolean[] toggleCastlingPossK = {false, false};
+    boolean[] toggleCastlingPossQ = {false, false}; //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
+
 
     public int getMoverColor() {
         return moverColor;
     }
 
-    int moverColor;           //b or w
-
-    boolean enPassant = false;
-
-    /*public boolean getCastlingPossK(int colIndex) {
-        return castlingPossK[colIndex];
-    }*/
-
-    public void setCastlingPossK(int colIndex, boolean castlingPossK) {
-        this.castlingPossK[colIndex] = castlingPossK;
+    public void toggleCastlingPossK(int colIndex) {
+        this.toggleCastlingPossK[colIndex] = true;
     }
-
-    /*
-    public boolean getCastlingPossQ(int colIndex) {
-        return castlingPossQ[colIndex];
-    }*/
-
-    public void setCastlingPossQ(int colIndex, boolean castlingPossQ) {
-        this.castlingPossQ[colIndex] = castlingPossQ;
+    public void toggleCastlingPossQ(int colIndex) {
+        this.toggleCastlingPossQ[colIndex] = true;
     }
-
-    boolean[] castlingPossK = {true, true};
-    boolean[] castlingPossQ = {true, true};
-    ;  //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
+    public boolean getToggleCastlingPossK(int colIndex) {
+        return this.toggleCastlingPossK[colIndex];
+    }
+    public boolean getToggleCastlingPossQ(int colIndex) {
+        return this.toggleCastlingPossQ[colIndex];
+    }
 
     public int getFromLine() {
         return fromLine;
@@ -124,17 +119,12 @@ public class Ply {
     }
     */
 
-    public void setCastlingColIndex(int colIndex, boolean castlingPossible){
-        castlingPossK[colIndex]=castlingPossible;
-        castlingPossQ[colIndex]=castlingPossible;
-    }
-
     public String toString() {
         return  " moverColor=" + moverColor +
                 " enPassant=" + enPassant +
 //                " check=" + check + " mate=" + mate + " remis=" + remis +
-                " castlingPossibleQ b/w=" + castlingPossQ[0] + "/" + castlingPossQ[1] +
-                " castlingPossibleK b/w=" + castlingPossK[0] + "/" + castlingPossK[1] +
+                " toggleCastlingPossibleQ b/w=" + toggleCastlingPossQ[0] + "/" + toggleCastlingPossQ[1] +
+                " toggleCastlingPossibleK b/w=" + toggleCastlingPossK[0] + "/" + toggleCastlingPossK[1] +
                 " fromLine=" + fromLine + " fromRow=" + fromRow +
                 " toLine=" + toLine + " toRow=" + toRow +
                 " toPiece=" + toPiece;

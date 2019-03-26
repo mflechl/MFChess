@@ -316,6 +316,8 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
         System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() + "   EVAL curr = " + EvaluateBoard.eval(iBoard,currentStaticState) );
         System.out.println("sA2: " + boardState.getNextMovesNotation());
+        //System.out.println("sA2: " + boardState.getNotation());
+
 //        System.out.println(iBoard);
         nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")
                 .replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","").replaceAll(" .*","");
