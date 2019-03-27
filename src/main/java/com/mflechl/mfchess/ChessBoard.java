@@ -242,7 +242,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         //if ( checkAlive && moveThread.isAlive() ) return; //do nothing if already running
         int currentDepth = newDepth;
         if (currentDepth<0) currentDepth=moveThread.getDepth();
-        if (currentDepth<2) return;
+        if (currentDepth<1) return;
 
         moveThread = new MoveThread( new IBoardState(iBoard, currentStaticState), executeNow );
 //        moveThread.executeNow = executeNow;

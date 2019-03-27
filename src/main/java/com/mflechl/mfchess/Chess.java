@@ -276,6 +276,8 @@ public class Chess extends JFrame  {
 
         System.out.println("VVV "+ChessBoard.moveThread.getState());
 
+        System.out.println(ChessBoard.iBoard);
+
         long finishTime = System.currentTimeMillis();
         System.out.println("The game took: " + (finishTime - startTime) + " ms   nALMCalls =" + Move.nALMCalls + "  number of moves = " + ChessBoard.currentStaticState.nMoves);
 

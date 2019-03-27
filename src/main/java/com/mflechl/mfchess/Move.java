@@ -13,9 +13,9 @@ public final class Move {
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
-    static final boolean USE_ORDERING = true;
-    static final int DEFAULT_START_DEPTH = 4;
-    static final int MAX_DEPTH = 4;
+    static final boolean USE_ORDERING = false; //DEFAULT: true!
+    static final int DEFAULT_START_DEPTH = 1;
+    static final int MAX_DEPTH = 1;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -42,56 +42,6 @@ public final class Move {
     //move from fromLine, fromRow to toLine,toRow legal?
     static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow) {
         return isLegal(_iBoard, sMove, fromLine, fromRow, toLine, toRow, ChessBoard.currentStaticState);
-    }
-
-    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, IState _state) {
-        if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7)
-            throw new ArrayIndexOutOfBoundsException("fromLine: " + fromLine + " fromRow: " + fromRow);
-        if (toLine < 0 || toLine > 7 || toRow < 0 || toRow > 7)
-            throw new ArrayIndexOutOfBoundsException("toLine: " + toLine + " toRow: " + toRow);
-
-        int col = Integer.signum(_iBoard.setup[fromLine][fromRow]);
-        if (col == Integer.signum(_iBoard.setup[toLine][toRow]))
-            return false; //occupied by own piece, including same tile
-
-        //check if move per se is fine (way to move for a given piece, no obstacles in between)
-        boolean isLegal = false;
-
-        switch (Math.abs(_iBoard.setup[fromLine][fromRow])) {
-            case ChessBoard.PAWN:
-                isLegal = legalMovePawn(_iBoard, fromLine, fromRow, toLine, toRow, col, sMove, _state);
-                break;
-            case ChessBoard.ROOK:
-                isLegal = legalMoveRook(_iBoard, fromLine, fromRow, toLine, toRow);
-                break;
-            case ChessBoard.KNIGHT:
-                isLegal = legalMoveKnight(fromLine, fromRow, toLine, toRow);
-                break;
-            case ChessBoard.BISHOP:
-                isLegal = legalMoveBishop(_iBoard, fromLine, fromRow, toLine, toRow);
-                break;
-            case ChessBoard.QUEEN:
-                isLegal = legalMoveRook(_iBoard, fromLine, fromRow, toLine, toRow)
-                        || legalMoveBishop(_iBoard, fromLine, fromRow, toLine, toRow);
-                break;
-            case ChessBoard.KING:
-                isLegal = legalMoveKing(_iBoard, fromLine, fromRow, toLine, toRow, col, sMove, _state);
-                break;
-        }
-
-        if (!isLegal) return false;
-
-        //check if move does not result in check
-        if (Math.abs(_iBoard.setup[toLine][toRow]) == ChessBoard.KING)
-            return true; //if it is a test for check, do not need this!
-
-        //make move on hypothetical tiles and test if this would mean "check"
-        IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
-        ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
-        //System.out.println("isLegal:\n" + hypo_iBoard);
-        boolean isCheck = isChecked(hypo_iBoard, col);
-
-        return (!isCheck);
     }
 
     //this duplicates some code, but would otherwise need to get entire lists of moves => too slow
@@ -140,6 +90,21 @@ public final class Move {
         return false;
     }
 
+    static ArrayList<Ply> orderList(ArrayList<Ply> plies) {
+        ArrayList<Ply> orderedPlies = new ArrayList<>();
+        for (Ply  ply: plies){
+            int i=0;
+            for( Ply oPly: orderedPlies){
+                if ( ply.getToLine()<oPly.getToLine() ) break;
+                if ( ply.getToLine()==oPly.getToLine() && ply.getToRow()<oPly.getToRow() ) break;
+                i++;
+            }
+            orderedPlies.add(i,ply);
+        }
+
+        return orderedPlies;
+    }
+
     static ArrayList<Ply> listAllMoves(final IBoard board, final IState state) {
         nALMCalls++; //TEST
 
@@ -148,10 +113,14 @@ public final class Move {
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (board.setup[il][ir] * state.turnOf > 0) {
-                    plies.addAll(listAllMovesSquare(board, state, il, ir));
+                    //plies.addAll(listAllMovesSquare(board, state, il, ir));
+                    plies.addAll( orderList( listAllMovesSquare(board, state, il, ir) ) );
                 }
             }
         }
+
+        //System.out.println("  Ply");
+        //for (Ply ply: plies) System.out.println(ply);
 
         return plies;
 
@@ -173,7 +142,7 @@ public final class Move {
             case ChessBoard.PAWN:
                 //move one square
                 if (board.setup[fromLine + col][fromRow] == 0) {
-                    Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col);
+                    Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col, state.enPassantPossible);
                     if (ply.getToLine() == 7 * colIndex) ply.togglePromotion();
                     plies.add(ply);
                 }
@@ -181,18 +150,17 @@ public final class Move {
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
                         (board.setup[fromLine + 2 * col][fromRow] == 0)) {
                     if (board.setup[fromLine + col][fromRow] == 0) //no piece in between
-                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, col));
+                        plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, col, state.enPassantPossible));
                 }
                 //eliminate or en-passant
                 for (int i = -1; i <= 1; i += 2) {
                     if (fromRow + i >= 0 && fromRow + i <= 7) {
                         toPiece = board.setup[fromLine + col][fromRow + i];
                         if (toPiece * col < 0) {
-                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, col));
+                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, col, state.enPassantPossible));
                         } else if (state.enPassantPossible == fromRow + i) { //en passant?
                             if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
-                                //sMove.enPassant = true; //SETTING ENPASSANT
-                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, col));
+                                plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, true, col, state.enPassantPossible));
                             }
                         }
                     }
@@ -206,7 +174,7 @@ public final class Move {
                     if (toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7) {
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col <= 0) {
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
                             //System.out.println("XXXXX " + plies.get(plies.size() - 1).getToggleCastlingPossK(0));
                         }
                     }
@@ -223,7 +191,7 @@ public final class Move {
                             if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                             toPiece = board.setup[toLine][toRow];
                             if (toPiece * col > 0) break; //own piece, give up that direction
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col));
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
                             if (toPiece * col != 0) break; //enemy piece, cannot go farther
                         }
                     }
@@ -239,7 +207,7 @@ public final class Move {
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) break; //own piece, give up that direction
-                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col));
+                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
                         if (toPiece * col != 0) break; //enemy piece, cannot go farther
                     }
 
@@ -255,7 +223,7 @@ public final class Move {
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) continue; //own piece
-                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col);
+                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible);
                         if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
                         if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
                         plies.add(p);
@@ -268,7 +236,7 @@ public final class Move {
                 if (state.castlingPossibleK[colIndex]) {
                     if (board.setup[kLine][5] == 0 && board.setup[kLine][6] == 0) {
                         if (!underAttack( board,-col, kLine, 5) && !underAttack( board,-col, kLine, 6)) {
-                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, col);
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow + 2, 0, false, col, state.enPassantPossible);
                             if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
                             if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
                             plies.add(p);
@@ -278,7 +246,7 @@ public final class Move {
                 if (state.castlingPossibleQ[colIndex]) {
                     if (board.setup[kLine][1] == 0 && board.setup[kLine][2] == 0 && board.setup[kLine][3] == 0) {
                         if (!underAttack( board, -col, kLine, 1) && !underAttack( board,-col, kLine, 2) && !underAttack( board,-col, kLine, 3)) {
-                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, col);
+                            Ply p = new Ply(fromLine, fromRow, fromLine, fromRow - 2, 0, false, col, state.enPassantPossible);
                             if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
                             if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
                             plies.add(p);
@@ -337,7 +305,7 @@ public final class Move {
         //System.out.println("D ply= "+ply);
 
         byte movingPiece = board.setup[ply.getFromLine()][ply.getFromRow()];
-        state.update(0,0,0, 0);
+        state.update(movingPiece,ply.getFromLine(), ply.getToLine(), ply.getFromRow());
         if ( ply.toggleCastlingPossK[0] ) state.castlingPossibleK[0]=!state.castlingPossibleK[0];
         if ( ply.toggleCastlingPossK[1] ) state.castlingPossibleK[1]=!state.castlingPossibleK[1];
         if ( ply.toggleCastlingPossQ[0] ) state.castlingPossibleQ[0]=!state.castlingPossibleQ[0];
@@ -367,8 +335,8 @@ public final class Move {
 
         //en-passant
         else if ( ply.enPassant ){
-            System.out.println("ENPASSANT");
-            board.setup[ply.getToLine()][ply.getToRow()-ply.getMoverColor()]=0;
+            //System.out.println("ENPASSANT "+ply);
+            board.setup[ply.getToLine()-ply.getMoverColor()][ply.getToRow()]=0;
         }
 
         //promotion
@@ -383,7 +351,7 @@ public final class Move {
         //System.out.println("U ply= "+ply);
 
         byte movingPiece = board.setup[ply.getToLine()][ply.getToRow()];
-        state.undoUpdate(0,0,0);
+        state.undoUpdate( ply.getPrevEnpassantPossible() );
         if ( ply.toggleCastlingPossK[0] ) state.castlingPossibleK[0]=!state.castlingPossibleK[0];
         if ( ply.toggleCastlingPossK[1] ) state.castlingPossibleK[1]=!state.castlingPossibleK[1];
         if ( ply.toggleCastlingPossQ[0] ) state.castlingPossibleQ[0]=!state.castlingPossibleQ[0];
@@ -410,8 +378,8 @@ public final class Move {
 
         //en-passant
         else if ( ply.enPassant ){
-            System.out.println("uENPASSANT");
-            board.setup[ply.getToLine()][ply.getToRow()-ply.getMoverColor()]=(byte) (- ChessBoard.PAWN*ply.getMoverColor() );
+            //System.out.println("uENPASSANT");
+            board.setup[ply.getToLine()-ply.getMoverColor()][ply.getToRow()]=(byte) (- ChessBoard.PAWN*ply.getMoverColor() );
         }
 
         //promotion
@@ -420,6 +388,56 @@ public final class Move {
             board.setup[ply.getFromLine()][ply.getFromRow()] = (byte) ( ChessBoard.PAWN*ply.getMoverColor() );
         }
 
+    }
+
+    static boolean isLegal(IBoard _iBoard, SpecialMove sMove, int fromLine, int fromRow, int toLine, int toRow, IState _state) {
+        if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7)
+            throw new ArrayIndexOutOfBoundsException("fromLine: " + fromLine + " fromRow: " + fromRow);
+        if (toLine < 0 || toLine > 7 || toRow < 0 || toRow > 7)
+            throw new ArrayIndexOutOfBoundsException("toLine: " + toLine + " toRow: " + toRow);
+
+        int col = Integer.signum(_iBoard.setup[fromLine][fromRow]);
+        if (col == Integer.signum(_iBoard.setup[toLine][toRow]))
+            return false; //occupied by own piece, including same tile
+
+        //check if move per se is fine (way to move for a given piece, no obstacles in between)
+        boolean isLegal = false;
+
+        switch (Math.abs(_iBoard.setup[fromLine][fromRow])) {
+            case ChessBoard.PAWN:
+                isLegal = legalMovePawn(_iBoard, fromLine, fromRow, toLine, toRow, col, sMove, _state);
+                break;
+            case ChessBoard.ROOK:
+                isLegal = legalMoveRook(_iBoard, fromLine, fromRow, toLine, toRow);
+                break;
+            case ChessBoard.KNIGHT:
+                isLegal = legalMoveKnight(fromLine, fromRow, toLine, toRow);
+                break;
+            case ChessBoard.BISHOP:
+                isLegal = legalMoveBishop(_iBoard, fromLine, fromRow, toLine, toRow);
+                break;
+            case ChessBoard.QUEEN:
+                isLegal = legalMoveRook(_iBoard, fromLine, fromRow, toLine, toRow)
+                        || legalMoveBishop(_iBoard, fromLine, fromRow, toLine, toRow);
+                break;
+            case ChessBoard.KING:
+                isLegal = legalMoveKing(_iBoard, fromLine, fromRow, toLine, toRow, col, sMove, _state);
+                break;
+        }
+
+        if (!isLegal) return false;
+
+        //check if move does not result in check
+        if (Math.abs(_iBoard.setup[toLine][toRow]) == ChessBoard.KING)
+            return true; //if it is a test for check, do not need this!
+
+        //make move on hypothetical tiles and test if this would mean "check"
+        IBoard hypo_iBoard = new IBoard(_iBoard); //deep copy
+        ChessBoard.processMove(hypo_iBoard, fromLine, fromRow, toLine, toRow, _iBoard.setup[fromLine][fromRow], true, sMove);
+        //System.out.println("isLegal:\n" + hypo_iBoard);
+        boolean isCheck = isChecked(hypo_iBoard, col);
+
+        return (!isCheck);
     }
 
     private static boolean legalMovePawn(IBoard _iBoard, int fromLine, int fromRow, int toLine, int toRow, int col, SpecialMove sMove, IState _state) {
@@ -547,7 +565,7 @@ public final class Move {
         return false;
     }
 
-    IBoardState bestMove(IBoardState iBoardState) {
+    IBoardState bestMove2(IBoardState iBoardState) {
 
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
 
@@ -565,7 +583,7 @@ public final class Move {
         if ( bestMove == null ){
             throw new NullPointerException("bestMove: No possible moves. " + eval );
         } else{
-            bestMove.setEval(eval);
+            bestMove.setEval(eval*iBoardState.state.turnOf);
             bestMove.setNotation(bestMove.getNotation()+" "+bestMove.getNextMovesNotation());
             int[] lrKing=findKing(bestMove,bestMove.state.turnOf);
             //check for check
@@ -581,7 +599,7 @@ public final class Move {
     }
 
 
-    IBoardState bestMove2(IBoardState iBoardState) {
+    IBoardState bestMove(IBoardState iBoardState) {
 
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
 
@@ -678,6 +696,7 @@ public final class Move {
         }
 
         for ( IBoardState board : moveList ){
+            //System.out.println(board.getNotation());
             int value;
             if ( isFirstMove ) value = -pvs(-color, depth-1, -beta, -maxValue, board);
             else{

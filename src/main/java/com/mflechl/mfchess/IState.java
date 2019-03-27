@@ -21,14 +21,14 @@ class IState {
         if (turnOf == ChessBoard.WHITE) moveNumber++;
         nMoves++;
         if (Math.abs(movingPiece) == ChessBoard.PAWN && Math.abs(fromLine - toLine) == 2) enPassantPossible = fromRow;
-        else enPassantPossible = -1;
+        else enPassantPossible = -11;
     }
 
-    void undoUpdate(int fromLine, int toLine, int fromRow) {
+    void undoUpdate(int prevEnPassantPossible) {
         turnOf *= -1;
         if (turnOf == ChessBoard.BLACK) moveNumber--;
         nMoves--;
-        //TODO: enPassant
+        enPassantPossible = prevEnPassantPossible;
         //if (Math.abs(movingPiece) == ChessBoard.PAWN && Math.abs(fromLine - toLine) == 2) enPassantPossible = fromRow;
         //else enPassantPossible = -1;
     }
@@ -47,7 +47,7 @@ class IState {
     int moveNumber = 1; ////one move=one each black and white, starting with 1 after first white move.
     boolean[] castlingPossibleQ = {true, true};  //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
     boolean[] castlingPossibleK = {true, true};  //same for king-side
-    int enPassantPossible = -1;
+    int enPassantPossible = -11;
     boolean check = false; //currently, is opponent in check?
     boolean remis = false; //currently, no more moves, remis?
     boolean mate = false; //currently, no more moves, mate?

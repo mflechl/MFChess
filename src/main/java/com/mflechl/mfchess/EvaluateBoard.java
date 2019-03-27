@@ -33,7 +33,7 @@ public final class EvaluateBoard {
         val += getValCombi(board);
         val += getValPST(board);
 
-        if (state.check) val += VALUE_CHECK * state.turnOf * -1;
+        //DEFAULT! if (state.check) val += VALUE_CHECK * state.turnOf * -1;
 
         return val;
     }
