@@ -173,7 +173,9 @@ public final class Move {
             case ChessBoard.PAWN:
                 //move one square
                 if (board.setup[fromLine + col][fromRow] == 0) {
-                    plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col));
+                    Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col);
+                    if (ply.getToLine() == 7 * colIndex) ply.togglePromotion();
+                    plies.add(ply);
                 }
                 //move two squaes
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
@@ -245,7 +247,6 @@ public final class Move {
                 break;
 
             case ChessBoard.KING:
-//                int colIndex = (col + 1) / 2; //black=0, white=1
                 for (int il = -1; il <= 1; il++) {
                     for (int ir = -1; ir <= 1; ir++) {
                         if (il == 0 && ir == 0) continue; //no move
@@ -371,8 +372,8 @@ public final class Move {
         }
 
         //promotion
-        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
-            System.out.println("PROMOTION");
+//        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
+        else if (ply.togglePromotion){
             board.setup[ply.getToLine()][ply.getToRow()] = (byte) ( ChessBoard.QUEEN*ply.getMoverColor() );
         }
 
@@ -414,8 +415,8 @@ public final class Move {
         }
 
         //promotion
-        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
-            System.out.println("uPROMOTION");
+//        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
+        else if (ply.togglePromotion){
             board.setup[ply.getFromLine()][ply.getFromRow()] = (byte) ( ChessBoard.PAWN*ply.getMoverColor() );
         }
 

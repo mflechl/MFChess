@@ -5,15 +5,19 @@ public class Ply {
     public Ply() {
     }
 
-    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean castlingPossKW, boolean castlingPossQW, boolean castlingPossKB, boolean castlingPossQB, int moverColor) {
-        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{castlingPossKW, castlingPossKB}, new boolean[]{castlingPossQW, castlingPossQB},moverColor);
+    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean toggleCastlingPossKW,
+               boolean toggleCastlingPossQW, boolean toggleCastlingPossKB, boolean toggleCastlingPossQB, boolean togglePromotion, int moverColor) {
+        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{toggleCastlingPossKW, toggleCastlingPossKB},
+                new boolean[]{toggleCastlingPossQW, toggleCastlingPossQB},togglePromotion, moverColor);
     }
 
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, int moverColor) {
-        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{false, false}, new boolean[]{false, false},moverColor);
+        this(fromLine, fromRow, toLine, toRow, toPiece, enPassant,
+                new boolean[]{false, false}, new boolean[]{false, false}, false, moverColor);
     }
 
-    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] toggleCastlingPossK, boolean[] toggleCastlingPossQ, int moverColor) {
+    public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant,
+               boolean[] toggleCastlingPossK, boolean[] toggleCastlingPossQ, boolean togglePromotion, int moverColor) {
         this.fromLine = fromLine;
         this.fromRow = fromRow;
         this.toLine = toLine;
@@ -21,6 +25,7 @@ public class Ply {
         this.toPiece = toPiece;
         this.toggleCastlingPossK = new boolean[]{toggleCastlingPossK[0], toggleCastlingPossK[1]};
         this.toggleCastlingPossQ = new boolean[]{toggleCastlingPossQ[0], toggleCastlingPossQ[1]};
+        this.togglePromotion = togglePromotion;
         this.moverColor = moverColor;
         this.enPassant = enPassant;
     }
@@ -34,6 +39,7 @@ public class Ply {
         this.enPassant = p.enPassant;
         this.toggleCastlingPossK = new boolean[]{p.toggleCastlingPossK[0],p.toggleCastlingPossK[1]};
         this.toggleCastlingPossQ = new boolean[]{p.toggleCastlingPossQ[0],p.toggleCastlingPossQ[1]};
+        this.togglePromotion = p.togglePromotion;
         this.moverColor = p.moverColor;
     }
 
@@ -51,8 +57,18 @@ public class Ply {
     boolean[] toggleCastlingPossQ = {false, false}; //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
 
 
+    boolean togglePromotion = false;
+
     public int getMoverColor() {
         return moverColor;
+    }
+
+    public boolean isTogglePromotion() {
+        return togglePromotion;
+    }
+
+    public void togglePromotion() {
+        this.togglePromotion = true;
     }
 
     public void toggleCastlingPossK(int colIndex) {
