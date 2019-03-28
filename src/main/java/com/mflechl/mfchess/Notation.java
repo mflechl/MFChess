@@ -32,6 +32,8 @@ class Notation extends JLabel {
         //write move number
         if (piece > 0) lbl += imove + ". ";
 
+        if ( apiece == ChessBoard.KING && Math.abs(toRow-aRow)==2 ) castling=true; //do not need argument above anymore!
+
         //castling
         if (castling) {
             lbl += "0-0";

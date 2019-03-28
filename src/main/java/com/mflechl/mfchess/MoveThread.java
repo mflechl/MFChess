@@ -68,6 +68,9 @@ public class MoveThread extends Thread {
                 }
                 System.out.println("MOVETHREAD "+getDepth()+"    "+ gNMN + "    That took: " + (finishTime - startTime) + " ms");
                 informListener(chosenMove);
+                if ( chosenMove == null ){
+                    break;
+                }
                 if ( !isGoDeeper() || executeNow || getDepth()>=Move.MAX_DEPTH ) break;
                 if ( chosenMove != null ) ChessBoard.nextBestMove = chosenMove.getNotation().replaceFirst("^\\d+\\. ","");
                 setDepth( getDepth() + 1 );

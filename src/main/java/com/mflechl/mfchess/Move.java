@@ -14,8 +14,8 @@ public final class Move {
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = false; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 1;
-    static final int MAX_DEPTH = 1;
+    static final int DEFAULT_START_DEPTH = 3;
+    static final int MAX_DEPTH = 3;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -29,6 +29,7 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     private IBoardState bestMove;
+    private Ply bestPly;
 
     private IBoard mBoard;
     private IState mState;
@@ -570,6 +571,7 @@ public final class Move {
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
 
         bestMove = null;
+        bestPly = null;
         int eval;
 
         mBoard = new IBoard(iBoardState);
@@ -581,17 +583,25 @@ public final class Move {
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
         if ( bestMove == null ){
+            //System.out.println(ChessBoard.currentStaticState.check+" "+ChessBoard.currentStaticState.mate);
+            //if ( ChessBoard.currentStaticState.check ) ChessBoard.currentStaticState.mate = true;
+            //else ChessBoard.currentStaticState.remis = true;
             throw new NullPointerException("bestMove: No possible moves. " + eval );
         } else{
             bestMove.setEval(eval*iBoardState.state.turnOf);
-            bestMove.setNotation(bestMove.getNotation()+" "+bestMove.getNextMovesNotation());
             int[] lrKing=findKing(bestMove,bestMove.state.turnOf);
             //check for check
             if ( underAttack(bestMove,-bestMove.state.turnOf,lrKing[0],lrKing[1]) ){
                 bestMove.state.check = true;
-                bestMove.setNotation(bestMove.getNotation()+"+");
+                //bestMove.setNotation(bestMove.getNotation()+"+");
+            } else bestMove.state.check = false;
+            if ( listAllMoves(bestMove, bestMove.state).isEmpty() ){
+                if (bestMove.state.check) bestMove.state.mate = true;
+                else bestMove.state.remis = true;
             }
-            else bestMove.state.check = false;
+            bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,iBoardState.state,bestPly.getFromLine(),bestPly.getFromRow(),
+                    bestPly.getToLine(),bestPly.getToRow(),bestMove.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
+            bestMove.setNotation(/*bestMove.getNotation()+" "+*/bestMove.getNextMovesNotation());
 
             //System.out.println("BEST MOVE eval="+eval+bestMove);
             return bestMove;
@@ -666,7 +676,10 @@ public final class Move {
                 }
                 if ( depth == startDepth) {
                     bestMove = new IBoardState(mBoard, mState);
-                    bestMove.setNextMoveNotation(Notation.getMoveNotation(mBoard,mState,ChessBoard.currentStaticState,ply.getFromLine(),ply.getFromRow(),ply.getToLine(),ply.getToRow(),mBoard.setup[ply.getToLine()][ply.getToRow()],ply.getToPiece(),new SpecialMove()));
+                    bestPly = new Ply(ply);
+                    //bestMove.setNextMoveNotation(Notation.getMoveNotation(bestMove,bestMove.state,ChessBoard.currentStaticState,bestPly.getFromLine(),bestPly.getFromRow(),
+                    //    bestPly.getToLine(),bestPly.getToRow(),mBoard.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
+
                     //bestMove.setNotation("YY");
                 }
             }

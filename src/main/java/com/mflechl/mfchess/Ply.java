@@ -34,7 +34,6 @@ public class Ply {
         this.prevEnpassantPossible = prevEnpassantPossible;
     }
 
-    /*
     public Ply(Ply p) {
         this.fromLine = p.fromLine;
         this.fromRow = p.fromRow;
@@ -48,7 +47,6 @@ public class Ply {
         this.toggleCastlingPossQ = new boolean[]{p.toggleCastlingPossQ[0],p.toggleCastlingPossQ[1]};
         this.togglePromotion = p.togglePromotion;
     }
-    */
 
     int fromLine;
     int fromRow;
