@@ -72,7 +72,7 @@ public class MoveThread extends Thread {
                     break;
                 }
                 if ( !isGoDeeper() || executeNow || getDepth()>=Move.MAX_DEPTH ) break;
-                if ( chosenMove != null ) ChessBoard.nextBestMove = chosenMove.getNotation().replaceFirst("^\\d+\\. ","");
+                ChessBoard.nextBestMove = chosenMove.getNotation().replaceFirst("^\\d+\\. ","");
                 setDepth( getDepth() + 1 );
             }
             //Chess.notation.updateText(chosenMove.getNotation(), chosenMove.state.nMoves);

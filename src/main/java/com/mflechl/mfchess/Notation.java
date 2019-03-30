@@ -22,16 +22,22 @@ class Notation extends JLabel {
     }
 
     static String getMoveNotation(IBoard board, IState state, IState prevState, int fromLine, int fromRow, int toLine, int toRow, int movingPiece, int eliminatedPiece, SpecialMove sMove) {
-        return getMoveNotation(board, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, sMove.castling, prevState, state.mate, state.remis);
+        return getMoveNotation(board, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, prevState, state.mate, state.remis);
     }
 
-    static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, boolean castling, IState state, boolean mate, boolean remis) {
+    static String getMoveNotation(IBoard board, Ply ply, IState state, IState prevState) {
+        return getMoveNotation(board, state.moveNumber,state.check, ply.getFromLine(),ply.getFromRow(),ply.getToLine(),
+                ply.getToRow(),board.setup[ply.getToLine()][ply.getToRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+    }
+
+    static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, IState prevState, boolean mate, boolean remis) {
         String lbl = "";
         int apiece = Math.abs(piece);
 
         //write move number
         if (piece > 0) lbl += imove + ". ";
 
+        boolean castling=false;
         if ( apiece == ChessBoard.KING && Math.abs(toRow-aRow)==2 ) castling=true; //do not need argument above anymore!
 
         //castling
@@ -45,7 +51,7 @@ class Notation extends JLabel {
                 //    if (piece>0) lbl+=com.mflechl.mfchess.ChessPieceImage.upieces[apiece]; //white pieces, unicode
                 //    else         lbl+=com.mflechl.mfchess.ChessPieceImage.bupieces[apiece]; //black pieces, unicode
             }
-            lbl += ambiguity(board, piece, aLine, aRow, toLine, toRow, state);
+            lbl += ambiguity(board, piece, aLine, aRow, toLine, toRow, prevState);
 
             //elimination
             if (eliminatedPiece != 0 || enpassant) {
