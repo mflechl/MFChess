@@ -25,10 +25,26 @@ class Notation extends JLabel {
         return getMoveNotation(board, state.moveNumber, state.check, fromLine, fromRow, toLine, toRow, movingPiece, eliminatedPiece, sMove.enPassant, prevState, state.mate, state.remis);
     }
 
+    /*
     static String getMoveNotation(IBoard board, Ply ply, IState state, IState prevState) {
         return getMoveNotation(board, state.moveNumber,state.check, ply.getFromLine(),ply.getFromRow(),ply.getToLine(),
-                ply.getToRow(),board.setup[ply.getToLine()][ply.getToRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+        //        ply.getToRow(),board.setup[ply.getFromLine()][ply.getFromRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+        ply.getToRow(),board.setup[ply.getToLine()][ply.getToRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+
     }
+    */
+
+    static String getMoveNotationPresBoard(IBoard board, Ply ply, IState state, IState prevState) {
+        Ply p=new Ply(ply);
+        IBoard b=new IBoard(board);
+        IState s=new IState(state);
+        Move.undoPly(b,s,p);
+        return getMoveNotation(b, state.moveNumber,state.check, ply.getFromLine(),ply.getFromRow(),ply.getToLine(),
+                //        ply.getToRow(),board.setup[ply.getFromLine()][ply.getFromRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+                ply.getToRow(),board.setup[ply.getToLine()][ply.getToRow()],ply.getToPiece(),ply.enPassant, prevState,state.mate,state.remis);
+
+    }
+
 
     static String getMoveNotation(IBoard board, int imove, boolean check, int aLine, int aRow, int toLine, int toRow, int piece, int eliminatedPiece, boolean enpassant, IState prevState, boolean mate, boolean remis) {
         String lbl = "";
@@ -144,6 +160,7 @@ class Notation extends JLabel {
                 }
             }
         }
+        //System.out.println("NNN "+namb+"    "+piece+"     "+board.setup[toLine][toRow]);
         if (namb > 1) { //three different pieces of the same kind can get there. Return both row and line.
             //this may not actually be needed, though.
             amb = CoordBoard.alpha[fromRow + 1] + (fromLine + 1);

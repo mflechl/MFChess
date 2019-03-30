@@ -14,8 +14,8 @@ public final class Move {
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = false; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 3;
-    static final int MAX_DEPTH = 3;
+    static final int DEFAULT_START_DEPTH = 4;
+    static final int MAX_DEPTH = 4;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -221,12 +221,15 @@ public final class Move {
             case ChessBoard.KING:
                 for (int il = -1; il <= 1; il++) {
                     for (int ir = -1; ir <= 1; ir++) {
+                        //System.out.println("LAM "+fromLine+" "+fromRow+"    "+il+" "+ir);
                         if (il == 0 && ir == 0) continue; //no move
                         toLine = fromLine + il;
                         toRow = fromRow + ir;
-                        if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
+                        if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) continue;
+
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) continue; //own piece
+
                         Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible);
                         if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
                         if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
@@ -352,7 +355,7 @@ public final class Move {
 
     }
 
-    private static void undoPly( IBoard board, IState state, Ply ply ){
+    static void undoPly( IBoard board, IState state, Ply ply ){
         //System.out.println("U ply= "+ply);
 
         byte movingPiece = board.setup[ply.getToLine()][ply.getToRow()];
@@ -611,7 +614,7 @@ public final class Move {
             IState s=new IState(bestMove.state);
             IState sPrev=new IState(tmpState);
 
-            nextMove=Notation.getMoveNotation(b,newPV.get(0),s,sPrev);
+            nextMove=Notation.getMoveNotationPresBoard(b,newPV.get(0),s,sPrev);
 
             newPV.remove(0);
             beyondMoves="";
@@ -619,9 +622,9 @@ public final class Move {
                 sPrev = new IState(s);
                 doPly(b, s, p);
                 s.check = underAttack(b, -s.turnOf, findKing(b, s.turnOf)[0], findKing(b, s.turnOf)[1]);
-                //if (underAttack(b, -s.turnOf, findKing(b, s.turnOf)[0], findKing(b, s.turnOf)[1])) s.check=true;
-                beyondMoves = beyondMoves + " " + (Notation.getMoveNotation(b, p, s, sPrev));
-                //if ( underAttack(b, -s.turnOf, findKing(b,s.turnOf)[0], findKing(b,s.turnOf)[1]) ) beyondMoves+="+";
+
+ //               beyondMoves = beyondMoves + " " + (Notation.getMoveNotation(b, p, s, sPrev));
+                beyondMoves = beyondMoves + " " + (Notation.getMoveNotationPresBoard(b, p, s, sPrev));
             }
             beyondMoves=beyondMoves.trim();
             System.out.println("PV |"+nextMove+"|"+beyondMoves+"|"+bestMove.getEval());
