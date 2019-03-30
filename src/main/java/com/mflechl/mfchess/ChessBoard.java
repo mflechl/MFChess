@@ -305,9 +305,9 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         currentStaticState = new IState(boardState.state);
 
         fillTilesFromBoard();
-//        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("(\\d+\\.)* \\w\\S","...");
-        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("^\\d+\\. ","");
-        nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
+//        String nextMovesLabel=boardState.getNextMovesNotation().replaceAll("^\\d+\\. ","");
+//        nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
+        String nextMovesLabel = boardState.getNextMovesNotation();
         if ( !nextMovesLabel.matches("^\\d+\\..*") ) nextMovesLabel = "... "+nextMovesLabel;
         setLabelLastandNextMove( gotoState, boardState.getEval(), nextMovesLabel );
 

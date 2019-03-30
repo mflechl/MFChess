@@ -14,8 +14,8 @@ public final class Move {
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = false; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 6;
-    static final int MAX_DEPTH = 6;
+    static final int DEFAULT_START_DEPTH = 3;
+    static final int MAX_DEPTH = 3;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -348,6 +348,8 @@ public final class Move {
             board.setup[ply.getToLine()][ply.getToRow()] = (byte) ( ChessBoard.QUEEN*ply.getMoverColor() );
         }
 
+        //state.check = false; //should be un-done in undoPly... but is that needed at all?
+
     }
 
     private static void undoPly( IBoard board, IState state, Ply ply ){
@@ -585,24 +587,10 @@ public final class Move {
         long startTime = System.currentTimeMillis();
         eval = pvs2(iBoardState.state.turnOf, startDepth, -INF, +INF, newPV);
         System.out.println("1st: " + (System.currentTimeMillis() - startTime) + " ms");
-        bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,iBoardState.state,bestPly.getFromLine(),bestPly.getFromRow(),
-                bestPly.getToLine(),bestPly.getToRow(),bestMove.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
-
-        IBoard b=new IBoard(bestMove);
-        IState s=new IState(bestMove.state);
-        IState sPrev=new IState(iBoardState.state);
-
-        nextMove=Notation.getMoveNotation(b,newPV.get(0),s,sPrev);
-        newPV.remove(0);
-        beyondMoves="";
-        for (Ply p: newPV){
-            sPrev=new IState(s);
-            doPly(b,s,p);
-            beyondMoves = beyondMoves + (Notation.getMoveNotation(b, p, s, sPrev) + " ");
-        }
-        beyondMoves=beyondMoves.trim();
-        System.out.println("PV |"+nextMove+"|"+beyondMoves+"|");
-        //for (Ply p: newPV) System.out.println("pv "+p);
+        IState tmpState = new IState(iBoardState.state);
+        tmpState.check=false;
+        //bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,tmpState,bestPly.getFromLine(),bestPly.getFromRow(),
+        //        bestPly.getToLine(),bestPly.getToRow(),bestMove.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
 
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
@@ -613,13 +601,37 @@ public final class Move {
             int[] lrKing=findKing(bestMove,bestMove.state.turnOf);
             //check for check
             bestMove.state.check = underAttack(bestMove, -bestMove.state.turnOf, lrKing[0], lrKing[1]);
+
             if ( listAllMoves(bestMove, bestMove.state).isEmpty() ){
                 if (bestMove.state.check) bestMove.state.mate = true;
                 else bestMove.state.remis = true;
             }
-            bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,iBoardState.state,bestPly.getFromLine(),bestPly.getFromRow(),
-                    bestPly.getToLine(),bestPly.getToRow(),bestMove.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
-            bestMove.setNotation(/*bestMove.getNotation()+" "+*/bestMove.getNextMovesNotation());
+
+            IBoard b=new IBoard(bestMove);
+            IState s=new IState(bestMove.state);
+            IState sPrev=new IState(tmpState);
+
+            nextMove=Notation.getMoveNotation(b,newPV.get(0),s,sPrev);
+
+            newPV.remove(0);
+            beyondMoves="";
+            for (Ply p: newPV) {
+                sPrev = new IState(s);
+                doPly(b, s, p);
+                s.check = underAttack(b, -s.turnOf, findKing(b, s.turnOf)[0], findKing(b, s.turnOf)[1]);
+                //if (underAttack(b, -s.turnOf, findKing(b, s.turnOf)[0], findKing(b, s.turnOf)[1])) s.check=true;
+                beyondMoves = beyondMoves + " " + (Notation.getMoveNotation(b, p, s, sPrev));
+                //if ( underAttack(b, -s.turnOf, findKing(b,s.turnOf)[0], findKing(b,s.turnOf)[1]) ) beyondMoves+="+";
+            }
+            beyondMoves=beyondMoves.trim();
+            System.out.println("PV |"+nextMove+"|"+beyondMoves+"|"+bestMove.getEval());
+            //for (Ply p: newPV) System.out.println("pv "+p);
+            bestMove.setNextMoveNotation(beyondMoves);
+            bestMove.setNotation(nextMove);
+
+            //bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,iBoardState.state,bestPly.getFromLine(),bestPly.getFromRow(),
+            //        bestPly.getToLine(),bestPly.getToRow(),bestMove.setup[bestPly.getToLine()][bestPly.getToRow()],bestPly.getToPiece(),new SpecialMove()));
+            //bestMove.setNotation(/*bestMove.getNotation()+" "+*/bestMove.getNextMovesNotation());
 
             //System.out.println("BEST MOVE eval="+eval+bestMove);
             return bestMove;
@@ -646,7 +658,11 @@ public final class Move {
         if ( bestMove == null ){
             throw new NullPointerException("bestMove: No possible moves. " + eval );
         } else{
-            bestMove.setEval(eval);
+            String nextMovesLabel=bestMove.getNextMovesNotation().replaceAll("^\\d+\\. ","");
+            nextMovesLabel = nextMovesLabel.replaceAll("^\\S* ","");
+            bestMove.setNextMoveNotation(nextMovesLabel);
+            bestMove.setEval(eval*iBoardState.state.turnOf);
+            System.out.println("PV |"+bestMove.getNotation()+"|"+bestMove.getNextMovesNotation()+"|"+bestMove.getEval());
             return bestMove;
         }
     }
