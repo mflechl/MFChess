@@ -9,14 +9,14 @@ public final class Move {
     }
 
     //static final boolean PICK_RANDOM = false;
-    static boolean USE_PLY_METHOD = true;
+    static boolean USE_PLY_METHOD = false;
 
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_ORDERING = false; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 4;
-    static final int MAX_DEPTH = 4;
+    static final int DEFAULT_START_DEPTH = 6;
+    static final int MAX_DEPTH = 6;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -89,6 +89,23 @@ public final class Move {
             fromRow = row + knightMove[1];
             if (fromLine >= 0 && fromLine <= 7 && fromRow >= 0 && fromRow <= 7) {
                 if (board.setup[fromLine][fromRow] * col == ChessBoard.KNIGHT) return true;
+            }
+        }
+        //pawn moves
+        for (int ir = -1; ir <= 1; ir += 2) {
+            fromRow = row + ir;
+            fromLine = line - col;
+            if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
+            if (board.setup[fromLine][fromRow] * col == ChessBoard.PAWN) return true;
+        }
+        //king moves
+        for (int il = -1; il <= 1; il++) {
+            for (int ir = -1; ir <= 1; ir++) {
+                if (il == 0 && ir == 0) continue; //no move
+                fromRow = row + ir;
+                fromLine = line + il;
+                if (fromLine < 0 || fromLine > 7 || fromRow < 0 || fromRow > 7) break;
+                if (board.setup[fromLine][fromRow] * col == ChessBoard.KING) return true;
             }
         }
 

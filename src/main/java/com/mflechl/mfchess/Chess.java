@@ -315,7 +315,7 @@ public class Chess extends JFrame  {
     // The entry main() method
     public static void main(String[] args) {
         String initialNotation = "";
-//        String initialNotation = "1. h4"; //avoid openings
+        //        String initialNotation = "1. h4"; //avoid openings
 //test if CM continues after mate          String initialNotation = "1. h4 e5 2. f3 d5 3. c3 Bd7 4. e3 Qf6 5. Qb3 Qg6 6. Qxb7 Ba3 7. Qxa8 Qg3+ 8. Ke2 Ke7 9. d4 a5 10. c4 Qe1+ 11. Kxe1 Bc6 12. Qxb8 Bb4+ 13. Ke2 Bd6 14. dxe5 Bxe5 15. f4 dxc4 16. fxe5 a4 17. b3 f6 18. exf6+ Kd7 19. fxg7 cxb3 20. gxh8Q bxa2 21. Qxh7+ Ne7 22. Rxa2 Ke6 23. Bd2 Bd5 24. Rxa4 c6 25. Ra1 Bc4+ 26. Ke1 Bxf1 27. Kxf1 Nd5 28. Nc3 Nf6 29. Qc8+";
 //        String initialNotation = "1. h4 g6 2. b3 Bg7 3. Nc3 g5 4. hxg5 Bd4 5. e3 Bg7 6. d4 b6 7. Bb5 Kf8 8. Qd3 Qe8 9. Qe2 Qd8 10. Qd1 a5 11. Qf3 c6 12. Na4 Qe8 13. Nxb6 Ra7 14. Nxc8 Qxc8 15. Bf1 d6 16. Be2 Qc7 17. Rh5 Nd7 18. Bc4 d5 19. Bf1 Bxd4 20. exd4 Ndf6 21. Bf4 Qc8 22. Be5 Qb7 23. a3 Nh6 24. Rxh6 Ng8 25. Bxh8 Nxh6 26. gxh6 Kg8 27. Bg7 c5 28. dxc5 a4 29. b4 Ra5 30. bxa5 Qb8 31. Qh5 f5 32. Qh4 f4 33. 0-0-0 f3 34. gxf3 e6 35. Qxa4 d4 36. Qxd4 Qc7 37. a6 Qb8 38. Re1 Qc7 39. Re5 Qb8 40. Qe4 Qd8 41. c6 Qe7 42. Kb2 Qd8 43. Qb4 Kf7 44. Bd3 Kg8 45. Re1 Qc8 46. Qb5 Qd8 47. a7 Qa8 48. Qb8+ Qxb8+ 49. axb8Q+ Kf7 50. Qc7+ Kg8 51. Re5 &#189; - &#189;";
 //        String initialNotation = "1. e4 Na6 2. Bxa6 ";  //simple test
