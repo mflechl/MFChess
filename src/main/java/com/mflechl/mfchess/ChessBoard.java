@@ -166,7 +166,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             aRow = _r;
             tileActive = true;
 
-            ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow);
+            ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow, false);
             for (Ply p : plies) {
                 tiles[p.getToLine()][p.getToRow()].setDestinationBorder();
                 System.out.println("XXXXX ply " + p);
@@ -315,7 +315,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             findAndSetLastMoveBorder(boardState, pastMoves.get(boardState.state.nMoves - 1));
 
         System.out.println("sAS: " + currentStaticState + "   EVAL = " + boardState.getEval() + "   EVAL curr = " + EvaluateBoard.eval(iBoard,currentStaticState) );
-        System.out.println("sA2: " + boardState.getNextMovesNotation());
+        //System.out.println("sA2: " + boardState.getNextMovesNotation());
         //System.out.println("sA2: " + boardState.getNotation());
 
 //        System.out.println(iBoard);

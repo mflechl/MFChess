@@ -211,6 +211,9 @@ public class Chess extends JFrame  {
                         }
                         */
                         break;
+                    case KeyEvent.VK_E:
+                        System.out.println( "EVAL current board: " + EvaluateBoard.eval(ChessBoard.iBoard, ChessBoard.currentStaticState) );
+                        break;
                 }
             }
         });
