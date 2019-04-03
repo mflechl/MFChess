@@ -2,8 +2,8 @@ package com.mflechl.mfchess;
 
 public class Ply {
 
-    //public Ply() {
-    //}
+    public Ply() {
+    }
 
     /*
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean toggleCastlingPossKW,
@@ -48,10 +48,10 @@ public class Ply {
         this.togglePromotion = p.togglePromotion;
     }
 
-    int fromLine;
-    int fromRow;
-    int toLine;
-    int toRow;
+    int fromLine=-1;
+    int fromRow=-1;
+    int toLine=-1;
+    int toRow=-1;
 
     int toPiece;
     int moverColor;           //b or w
@@ -166,6 +166,11 @@ public class Ply {
         this.moverColor = moverColor;
     }
     */
+
+    public boolean equals(Ply p){
+        if ( fromLine == p.fromLine && fromRow == p.fromRow && toLine == p.toLine && toRow == p.toRow ) return true;
+        return false;
+    }
 
     public String toString() {
         return  " moverColor=" + moverColor +

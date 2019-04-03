@@ -37,6 +37,8 @@ public class ChessBoard implements ActionListener, ThreadListener  {
     static IBoardState currentBestMove;
 //    static IBoardState nextBestMove;
     static String nextBestMove="";
+    final static int MAX_NEXT_PLIES=3;
+    static Ply[] nextBestPlies = new Ply[MAX_NEXT_PLIES];
 
     //    ReadOpenings readOpenings = new ReadOpenings();
     static List<String> openings;
@@ -51,6 +53,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         ReadOpenings readOpenings = new ReadOpenings();
         openings = new ArrayList<String>(readOpenings.openings);
 
+        for (int i=0; i<MAX_NEXT_PLIES; i++) nextBestPlies[i] = new Ply();
     }
 
     public static void toggleAutoComputerMove() {
@@ -169,7 +172,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow, false);
             for (Ply p : plies) {
                 tiles[p.getToLine()][p.getToRow()].setDestinationBorder();
-                System.out.println("XXXXX ply " + p);
+                //System.out.println("XXXXX ply " + p);
             }
 
             //ArrayList<int[]> list = Move.legalDestination(iBoard, aLine, aRow, currentStaticState, false);
@@ -319,8 +322,11 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         //System.out.println("sA2: " + boardState.getNotation());
 
 //        System.out.println(iBoard);
-        nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")
-                .replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","").replaceAll(" .*","");
+        //System.out.println("A "+boardState.getNextMovesNotation());
+        nextBestMove = boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","")     //remove any leading move number
+                //.replaceAll("^(.*? )","").replaceFirst("^\\d+\\. ","")   //remove first move, and any following number
+                        .replaceAll(" .*","");                                             //remove white space
+        //System.out.println("B "+nextBestMove+"      "+boardState.getNextMovesNotation().replaceFirst("^\\d+\\. ","").replaceAll(" .*",""));
     }
 
     static void removeFutureMoves(IState state) {

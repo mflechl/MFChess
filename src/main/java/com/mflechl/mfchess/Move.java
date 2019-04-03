@@ -9,14 +9,14 @@ public final class Move {
     }
 
     //static final boolean PICK_RANDOM = false;
-    static boolean USE_PLY_METHOD = false;
+    static boolean USE_PLY_METHOD = true;
 
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
-    static final boolean USE_ORDERING = false; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 6;
-    static final int MAX_DEPTH = 6;
+    static final boolean USE_ORDERING = true; //DEFAULT: true!
+    static final int DEFAULT_START_DEPTH = 5;
+    static final int MAX_DEPTH = 5;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -30,7 +30,6 @@ public final class Move {
     public final static SpecialMove SDUMMY = new SpecialMove();
 
     private IBoardState bestMove;
-    private Ply bestPly;
 
     String beyondMoves = "";
     String nextMove = "";
@@ -42,6 +41,9 @@ public final class Move {
 
     public void setStartDepth(int startDepth) {
         this.startDepth = startDepth;
+    }
+    public int getStartDepth() {
+        return startDepth;
     }
 
     //move from fromLine, fromRow to toLine,toRow legal?
@@ -179,13 +181,18 @@ public final class Move {
 
             case ChessBoard.PAWN:
                 //move one square
+                if (fromLine+col > 7){
+                    System.out.println("THERE AGAIN");
+                    System.out.println(board);
+                    break;
+                }
                 if (board.setup[fromLine + col][fromRow] == 0) {
                     Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col, state.enPassantPossible);
                     if (ply.getToLine() == 7 * colIndex) ply.togglePromotion();
                     plies.add(ply);
                     if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
                 }
-                //move two squaes
+                //move two squares
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
                         (board.setup[fromLine + 2 * col][fromRow] == 0)) {
                     if (board.setup[fromLine + col][fromRow] == 0) { //no piece in between
@@ -199,7 +206,9 @@ public final class Move {
                     if (fromRow + i >= 0 && fromRow + i <= 7) {
                         toPiece = board.setup[fromLine + col][fromRow + i];
                         if (toPiece * col < 0) {
-                            plies.add(new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, col, state.enPassantPossible));
+                            Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow + i, toPiece, false, col, state.enPassantPossible);
+                            if (ply.getToLine() == 7 * colIndex) ply.togglePromotion();
+                            plies.add( ply );
                             if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
                         } else if (state.enPassantPossible == fromRow + i) { //en passant?
                             if ((fromLine == 4 && col == ChessBoard.WHITE) || (fromLine == 3 && col == ChessBoard.BLACK)) {
@@ -640,7 +649,6 @@ public final class Move {
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
 
         bestMove = null;
-        bestPly = null;
         int eval;
 
         mBoard = new IBoard(iBoardState);
@@ -649,9 +657,13 @@ public final class Move {
 
         ArrayList<Ply> newPV=new ArrayList<>(); //GETPV
 
-        long startTime = System.currentTimeMillis();
+        //long startTime = System.currentTimeMillis();
+
+        /////////////////////////////////////////////////////////////////////////////////////
         eval = pvs2(iBoardState.state.turnOf, startDepth, -INF, +INF, newPV);
-        System.out.println("1st: " + (System.currentTimeMillis() - startTime) + " ms");
+        /////////////////////////////////////////////////////////////////////////////////////
+
+        //System.out.println("1st: " + (System.currentTimeMillis() - startTime) + " ms");
         IState tmpState = new IState(iBoardState.state);
         tmpState.check=false;
         //bestMove.setNextMoveNotation(Notation.getMoveNotation(iBoardState,bestMove.state,tmpState,bestPly.getFromLine(),bestPly.getFromRow(),
@@ -677,6 +689,11 @@ public final class Move {
             IState sPrev=new IState(tmpState);
 
             nextMove=Notation.getMoveNotationPresBoard(b,newPV.get(0),s,sPrev);
+            for (int i=1; i<4; i++) {
+                if (newPV.size() >= i) ChessBoard.nextBestPlies[i-1] = new Ply(newPV.get(i));
+                else ChessBoard.nextBestPlies[i-1] = new Ply(); //this should better be done after executing the move
+//            System.out.println("DDD "+newPV.size()+"  "+nextBestPly.toLine );
+            }
 
             newPV.remove(0);
             beyondMoves="";
@@ -750,9 +767,9 @@ public final class Move {
         //tmp=(depth==startDepth);
         ArrayList<Ply> moveList = listAllMoves(mBoard, mState);
 
-        if ( depth == startDepth && USE_ORDERING ){
+        if ( depth > getStartDepth() - ChessBoard.MAX_NEXT_PLIES       &&      USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            //TsortList(moveList); //TODO
+            sortPlyList(moveList, getStartDepth()-depth);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
@@ -769,10 +786,10 @@ public final class Move {
                 }
             }
 
-            //if (depth==startDepth){
-            //    System.out.println(ply+" "+value);
-            //    for (Ply p: childPV) System.out.println("PV= "+p);
-            //}
+            if (depth==startDepth){
+                System.out.println(ply+" "+value);
+                for (Ply p: childPV) System.out.println("PV= "+p);
+            }
 
             isFirstMove = false;
             if ( value > maxValue ){
@@ -788,7 +805,7 @@ public final class Move {
 
                 if ( depth == startDepth) {
                     bestMove = new IBoardState(mBoard, mState);
-                    bestPly = new Ply(ply);
+                    //bestPly = new Ply(ply);
 
                 }
             }
@@ -811,7 +828,7 @@ public final class Move {
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            //sortList(moveList);
+            //sortBSList(moveList);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
@@ -856,7 +873,7 @@ public final class Move {
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            sortList(moveList);
+            sortBSList(moveList);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
@@ -887,7 +904,7 @@ public final class Move {
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            sortList(moveList);
+            sortBSList(moveList);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
@@ -916,7 +933,7 @@ public final class Move {
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            sortList(moveList);
+            sortBSList(moveList);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
@@ -935,10 +952,10 @@ public final class Move {
         return minValue;
     }
 
-    void sortList(ArrayList<IBoardState> list){
+    void sortBSList(ArrayList<IBoardState> list){
         int indBestMove = -1;
         for ( int i=0; i<list.size(); i++ ){
-            //System.out.println("sortList: |" + board.getNotation().replaceAll("^\\d+\\. ","") + "|   |" + ChessBoard.nextBestMove + "| " +
+            //System.out.println("sortBSList: |" + board.getNotation().replaceAll("^\\d+\\. ","") + "|   |" + ChessBoard.nextBestMove + "| " +
             //        board.getNotation().replaceAll("^\\d+\\. ","").equals(ChessBoard.nextBestMove));
             if ( list.get(i).getNotation().replaceAll("^\\d+\\. ","").equals(ChessBoard.nextBestMove)){
                 indBestMove = i;
@@ -948,6 +965,24 @@ public final class Move {
         if ( list.size() < 2 || indBestMove<0 ) return;
         Collections.swap(list, 0, indBestMove);
     }
+
+    void sortPlyList(ArrayList<Ply> list, int depth){
+        int indBestMove = -1;
+        for ( int i=0; i<list.size(); i++ ){
+            //System.out.println("sortBSList: |" + board.getNotation().replaceAll("^\\d+\\. ","") + "|   |" + ChessBoard.nextBestMove + "| " +
+            //        board.getNotation().replaceAll("^\\d+\\. ","").equals(ChessBoard.nextBestMove));
+            if ( ChessBoard.nextBestPlies[depth].equals( list.get(i) ) ){
+                indBestMove = i;
+                break;
+            }
+        }
+        if ( list.size() < 2 || indBestMove<0 ) return;
+        Collections.swap(list, 0, indBestMove);
+        //System.out.println("SORT: "+list.get(0)+"\n      "+ChessBoard.nextBestPly);
+
+    }
+
+
 
     ArrayList<IBoardState> allLegalMoves(IBoardState iBoardState) {
         nALMCalls++; //TEST
