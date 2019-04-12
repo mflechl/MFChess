@@ -218,17 +218,6 @@ public class Chess extends JFrame  {
             }
         });
 
-        /*
-        addPropertyChangeListener("title", new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent propertyChangeEvent) {
-                System.out.println("!!! ABC !!!");
-                ChessBoard.computerMove();
-                setTitle(getTitle()+"1");
-            }
-        });
-        */
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Handle the CLOSE button
 
         //title and icon
@@ -311,6 +300,7 @@ public class Chess extends JFrame  {
     //TODO: improve evaluation
     //TODO: sorting for alphabeta
     //TODO: computerPlay: update notation; and update rest of board properly
+    //TODO: pick shortest path to mate, they are not equivalent
 
     // The entry main() method
     public static void main(String[] args) {

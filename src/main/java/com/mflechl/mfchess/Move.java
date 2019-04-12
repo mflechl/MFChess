@@ -830,9 +830,11 @@ public final class Move {
         ArrayList<IBoardState> moveList = allLegalMoves(currBoardState);
         if ( depth == startDepth && USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
-            //sortBSList(moveList);
+            sortBSList(moveList);
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
+
+        if ( moveList.size() == 0 ) return -99999; //mate // System.out.println("OOOO "+depth);
 
         for ( IBoardState board : moveList ){
             int value;
@@ -1071,6 +1073,7 @@ public final class Move {
         return list;
     }
 
+    /*
     static ArrayList<int[]> legalDestination(IBoard _iBoard, int fromLine, int fromRow, IState _state, boolean stopAfterFirst) {
         ArrayList<int[]> list = new ArrayList<>();
         for (int toLine = 0; toLine < 8; toLine++) {
@@ -1085,6 +1088,7 @@ public final class Move {
         }
         return list;
     }
+    */
 
     void updateCheckState(IState state, IBoard iBoard) {
         state.check = isChecked(iBoard, state.turnOf); //check of opponent result of the move?

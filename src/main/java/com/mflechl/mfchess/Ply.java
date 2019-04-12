@@ -168,8 +168,7 @@ public class Ply {
     */
 
     public boolean equals(Ply p){
-        if ( fromLine == p.fromLine && fromRow == p.fromRow && toLine == p.toLine && toRow == p.toRow ) return true;
-        return false;
+        return fromLine == p.fromLine && fromRow == p.fromRow && toLine == p.toLine && toRow == p.toRow;
     }
 
     public String toString() {
