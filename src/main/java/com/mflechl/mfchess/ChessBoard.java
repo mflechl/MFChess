@@ -458,12 +458,15 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         else if (currentStaticState.remis) return;
 
         if ( currentBestMove != null ){
-
             updateMove(currentBestMove);
+
+            if (currentStaticState.mate) return;
+            else if (currentStaticState.remis) return;
 
             if (USE_THREAD){     //calculate a computer move, but only execute it if user wants it
                 findDeeperMove(Move.DEFAULT_START_DEPTH, Chess.COMPUTER_PLAY ); //execute now if COMPUTER_PLAY
             }
+
             return;
         }
 

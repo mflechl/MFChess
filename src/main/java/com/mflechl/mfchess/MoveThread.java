@@ -63,7 +63,7 @@ public class MoveThread extends Thread {
                 if ( move.stopBestMove ) break;
                 String gNMN="Could not find next move";
                 if (chosenMove != null){
-                    gNMN=chosenMove.getNextMovesNotation();
+                    gNMN=chosenMove.getNotation()+" "+chosenMove.getNextMovesNotation();
                     ChessBoard.setLabelNextMoves( chosenMove.getEval(), gNMN );
                 }
                 System.out.println("MOVETHREAD "+getDepth()+"    "+ gNMN + "    That took: " + (finishTime - startTime) + " ms");

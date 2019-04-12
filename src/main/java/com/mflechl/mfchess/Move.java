@@ -182,8 +182,6 @@ public final class Move {
             case ChessBoard.PAWN:
                 //move one square
                 if (fromLine+col > 7){
-                    System.out.println("THERE AGAIN");
-                    System.out.println(board);
                     break;
                 }
                 if (board.setup[fromLine + col][fromRow] == 0) {
@@ -690,9 +688,8 @@ public final class Move {
 
             nextMove=Notation.getMoveNotationPresBoard(b,newPV.get(0),s,sPrev);
             for (int i=1; i<4; i++) {
-                if (newPV.size() >= i) ChessBoard.nextBestPlies[i-1] = new Ply(newPV.get(i));
+                if (newPV.size() > i) ChessBoard.nextBestPlies[i-1] = new Ply(newPV.get(i));
                 else ChessBoard.nextBestPlies[i-1] = new Ply(); //this should better be done after executing the move
-//            System.out.println("DDD "+newPV.size()+"  "+nextBestPly.toLine );
             }
 
             newPV.remove(0);
@@ -751,12 +748,12 @@ public final class Move {
 
     int pvs2(int color, int depth, int alpha, int beta, ArrayList<Ply> PV){
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;
-
         if ( depth==0 ){
 //            if ( listAllMoves(mBoard, mState).isEmpty() ) return -INF;
             if ( noMoreMoveLeft(mBoard,mState) ){
+                //System.out.println(color + "XXXXXXXXXXX\n"+mBoard);
                 int[] lrKing=findKing(mBoard,mState.turnOf);
-                if ( underAttack(mBoard,color,lrKing[0],lrKing[1]) )  return -INF; //mate
+                if ( underAttack(mBoard,color,lrKing[0],lrKing[1]) )  return -99999; //mate
                 else return 0; //remis
             }
             return EvaluateBoard.eval(mBoard, mState)*color;
@@ -773,6 +770,7 @@ public final class Move {
             //System.out.println( "B " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
         }
 
+        if ( moveList.size() == 0 ) return -99999; //mate // System.out.println("OOOO "+depth);
         for ( Ply ply : moveList ){
 
             ArrayList<Ply> childPV=new ArrayList<>();
@@ -786,10 +784,14 @@ public final class Move {
                 }
             }
 
+            /*
             if (depth==startDepth){
-                System.out.println(ply+" "+value);
+                System.out.println(ply+" KK "+value*color+" KK "+childPV.size());
                 for (Ply p: childPV) System.out.println("PV= "+p);
             }
+            */
+
+            /*if ( depth == startDepth)*/ //System.out.println("DDD "+depth+"=?"+startDepth+"  "+ply+"       "+value+" > "+maxValue);
 
             isFirstMove = false;
             if ( value > maxValue ){
