@@ -230,7 +230,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
 
     }
 
-    void findDeeperMove(int newDepth, boolean executeNow){
+    void findDeeperMove(int newDepth, boolean executeNow){ //!!!
         //System.out.println("fDM: "+newDepth+" "+moveThread.isAlive() +" " + moveThread.getState() );
         //if calling itself to add one depth, thread is still alive - ignore it...
         moveThread.move.stopBestMove = true;
@@ -276,17 +276,19 @@ public class ChessBoard implements ActionListener, ThreadListener  {
         return str;
     }
 
-    static void getPreviousState() {
+    void getPreviousState() {
         moveThread.move.stopBestMove = true;
         int gotoState = currentStaticState.nMoves - 1;
         if (gotoState >= 0) setActiveState(pastMoves.get(gotoState), gotoState);
+        findDeeperMove( Move.DEFAULT_START_DEPTH, false );
     }
 
     void getNextState() {
         moveThread.move.stopBestMove = true;
         int gotoState = currentStaticState.nMoves + 1;
         if (gotoState < pastMoves.size()) setActiveState(pastMoves.get(gotoState), gotoState);
-        else computerMove();
+        findDeeperMove( Move.DEFAULT_START_DEPTH, false );
+//        else computerMove();
     }
 
     static void getBeginState() {

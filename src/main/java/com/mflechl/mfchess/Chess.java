@@ -76,7 +76,7 @@ public class Chess extends JFrame  {
         btnPanel.add(btnPrev,c);
         btnPrev.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
-                ChessBoard.getPreviousState();
+                chessBoard.getPreviousState();
                 canvas.repaint();
                 requestFocus(); // change the focus to JFrame to receive KeyEvent
             }
@@ -186,7 +186,7 @@ public class Chess extends JFrame  {
             public void keyPressed(KeyEvent evt) {
                 switch (evt.getKeyCode()) {
                     case KeyEvent.VK_LEFT:
-                        ChessBoard.getPreviousState();
+                        chessBoard.getPreviousState();
                         repaint();
                         break;
                     case KeyEvent.VK_RIGHT:
