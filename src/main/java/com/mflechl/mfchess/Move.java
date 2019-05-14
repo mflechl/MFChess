@@ -14,9 +14,12 @@ public final class Move {
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;     //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
+    static final boolean USE_QS = true;              //use quiescence search; default: true
+
     static final boolean USE_ORDERING = true;        //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 3;
-    static final int MAX_DEPTH = 3;
+    static final int QS_DEPTH=6;
+    static final int DEFAULT_START_DEPTH = 5;
+    static final int MAX_DEPTH = 5;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -129,7 +132,7 @@ public final class Move {
         return orderedPlies;
     }
 
-    static ArrayList<Ply> listAllMoves(final IBoard board, final IState state) {
+    static ArrayList<Ply> listAllMoves(final IBoard board, final IState state, boolean tacticOnly) {
         nALMCalls++; //TEST
 
         ArrayList<Ply> plies = new ArrayList<>();
@@ -138,7 +141,7 @@ public final class Move {
             for (int ir = 0; ir < 8; ir++) {
                 if (board.setup[il][ir] * state.turnOf > 0) {
                     //plies.addAll(listAllMovesSquare(board, state, il, ir));
-                    plies.addAll(orderList(listAllMovesSquare(board, state, il, ir, false)));
+                    plies.addAll(orderList(listAllMovesSquare(board, state, il, ir, false, tacticOnly)));
                 }
             }
         }
@@ -156,7 +159,7 @@ public final class Move {
         for (int il = 0; il < 8; il++) {
             for (int ir = 0; ir < 8; ir++) {
                 if (board.setup[il][ir] * state.turnOf > 0) {
-                    if ( ! listAllMovesSquare(board, state, il, ir, true).isEmpty() ) return false;
+                    if ( ! listAllMovesSquare(board, state, il, ir, true, false).isEmpty() ) return false;
                 }
             }
         }
@@ -165,8 +168,9 @@ public final class Move {
 
     }
 
-
-    static ArrayList<Ply> listAllMovesSquare(final IBoard board, final IState state, int fromLine, int fromRow, boolean stopAfterFirst) {
+    //stopAfterFirst: return after first valid move was found (used to check if there are any legal moves left
+    //tacticOnly: only add tactical moves, i.e. captures and promotions (for quiescence search)
+    static ArrayList<Ply> listAllMovesSquare(final IBoard board, final IState state, int fromLine, int fromRow, boolean stopAfterFirst, boolean tacticOnly) {
         ArrayList<Ply> plies = new ArrayList<>(); //TODO: check if it is faster to allocate a size here
         int piece = board.setup[fromLine][fromRow];
         int col = Integer.signum(piece);
@@ -186,13 +190,17 @@ public final class Move {
                 }
                 if (board.setup[fromLine + col][fromRow] == 0) {
                     Ply ply = new Ply(fromLine, fromRow, fromLine + col, fromRow, 0, false, col, state.enPassantPossible);
-                    if (ply.getToLine() == 7 * colIndex) ply.togglePromotion();
-                    plies.add(ply);
+                    if (ply.getToLine() == 7 * colIndex){
+                        ply.togglePromotion();
+                        plies.add(ply);            //promotion: add in any case
+                    } else if (!tacticOnly) {
+                        plies.add(ply);            //if not only looking for tactical moves, add as well
+                    }
                     if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
                 }
                 //move two squares
                 if (((col == ChessBoard.WHITE && fromLine == 1) || (col == ChessBoard.BLACK && fromLine == 6)) &&
-                        (board.setup[fromLine + 2 * col][fromRow] == 0)) {
+                        (board.setup[fromLine + 2 * col][fromRow] == 0) && !tacticOnly ) {
                     if (board.setup[fromLine + col][fromRow] == 0) { //no piece in between
                         plies.add(new Ply(fromLine, fromRow, fromLine + 2 * col, fromRow, 0, false, col, state.enPassantPossible));
                         if (stopAfterFirst && checkAndCastling(board, state, plies, kLine, col, colIndex, plies.size() - 1))
@@ -224,7 +232,8 @@ public final class Move {
                     toRow = fromRow + knightMove[1];
                     if (toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7) {
                         toPiece = board.setup[toLine][toRow];
-                        if (toPiece * col <= 0) {
+//                        if (toPiece * col <= 0) {
+                        if ( (toPiece * col < 0) || (toPiece==0 && !tacticOnly) ) {
                             plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
                             if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
                             //System.out.println("XXXXX " + plies.get(plies.size() - 1).getToggleCastlingPossK(0));
@@ -243,9 +252,17 @@ public final class Move {
                             if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                             toPiece = board.setup[toLine][toRow];
                             if (toPiece * col > 0) break; //own piece, give up that direction
-                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
-                            if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
-                            if (toPiece * col != 0) break; //enemy piece, cannot go farther
+
+                            if ( !tacticOnly || toPiece != 0 ){ //add if it is a capture and/or we want all moves
+                                    plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
+                                    if (stopAfterFirst && checkAndCastling(board, state, plies, kLine, col, colIndex, plies.size() - 1))
+                                        return plies;
+                            }
+                            if (toPiece != 0) break; //enemy piece, cannot go farther
+
+                            //   plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
+                            //   if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
+                            //   if (toPiece * col != 0) break; //enemy piece, cannot go farther
                         }
                     }
 
@@ -260,9 +277,13 @@ public final class Move {
                         if (!(toLine >= 0 && toLine <= 7 && toRow >= 0 && toRow <= 7)) break;
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) break; //own piece, give up that direction
-                        plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
-                        if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
-                        if (toPiece * col != 0) break; //enemy piece, cannot go farther
+
+                        if ( !tacticOnly || toPiece != 0 ) { //add if it is a capture and/or we want all moves
+                            plies.add(new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible));
+                            if (stopAfterFirst && checkAndCastling(board, state, plies, kLine, col, colIndex, plies.size() - 1))
+                                return plies;
+                        }
+                        if (toPiece != 0) break; //enemy piece, cannot go farther
                     }
 
                 }
@@ -280,13 +301,18 @@ public final class Move {
                         toPiece = board.setup[toLine][toRow];
                         if (toPiece * col > 0) continue; //own piece
 
-                        Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible);
-                        if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
-                        if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
-                        plies.add(p);
-                        if (stopAfterFirst && checkAndCastling(board,state,plies,kLine,col,colIndex,plies.size()-1) ) return plies;
+                        if ( !tacticOnly || toPiece != 0 ) { //add if it is a capture and/or we want all moves
+                            Ply p = new Ply(fromLine, fromRow, toLine, toRow, toPiece, false, col, state.enPassantPossible);
+                            if (state.castlingPossibleK[colIndex]) p.toggleCastlingPossK(colIndex);
+                            if (state.castlingPossibleQ[colIndex]) p.toggleCastlingPossQ(colIndex);
+                            plies.add(p);
+                            if (stopAfterFirst && checkAndCastling(board, state, plies, kLine, col, colIndex, plies.size() - 1))
+                                return plies;
+                        }
                     }
                 }
+
+                if (tacticOnly) break;
 
                 //castling
                 if (state.check) break;
@@ -677,7 +703,7 @@ public final class Move {
             //check for check
             bestMove.state.check = underAttack(bestMove, -bestMove.state.turnOf, lrKing[0], lrKing[1]);
 
-            if ( listAllMoves(bestMove, bestMove.state).isEmpty() ){
+            if ( listAllMoves(bestMove, bestMove.state, false).isEmpty() ){
                 if (bestMove.state.check) bestMove.state.mate = true;
                 else bestMove.state.remis = true;
             }
@@ -756,14 +782,16 @@ public final class Move {
                 if ( underAttack(mBoard,color,lrKing[0],lrKing[1]) )  return -99999; //mate
                 else return 0; //remis
             }
-            return (-1)*quiescence_search(-color, depth-1, -beta, -alpha);
-//            return EvaluateBoard.eval(mBoard, mState)*color;
+            if (USE_QS) return quiesce(color, depth, alpha, beta);
+            else        return EvaluateBoard.eval(mBoard, mState)*color;
+
+            //
         }
 
         int maxValue = alpha;
         boolean isFirstMove = true;
         //tmp=(depth==startDepth);
-        ArrayList<Ply> moveList = listAllMoves(mBoard, mState);
+        ArrayList<Ply> moveList = listAllMoves(mBoard, mState, false);
 
         //order moves for high depths, only
         if ( depth > getStartDepth() - ChessBoard.MAX_NEXT_PLIES       &&      USE_ORDERING ){
@@ -824,25 +852,48 @@ public final class Move {
     //https://en.wikipedia.org/wiki/Quiescence_search
     //https://www.chessprogramming.org/CPW-Engine_quiescence
     //https://www.chessprogramming.org/CPW-Engine_movegen(0x88)
-    int quiescence_search(int color, int depth, int alpha, int beta){
+    //TODO: cutoffs!
+    int quiesce(int color, int depth, int alpha, int beta){
 
         /* get a "stand pat" score */
-        int val = EvaluateBoard.eval(mBoard, mState)*color;
-        //int stand_pat = val;
+        int value = EvaluateBoard.eval(mBoard, mState)*color;
+        //int stand_pat = value;
+
+        if (depth<-QS_DEPTH) return value;
 
         /* check if stand-pat score causes a beta cutoff */
-        if (val >= beta) {
+        if (value >= beta) {
             return beta;
         }
 
         /* check if stand-pat score may become a new alpha */
-        if (alpha < val) {
-            alpha = val;
+        if (alpha < value) {
+            alpha = value;
         }
 
         //need to do a real search...
-        return val;
-    }
+        ArrayList<Ply> moveList = listAllMoves(mBoard, mState, true);
+
+        for ( Ply ply : moveList ){
+//            ArrayList<Ply> childPV=new ArrayList<>();
+            doPly(mBoard, mState, ply);
+            value = -quiesce(-color, depth-1, -beta, -alpha);
+            undoPly(mBoard, mState, ply);
+
+            if ( value > alpha ){
+                if ( USE_ALPHABETA && value >= beta ) {
+                    return beta;
+                }
+                alpha = value;
+
+//                PV.clear(); //GETPV
+//                PV.add(ply); //need deep copy!? //GETPV
+//                PV.addAll(childPV); //deep? GETPV
+            }
+
+        }
+        return alpha;
+    } //end quiesce
 
     int pvs(int color, int depth, int alpha, int beta, IBoardState currBoardState){
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return -9997;

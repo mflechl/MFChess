@@ -169,7 +169,7 @@ public class ChessBoard implements ActionListener, ThreadListener  {
             aRow = _r;
             tileActive = true;
 
-            ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow, false);
+            ArrayList<Ply> plies = Move.listAllMovesSquare(iBoard, currentStaticState, aLine, aRow, false, false);
             for (Ply p : plies) {
                 tiles[p.getToLine()][p.getToRow()].setDestinationBorder();
                 //System.out.println("XXXXX ply " + p);
