@@ -13,10 +13,10 @@ public final class Move {
 
     static final boolean USE_ALPHABETA = true;
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
-    static final boolean USE_PVS = !USE_NEGAMAX;            //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
-    static final boolean USE_ORDERING = true; //DEFAULT: true!
-    static final int DEFAULT_START_DEPTH = 5;
-    static final int MAX_DEPTH = 5;
+    static final boolean USE_PVS = !USE_NEGAMAX;     //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
+    static final boolean USE_ORDERING = true;        //DEFAULT: true!
+    static final int DEFAULT_START_DEPTH = 3;
+    static final int MAX_DEPTH = 3;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -717,7 +717,7 @@ public final class Move {
         }
     }
 
-
+    //this uses the old method of generating all moves as boards and is much slower
     IBoardState bestMoveOld(IBoardState iBoardState) {
 
         System.out.println("bestMove: nextBestMove = " + ChessBoard.nextBestMove );
@@ -756,7 +756,8 @@ public final class Move {
                 if ( underAttack(mBoard,color,lrKing[0],lrKing[1]) )  return -99999; //mate
                 else return 0; //remis
             }
-            return EvaluateBoard.eval(mBoard, mState)*color;
+            return (-1)*quiescence_search(-color, depth-1, -beta, -alpha);
+//            return EvaluateBoard.eval(mBoard, mState)*color;
         }
 
         int maxValue = alpha;
@@ -764,6 +765,7 @@ public final class Move {
         //tmp=(depth==startDepth);
         ArrayList<Ply> moveList = listAllMoves(mBoard, mState);
 
+        //order moves for high depths, only
         if ( depth > getStartDepth() - ChessBoard.MAX_NEXT_PLIES       &&      USE_ORDERING ){
             //System.out.println( "A " + moveList.get(0).getNextMovesNotation() + "    " + ChessBoard.nextBestMove );
             sortPlyList(moveList, getStartDepth()-depth);
@@ -816,6 +818,30 @@ public final class Move {
         }
         //if ( !thisNotation.equals("") ) currBoardState.setNextMoveNotation( currBoardState.getNextMovesNotation() + " " + thisNotation );
         return maxValue;
+    }
+
+    //https://www.chessprogramming.org/Quiescence_Search
+    //https://en.wikipedia.org/wiki/Quiescence_search
+    //https://www.chessprogramming.org/CPW-Engine_quiescence
+    //https://www.chessprogramming.org/CPW-Engine_movegen(0x88)
+    int quiescence_search(int color, int depth, int alpha, int beta){
+
+        /* get a "stand pat" score */
+        int val = EvaluateBoard.eval(mBoard, mState)*color;
+        //int stand_pat = val;
+
+        /* check if stand-pat score causes a beta cutoff */
+        if (val >= beta) {
+            return beta;
+        }
+
+        /* check if stand-pat score may become a new alpha */
+        if (alpha < val) {
+            alpha = val;
+        }
+
+        //need to do a real search...
+        return val;
     }
 
     int pvs(int color, int depth, int alpha, int beta, IBoardState currBoardState){
