@@ -17,7 +17,7 @@ public final class Move {
     static final boolean USE_QS = true;              //use quiescence search; default: true
 
     static final boolean USE_ORDERING = true;        //DEFAULT: true!
-    static final int QS_DEPTH=6;
+    static final int QS_DEPTH=5;
     static final int DEFAULT_START_DEPTH = 5;
     static final int MAX_DEPTH = 5;
 
@@ -696,7 +696,11 @@ public final class Move {
         if (ChessBoard.USE_THREAD && ChessBoard.moveThread.move.stopBestMove) return null;
 
         if ( bestMove == null ){
+            //TODO: Should not be able to get here after mate/remis
             throw new NullPointerException("bestMove: No possible moves. " + eval );
+//            if ( ! (bestMove.state.mate || bestMove.state.remis ) ) throw new NullPointerException("bestMove: No possible moves. " + eval );
+//            System.out.println("can we continue?");
+//            return null;
         } else{
             bestMove.setEval(eval*iBoardState.state.turnOf);
             int[] lrKing=findKing(bestMove,bestMove.state.turnOf);
@@ -857,7 +861,7 @@ public final class Move {
 
         /* get a "stand pat" score */
         int value = EvaluateBoard.eval(mBoard, mState)*color;
-        //int stand_pat = value;
+        int stand_pat = value;
 
         if (depth<-QS_DEPTH) return value;
 
@@ -876,6 +880,10 @@ public final class Move {
 
         for ( Ply ply : moveList ){
 //            ArrayList<Ply> childPV=new ArrayList<>();
+
+            //delta cut-off TODO: Should not be done during end game due to potential material insufficiency
+            if ( stand_pat + EvaluateBoard.VALUE_OF[Math.abs(ply.getToPiece())] + 200 < alpha ) continue;
+
             doPly(mBoard, mState, ply);
             value = -quiesce(-color, depth-1, -beta, -alpha);
             undoPly(mBoard, mState, ply);
