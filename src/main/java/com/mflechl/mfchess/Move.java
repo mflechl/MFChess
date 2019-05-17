@@ -4,6 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
+//https://www.chessprogramming.org/CPW-Engine_search
+//TODO        futility pruning
+
+//https://github.com/nescitus/cpw-engine/blob/master/move.cpp#L30
+//TODO        hash table
+
 public final class Move {
     Move() {
     }
@@ -18,8 +24,8 @@ public final class Move {
 
     static final boolean USE_ORDERING = true;        //DEFAULT: true!
     static final int QS_DEPTH=5;
-    static final int DEFAULT_START_DEPTH = 5;
-    static final int MAX_DEPTH = 5;
+    static final int DEFAULT_START_DEPTH = 7;
+    static final int MAX_DEPTH = 7;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -792,6 +798,7 @@ public final class Move {
             //
         }
 
+        int new_depth=depth-1;
         int maxValue = alpha;
         boolean isFirstMove = true;
         //tmp=(depth==startDepth);
@@ -805,16 +812,25 @@ public final class Move {
         }
 
         if ( moveList.size() == 0 ) return -99999; //mate // System.out.println("OOOO "+depth);
+        int nmoves_tried=0;
         for ( Ply ply : moveList ){
 
             ArrayList<Ply> childPV=new ArrayList<>();
             int value;
             doPly(mBoard, mState, ply);
-            if ( isFirstMove ) value = -pvs2(-color, depth-1, -beta, -maxValue, childPV);
+            nmoves_tried++;
+
+            if ( new_depth > 3 && nmoves_tried > 3 ){ //TODO: && not check && no capture && no prom
+                new_depth = depth-2; //skip one
+                if (nmoves_tried > 8) new_depth--; //skip another
+            }
+
+
+            if ( isFirstMove ) value = -pvs2(-color, new_depth, -beta, -maxValue, childPV);
             else{
-                value = -pvs2(-color, depth-1, -maxValue - 1, -maxValue, childPV);
+                value = -pvs2(-color, new_depth, -maxValue - 1, -maxValue, childPV);
                 if ( maxValue < value && value < beta ){
-                    value = -pvs2(-color, depth-1, -beta, -maxValue, childPV);
+                    value = -pvs2(-color, new_depth, -beta, -maxValue, childPV);
                 }
             }
 
@@ -882,7 +898,8 @@ public final class Move {
 //            ArrayList<Ply> childPV=new ArrayList<>();
 
             //delta cut-off TODO: Should not be done during end game due to potential material insufficiency
-            if ( stand_pat + EvaluateBoard.VALUE_OF[Math.abs(ply.getToPiece())] + 200 < alpha ) continue;
+            if ( ( stand_pat + EvaluateBoard.VALUE_OF[Math.abs(ply.getToPiece())] + 200 < alpha ) &&
+                    !ply.togglePromotion ) continue;
 
             doPly(mBoard, mState, ply);
             value = -quiesce(-color, depth-1, -beta, -alpha);
