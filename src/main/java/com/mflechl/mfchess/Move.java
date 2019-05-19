@@ -4,9 +4,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 
-//https://www.chessprogramming.org/CPW-Engine_search
-//TODO        futility pruning
-
 //https://github.com/nescitus/cpw-engine/blob/master/move.cpp#L30
 //TODO        hash table
 
@@ -21,11 +18,15 @@ public final class Move {
     static final boolean USE_NEGAMAX = false;        //if false, use regular alphabeta (if that is true), otherwise negamax instead.
     static final boolean USE_PVS = !USE_NEGAMAX;     //if false, use regular alphabeta (if that is true), otherwise principal variation search instead. NEGAMAX and PVS should not be true at the same time!
     static final boolean USE_QS = true;              //use quiescence search; default: true
+    static final boolean USE_FUTILITY = true;
+    static final boolean USE_REDUCTION = false;
+
+    int[] futility_margin = { 0, 200, 300, 500 };
 
     static final boolean USE_ORDERING = true;        //DEFAULT: true!
     static final int QS_DEPTH=5;
-    static final int DEFAULT_START_DEPTH = 7;
-    static final int MAX_DEPTH = 7;
+    static final int DEFAULT_START_DEPTH = 6;
+    static final int MAX_DEPTH = 6;
 
     static final int[][] knightMoves = {{1, 2}, {2, 1}, {-1, 2}, {2, -1}, {-2, 1}, {1, -2}, {-1, -2}, {-2, -1}};
     static final int[][] rookMoves = {{-1, 0}, {1, 0}, {0, -1}, {0, +1}};
@@ -443,7 +444,7 @@ public final class Move {
 
         //promotion
 //        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
-        else if (ply.togglePromotion) {
+        else if (ply.isPromotion) {
             board.setup[ply.getToLine()][ply.getToRow()] = (byte) (ChessBoard.QUEEN * ply.getMoverColor());
         }
 
@@ -488,7 +489,7 @@ public final class Move {
 
         //promotion
 //        else if (ply.getToLine() == 7 * (ply.getMoverColor()+1)/2 && Math.abs(movingPiece) == ChessBoard.PAWN) {
-        else if (ply.togglePromotion) {
+        else if (ply.isPromotion) {
             board.setup[ply.getFromLine()][ply.getFromRow()] = (byte) (ChessBoard.PAWN * ply.getMoverColor());
         }
 
@@ -812,6 +813,13 @@ public final class Move {
         }
 
         if ( moveList.size() == 0 ) return -99999; //mate // System.out.println("OOOO "+depth);
+
+        //do futility pruning?
+        boolean fut_prune=false;
+        //* -1 because one move happened wrt beginning of the function
+        if ( USE_FUTILITY && depth <= 3 && !mState.check && Math.abs(alpha) < 9000 && EvaluateBoard.eval(mBoard, mState)*color*+1 + futility_margin[depth] <= alpha )
+            fut_prune = true;
+
         int nmoves_tried=0;
         for ( Ply ply : moveList ){
 
@@ -820,9 +828,20 @@ public final class Move {
             doPly(mBoard, mState, ply);
             nmoves_tried++;
 
-            if ( new_depth > 3 && nmoves_tried > 3 ){ //TODO: && not check && no capture && no prom
-                new_depth = depth-2; //skip one
-                if (nmoves_tried > 8) new_depth--; //skip another
+            //futility pruning
+            if (fut_prune
+                    &&	ply.toPiece==0 && !ply.isPromotion){
+                undoPly(mBoard, mState, ply);
+                continue;
+            }
+
+            //late move reduction //TODO: order moves
+            if ( USE_REDUCTION && new_depth > 3 && nmoves_tried > 3 && ply.getToPiece()==0 && !ply.isPromotion ){
+                if (ply.isCheck()==2) ply.check = isChecked(mBoard, mState.turnOf) ? 1: 0;
+                if (ply.isCheck()==0){
+                    new_depth = depth-2; //skip one
+                    //if (nmoves_tried > 14) new_depth--; //skip another
+                }
             }
 
 
@@ -899,7 +918,7 @@ public final class Move {
 
             //delta cut-off TODO: Should not be done during end game due to potential material insufficiency
             if ( ( stand_pat + EvaluateBoard.VALUE_OF[Math.abs(ply.getToPiece())] + 200 < alpha ) &&
-                    !ply.togglePromotion ) continue;
+                    !ply.isPromotion) continue;
 
             doPly(mBoard, mState, ply);
             value = -quiesce(-color, depth-1, -beta, -alpha);

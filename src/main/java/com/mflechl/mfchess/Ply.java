@@ -7,10 +7,10 @@ public class Ply {
 
     /*
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean toggleCastlingPossKW,
-               boolean toggleCastlingPossQW, boolean toggleCastlingPossKB, boolean toggleCastlingPossQB, boolean togglePromotion,
+               boolean toggleCastlingPossQW, boolean toggleCastlingPossKB, boolean toggleCastlingPossQB, boolean isPromotion,
                int moverColor, int prevEnpassantPossible) {
         this(fromLine, fromRow, toLine, toRow, toPiece, enPassant, new boolean[]{toggleCastlingPossKW, toggleCastlingPossKB},
-                new boolean[]{toggleCastlingPossQW, toggleCastlingPossQB},togglePromotion, moverColor,prevEnpassantPossible);
+                new boolean[]{toggleCastlingPossQW, toggleCastlingPossQB},isPromotion, moverColor,prevEnpassantPossible);
     }
     */
 
@@ -20,7 +20,7 @@ public class Ply {
     }
 
     public Ply(int fromLine, int fromRow, int toLine, int toRow, int toPiece, boolean enPassant, boolean[] toggleCastlingPossK,
-               boolean[] toggleCastlingPossQ, boolean togglePromotion, int moverColor, int prevEnpassantPossible) {
+               boolean[] toggleCastlingPossQ, boolean isPromotion, int moverColor, int prevEnpassantPossible) {
         this.fromLine = fromLine;
         this.fromRow = fromRow;
         this.toLine = toLine;
@@ -28,7 +28,7 @@ public class Ply {
         this.toPiece = toPiece;
         this.toggleCastlingPossK = new boolean[]{toggleCastlingPossK[0], toggleCastlingPossK[1]};
         this.toggleCastlingPossQ = new boolean[]{toggleCastlingPossQ[0], toggleCastlingPossQ[1]};
-        this.togglePromotion = togglePromotion;
+        this.isPromotion = isPromotion;
         this.moverColor = moverColor;
         this.enPassant = enPassant;
         this.prevEnpassantPossible = prevEnpassantPossible;
@@ -45,7 +45,8 @@ public class Ply {
         this.enPassant = p.enPassant;
         this.toggleCastlingPossK = new boolean[]{p.toggleCastlingPossK[0],p.toggleCastlingPossK[1]};
         this.toggleCastlingPossQ = new boolean[]{p.toggleCastlingPossQ[0],p.toggleCastlingPossQ[1]};
-        this.togglePromotion = p.togglePromotion;
+        this.isPromotion = p.isPromotion;
+        this.check = p.check;
     }
 
     int fromLine=-1;
@@ -53,7 +54,7 @@ public class Ply {
     int toLine=-1;
     int toRow=-1;
 
-    int toPiece;
+    int toPiece;              //0 for empty, otherwise figure for capture
     int moverColor;           //b or w
 
     int prevEnpassantPossible = -11;
@@ -63,8 +64,8 @@ public class Ply {
     boolean[] toggleCastlingPossK = {false, false};
     boolean[] toggleCastlingPossQ = {false, false}; //true-castling possible, false-castling not possible anymore or done, for white/black, for Queen-side
 
-
-    boolean togglePromotion; // = false (default);
+    boolean isPromotion; // = false (default);
+    int check = 2; //0-no, 1-yes, 2-not set
 
     public int getMoverColor() {
         return moverColor;
@@ -72,12 +73,16 @@ public class Ply {
 
     /*
     public boolean isTogglePromotion() {
-        return togglePromotion;
+        return isPromotion;
     }
     */
 
+    public int isCheck(){
+        return check;
+    }
+
     public void togglePromotion() {
-        this.togglePromotion = true;
+        this.isPromotion = true;
     }
 
     public void toggleCastlingPossK(int colIndex) {
@@ -174,7 +179,7 @@ public class Ply {
     public String toString() {
         return  " moverColor=" + moverColor +
                 " enPassant=" + enPassant + " prevEnpassantPossible=" + prevEnpassantPossible +
-//                " check=" + check + " mate=" + mate + " remis=" + remis +
+                " check=" + check + //" mate=" + mate + " remis=" + remis +
                 " toggleCastlingPossibleQ b/w=" + toggleCastlingPossQ[0] + "/" + toggleCastlingPossQ[1] +
                 " toggleCastlingPossibleK b/w=" + toggleCastlingPossK[0] + "/" + toggleCastlingPossK[1] +
                 " fromLine=" + fromLine + " fromRow=" + fromRow +
